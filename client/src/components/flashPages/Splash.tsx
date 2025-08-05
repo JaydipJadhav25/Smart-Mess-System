@@ -77,7 +77,7 @@ const SplashScreen: React.FC = () => {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden"
+      className="fixed min-h-screen inset-0 z-50 flex items-center justify-center overflow-hidden"
       style={{
         backgroundColor: "oklch(16.566% 0.00834 285.43 / 0.993)",
       }}
@@ -102,7 +102,7 @@ const SplashScreen: React.FC = () => {
       {/* 💬 Center Content */}
       <div className="flex flex-col items-center gap-2 animate-[zoomIn_0.8s_ease-out_forwards] scale-75 text-center z-10">
         {/* Logo */}
-        <img src="/logo.png" alt="Logo" className="w-60 h-60" />
+        <img src="/logo.png" alt="Logo" className="w-52 h-52" />
 
 
    {/* Title */}
