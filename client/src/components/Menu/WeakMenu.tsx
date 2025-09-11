@@ -108,7 +108,7 @@ export default function WeakMenu() {
               ))}
             </tbody>
           </table>
-        </CardContent>
+        </CardContent> 
       </Card>
     </div>
   );
