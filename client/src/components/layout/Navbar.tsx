@@ -28,6 +28,7 @@ function classNames(...classes :  any) {
 export default function Navbar() {
   return (
     <Disclosure as="nav" className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-lg">
+
   <div className="px-4 sm:px-6 lg:px-8 w-full">
     <div className="flex justify-between items-center h-16 w-full">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
