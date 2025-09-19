@@ -273,7 +273,7 @@ const recommendedNutrition = [
         fill="#8884d8"
         label
       >
-        {chartData.map((entry, index) => (
+        {chartData.map((_, index) => (
           <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
         ))}
       </Pie>
@@ -308,7 +308,7 @@ const recommendedNutrition = [
           <Tooltip />
           <Legend />
           <Bar dataKey="value">
-            {recommendedNutrition.map((entry, index) => (
+            {recommendedNutrition.map((_, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
           </Bar>
