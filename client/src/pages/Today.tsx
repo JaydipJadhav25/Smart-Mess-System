@@ -223,12 +223,15 @@ const recommendedNutrition = [
 
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="min-h-screen flex flex-col">
       <Loading />
       <Navbar />
+          <main className="flex-1 p-6 space-y-6">
 
-      <main className="flex-1 p-6 space-y-6">
-        <h1 className="text-3xl font-bold text-center mb-6">{today.day} Meals & Nutrition</h1>
+           <div className="bg-background backdrop-blur-lg rounded-xl p-6 text-center space-y-1">
+     <h1 className="text-3xl font-bold text-center mb-6">{today.day} Meals & Nutrition</h1>
+      </div>
+       
 
         <div className="grid md:grid-cols-3 gap-6">
           {meals.map((meal) => {

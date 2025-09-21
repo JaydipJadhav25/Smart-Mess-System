@@ -3,8 +3,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Utensils, AlarmClock, Home } from "lucide-react";
 import LightRays from "../ui/LightRays";
 // import { useEffect } from "react";
+import { Calendar, Sun, Moon, Star, CheckCircle, RefreshCw, Clock } from 'lucide-react';
+  import { useNavigate } from 'react-router-dom';
+
 
 export default function Hero() {
+    const navigate = useNavigate();
+
   const now = new Date();
   const hour = now.getHours();
 
@@ -90,8 +95,8 @@ export default function Hero() {
                        hover:bg-primary/10 transition duration-300 ease-in-out cursor-pointer
                        bg-background/80 backdrop-blur-md shadow-md"
           >
-            <div className="h-12 w-12 rounded-full bg-secondary/10 flex items-center justify-center mb-4">
-              <Utensils className="h-6 w-6 text-secondary" />
+            <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+              <Utensils className="h-6 w-6 text-primary"/>
             </div>
             <h3 className="text-lg font-medium">Current Meal</h3>
             <p className="text-2xl font-bold">{nextMeal}</p>
@@ -112,39 +117,145 @@ export default function Hero() {
         </div>
 
         {/* Menu Schedule */}
-        <Card className="bg-background/80 backdrop-blur-md hover:shadow-lg transition shadow-md">
-          <CardHeader>
-            <CardTitle>📅 Today's Menu</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <table className="w-full text-sm text-left">
-              <thead className="border-b">
-                <tr>
-                  <th>Meal</th>
-                  <th>Time</th>
-                  <th>Menu</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Breakfast</td>
-                  <td>8:00 AM</td>
-                  <td>Idli + Sambar</td>
-                </tr>
-                <tr>
-                  <td>Lunch</td>
-                  <td>1:00 PM</td>
-                  <td>Rice, Dal, Veg Curry</td>
-                </tr>
-                <tr>
-                  <td>Dinner</td>
-                  <td>7:30 PM</td>
-                  <td>Roti, Paneer, Salad</td>
-                </tr>
-              </tbody>
-            </table>
-          </CardContent>
-        </Card>
+  <Card
+   onClick={()=>{
+       navigate("/today")
+   }}
+  className="bg-background/95 backdrop-blur-lg hover:shadow-xl transition-all duration-300 shadow-lg cursor-pointer">
+  <CardHeader className="pb-4">
+    <div className="flex items-center justify-between">
+      <CardTitle className="text-xl font-semibold flex items-center gap-2">
+        <Calendar className="h-6 w-6 text-indigo-600" />
+        Today's Menu
+      </CardTitle>
+      <div className="text-sm text-gray-500 font-medium">
+        {new Date().toLocaleDateString('en-US', {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        })}
+      </div>
+    </div>
+  </CardHeader>
+  <CardContent className="pt-0">
+    <div className="overflow-hidden rounded-lg border border-gray-200">
+      <table className="w-full text-sm">
+        <thead className="bg-background">
+          <tr>
+            <th className="px-4 py-3 text-left font-semibold border-b">Meal</th>
+            <th className="px-4 py-3 text-left font-semibold border-b">Timing</th>
+            <th className="px-4 py-3 text-left font-semibold border-b">Menu</th>
+            <th className="px-4 py-3 text-center font-semibold border-b">Status</th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-gray-100">
+          <tr className="">
+            <td className="px-4 py-4">
+              <div className="flex items-center gap-2">
+                <Sun className="h-5 w-5 text-yellow-500" />
+                <span className="font-medium">Breakfast</span>
+              </div>
+            </td>
+            <td className="px-4 py-4">
+              <div className="flex items-center gap-1">
+                <Clock className="h-4 w-4 text-indigo-600" />
+                <span className="text-indigo-600 font-medium">8:00 AM – 10:00 AM</span>
+              </div>
+            </td>
+            <td className="px-4 py-4">
+              <div className="space-y-1">
+                <div className="font-medium">South Indian Special</div>
+                <div className="text-gray-600 text-xs">Idli, Sambar, Coconut Chutney</div>
+              </div>
+            </td>
+            <td className="px-4 py-4 text-center">
+              <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                <CheckCircle className="h-4 w-4 mr-1" />
+                Available
+              </span>
+            </td>
+          </tr>
+          <tr className="">
+            <td className="px-4 py-4">
+              <div className="flex items-center gap-2">
+                <Star className="h-5 w-5 text-orange-400" />
+                <span className="font-medium">Lunch</span>
+              </div>
+            </td>
+            <td className="px-4 py-4">
+              <div className="flex items-center gap-1">
+                <RefreshCw className="h-4 w-4 text-indigo-600" />
+                <span className="text-indigo-600 font-medium">12:30 PM – 2:30 PM</span>
+              </div>
+            </td>
+            <td className="px-4 py-4">
+              <div className="space-y-1">
+                <div className="font-medium">Complete Thali</div>
+                <div className="text-gray-600 text-xs">Rice, Dal Tadka, Mix Veg Curry, Pickle</div>
+              </div>
+            </td>
+            <td className="px-4 py-4 text-center">
+              <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                <RefreshCw className="h-4 w-4 mr-1" />
+                Serving
+              </span>
+            </td>
+          </tr>
+          <tr className="">
+            <td className="px-4 py-4">
+              <div className="flex items-center gap-2">
+                <Moon className="h-5 w-5 text-blue-600" />
+                <span className="font-medium">Dinner</span>
+              </div>
+            </td>
+            <td className="px-4 py-4">
+              <div className="flex items-center gap-1">
+                <Clock className="h-4 w-4 text-indigo-600" />
+                <span className="text-indigo-600 font-medium">7:30 PM – 9:30 PM</span>
+              </div>
+            </td>
+            <td className="px-4 py-4">
+              <div className="space-y-1">
+                <div className="font-medium">North Indian Delights</div>
+                <div className="text-gray-600 text-xs">Butter Roti, Paneer Butter Masala, Salad</div>
+              </div>
+            </td>
+            <td className="px-4 py-4 text-center">
+              <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                <Clock className="h-4 w-4 mr-1" />
+                Upcoming
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    {/* Legend and Timestamp */}
+    <div className="mt-4 flex items-center justify-between text-xs text-gray-500">
+      <div className="flex items-center gap-4">
+        <span className="flex items-center gap-1">
+          <CheckCircle className="h-3 w-3 text-green-500" />
+          Available
+        </span>
+        <span className="flex items-center gap-1">
+          <RefreshCw className="h-3 w-3 text-yellow-500" />
+          Serving
+        </span>
+        <span className="flex items-center gap-1">
+          <Clock className="h-3 w-3 text-blue-500" />
+          Upcoming
+        </span>
+      </div>
+      <div className="flex items-center gap-1">
+        <Calendar className="h-4 w-4 text-gray-400" />
+        <span>Last updated: {new Date().toLocaleTimeString()}</span>
+      </div>
+    </div>
+  </CardContent>
+</Card>
+   
       </div>
     </div>
   );

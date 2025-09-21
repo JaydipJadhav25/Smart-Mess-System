@@ -16,8 +16,8 @@ const navigation = [
   { name: 'Home' , path : '/' },
   { name: 'Todays Plate', path : '/today'  },
   { name: 'Weekly Menu', path : '/menu'  },
-  { name: 'Feedback',  path : '/feedback' },
-  { name: 'Report Leave',  path : '/report' },
+  // { name: 'Feedback',  path : '/feedback' },
+  // { name: 'Report Leave',  path : '/report' },
   { name: 'About Mess',  path : '/about' },
 ]
 
