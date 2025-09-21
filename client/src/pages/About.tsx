@@ -2,7 +2,7 @@ import Loading from "@/components/flashPages/Loading";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
 import CircularGallery from "@/components/ui/CircularGallery";
-import TextType from "@/components/ui/TextType";
+// import TextType from "@/components/ui/TextType";
 import { Card,  CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Users,
@@ -31,14 +31,14 @@ export default function About() {
             {/* Left Content */}
             <div className="text-center md:text-left">
               <h1 className="text-5xl font-extrabold mb-6 leading-tight">
-     
-              <TextType 
+                    About Smart Mess System
+              {/* <TextType 
                 text={[" About", "Smart", "Mess System"]}
                 typingSpeed={75}
                 pauseDuration={1500}
                 showCursor={true}
                 cursorCharacter="|"
-              />
+              /> */}
                  </h1>
               <p className="text-lg max-w-xl mx-auto md:mx-0 opacity-90">
                 A modern web-based solution that transforms hostel and mess management 
@@ -213,9 +213,9 @@ export default function About() {
       <Eye className="w-8 h-8 text-indigo-500" />
       Our Vision
     </h2>
-    <p className="text-lg leading-relaxed text-gray-200">
+    <p className="text-lg leading-relaxed">
       We aim to build a{" "}
-      <strong className="text-white">fully automated and intelligent mess management system</strong>, 
+      <strong className="">fully automated and intelligent mess management system</strong>, 
       ensuring accuracy, transparency, and efficiency.  
       Our future roadmap expands into <span className="font-semibold">mobile apps</span>, 
       <span className="font-semibold"> digital payments</span>, and 
@@ -235,13 +235,13 @@ export default function About() {
 </section>
 
 {/* Contact Section */}
-<section className="bg-background text-white py-20">
+<section className="bg-background py-20">
   <div className="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
     
     {/* Left - Contact Info */}
     <div>
       <h2 className="text-4xl font-bold mb-6">Get in Touch</h2>
-      <p className="text-lg mb-6 text-gray-200">
+      <p className="text-lg mb-6">
         Have questions, feedback, or suggestions?  
         We’d love to hear from you. Reach out and let’s make mess management smarter together.
       </p>

@@ -5,6 +5,8 @@ import LightRays from "../ui/LightRays";
 // import { useEffect } from "react";
 import { Calendar, Sun, Moon, Star, CheckCircle, RefreshCw, Clock } from 'lucide-react';
   import { useNavigate } from 'react-router-dom';
+// import { Button } from "@headlessui/react";
+// import LaserFlow from "../ui/LaserFlow";
 
 
 export default function Hero() {
@@ -57,7 +59,7 @@ export default function Hero() {
       {/* Foreground Content */}
       <div className="relative p-6 space-y-6">
         {/* Hero Section */}
-        <div className="bg-background/80 backdrop-blur-md rounded-xl p-6 text-center space-y-1 shadow-lg">
+        {/* <div className="bg-background/80 backdrop-blur-md rounded-xl p-6 text-center space-y-1 shadow-lg">
           <h1
             className="
               text-3xl font-bold 
@@ -70,7 +72,100 @@ export default function Hero() {
             Smart Mess System
           </h1>
           <p className="text-muted-foreground text-sm">Eat Smart, Live Smart</p>
+        </div> */}
+         
+   
+{/* <div style={{ height: '500px', position: 'relative', overflow: 'hidden' }}>
+  <LaserFlow />
+</div> */}
+
+
+        {/* <div className="container px-4 py-24 mx-auto"> */}
+  <div className="container px-4 pb-4 pt-4 mx-auto">
+    <div className="flex flex-col lg:flex-row items-center gap-12">
+      
+      {/* Left section with text */}
+      <div
+        className="flex-1 text-left space-y-6"  
+      >
+        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
+          {/* <img
+            src="/logo.png"
+            alt="Department Logo"
+            className="w-24 h-24 object-contain rounded-xl shadow-md ring-1 ring-muted"
+
+          /> */}
+          {/* <div className="absolute left-0 top-[1px] bg-clip-text bg-no-repeat text-transparent bg-gradient-to-r py-4 from-purple-500 via-violet-500 to-pink-500 [text-shadow:0_0_rgba(0,0,0,0.1)]">
+            <span className="">Exploding beams.</span>
+          </div> */}
+          <span className="block mt-2 bg-clip-text bg-no-repeat text-transparent bg-gradient-to-r py-4 from-purple-700 via-violet-200 to-pink-700 [text-shadow:0_0_rgba(0,0,0,0.1)]">
+            Smart Mess System
+            </span>
+        </h2>
+
+        <p className="text-lg md:text-xl text-muted-foreground max-w-2xl">
+        A comprehensive web-based platform designed to simplify mess operations.
+            From meal scheduling to payments, everything is managed digitally.
+            Enhancing transparency, efficiency, and convenience for every student.
+        </p>
+
+        {/* <div className="flex flex-wrap items-center gap-4 pt-4" data-aos="fade-up" data-aos-delay="300"> */}
+        {/* <div className="flex flex-wrap items-center gap-4 pt-4">
+          <Button size="lg" className="gap-2" asChild>
+            <Link to="/events">
+              <Terminal className="h-5 w-5" />
+              Join Events
+              <ChevronRight className="ml-1 h-4 w-4" />
+            </Link>
+          </Button>
+          <Button size="lg" variant="outline" className="gap-2" asChild>
+            <Link to="/members">
+              <Users className="h-5 w-5" />
+              Meet Our Team
+            </Link>
+          </Button>
+        </div> */}
+
+        {/* <div className="flex flex-wrap items-center gap-3 pt-6" data-aos="fade-up" data-aos-delay="400"> */}
+        <div className="flex flex-wrap items-center gap-3 pt-6" >
+                            {[
+                        "Automation",
+                        "Tracking",
+                        "Analytics",
+                        "Centralization",
+                        "Optimization",
+                        "Transparency",
+                        "Integration",
+                        "Sustainability"
+                      ]
+                  .map((tech, index) => (
+            // <span key={tech} className="px-3 py-1 text-sm bg-muted rounded-full" data-aos="zoom-in" data-aos-delay={500 + index * 100}>
+                    <span key={index+tech} className="px-3 py-1 text-sm bg-muted rounded-full"> 
+              {tech}
+            </span>
+          ))}
         </div>
+      </div>
+
+      {/* Right section with terminal */}
+      
+      <div className="flex-1 relativ flex justify-center" data-aos="fade-left">
+        <div className="relative z-10 bg-backgroud p-1 rounded-lg border shadow-lg overflow-hidden w-3/4">
+         
+        <img src="/features/Centralized-System.png" alt="heropng" className=""/>
+        </div>
+
+        {/* Decorative elements */}
+        {/* <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-primary/20 rounded-full blur-xl" />
+        <div className="absolute -top-6 -left-6 w-24 h-24 bg-secondary/20 rounded-full blur-xl" />
+ */}
+
+      </div>
+
+    </div>
+  </div>
+
+
 
         {/* Mess Overview */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
