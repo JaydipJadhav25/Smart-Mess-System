@@ -10,15 +10,16 @@ import {NavLink} from "react-router-dom"
 //   { name: 'Projects', href: '#', current: false },
 //   { name: 'Calendar', href: '#', current: false },
 // ]
-
+ 
 
 const navigation = [
   { name: 'Home' , path : '/' },
   { name: 'Todays Plate', path : '/today'  },
   { name: 'Weekly Menu', path : '/menu'  },
+  { name: 'Feedback',  path : '/feedback' },
+  { name: 'About Mess',  path : '/about' },
   // { name: 'Feedback',  path : '/feedback' },
   // { name: 'Report Leave',  path : '/report' },
-  { name: 'About Mess',  path : '/about' },
 ]
 
 function classNames(...classes :  any) {

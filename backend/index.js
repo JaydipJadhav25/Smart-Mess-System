@@ -2,8 +2,13 @@ import dotenv from 'dotenv'
 dotenv.config();//configer env varibles
 import express from "express"
 import cors from "cors"
+import { dbConnect } from './db/dbConnet.js';
+import feedbackRouter from "./routes/feedback.routes.js"
 
 
+
+//database connecction
+await dbConnect();
 
 const app = express();
 app.use(cors());
@@ -12,10 +17,18 @@ app.use(express.urlencoded({extended : true}));
 
 
 
-app.get("/" , (req , res)=>{
-    return res.send("<h1>smart Mess</h1>");
+app.get("/" , async(req , res)=>{
+
+
+    return res.json({
+        text : "smart mess system" , 
+    });
 })
 
+
+//routes :////////////////////////////
+//feedback router/////////////////
+app.use("/feedback" , feedbackRouter);
 
 
 

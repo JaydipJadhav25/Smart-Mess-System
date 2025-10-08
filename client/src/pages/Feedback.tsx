@@ -1,3 +1,4 @@
+import FeedbackForm from "@/components/feedback/FeedbackForm"
 import Loading from "@/components/flashPages/Loading"
 import Footer from "@/components/layout/Footer"
 import Navbar from "@/components/layout/Navbar"
@@ -8,8 +9,7 @@ function Feedback() {
       <Loading/>
       <Navbar/>
       <main className="flex-1">
-       <h1>coming soon..</h1>
-       
+       <FeedbackForm/>
       </main>
       <Footer/>
     </div>

@@ -7,6 +7,12 @@ import Menu from "./pages/Menu"
 import Feedback from "./pages/Feedback"
 import Report from "./pages/Report"
 import About from "./pages/About"
+import UserSignup from "./pages/SignupFormData "
+import LoginFormData from "./pages/LoginFormData"
+import OtpVerification from "./pages/OtpVerification"
+// import FeedbackForm from "./components/feedback/FeedbackForm"
+import FeedbackAnalysis from "./pages/admin/FeedbackAnalysis"
+import AnalyticsDashboard from "./components/AnalyticsDashBoard/AnalyticsDashboard"
 
 
  const AppRouter = ()=>{
@@ -19,6 +25,13 @@ import About from "./pages/About"
           <Route  path="/feedback" element={<Feedback/>}/>
           <Route  path="/report" element={<Report/>}/>
           <Route  path="/about" element={<About/>}/>
+          <Route path="/signup" element={<UserSignup/>}/>
+          <Route path="/login" element={<LoginFormData/>}/>
+          <Route path="/verification" element={<OtpVerification/>}/>
+          {/* <Route path="/feedbackform" element={<FeedbackForm/>}/> */}
+
+          <Route path="/ai" element={<FeedbackAnalysis/>}/>
+          <Route path="/dashbord" element={<AnalyticsDashboard/>}/>
           <Route path="*" element={<NotFound/>}/>
         </Routes>
         </>
