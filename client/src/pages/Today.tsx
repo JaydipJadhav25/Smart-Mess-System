@@ -3,6 +3,7 @@ import Loading from "@/components/flashPages/Loading";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { PointerHighlight } from "@/components/ui/pointer-highlight";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 import { BarChart, Bar, XAxis, YAxis,  CartesianGrid } from "recharts";
 
@@ -229,8 +230,14 @@ const recommendedNutrition = [
           <main className="flex-1 p-6 space-y-6">
 
            <div className="bg-background backdrop-blur-lg rounded-xl p-6 text-center space-y-1">
-     <h1 className="text-3xl font-bold text-center mb-6">{today.day} Meals & Nutrition</h1>
+     {/* <h1 className="text-3xl font-bold text-center mb-6">{today.day} Meals &  <PointerHighlight>
+        <span> Nutrition</span>
+      </PointerHighlight></h1> */}
+      <h1 className="text-3xl font-bold text-center mb-6">{today.day} Meals & <PointerHighlight containerClassName="inline-block">Nutrition</PointerHighlight></h1>
+
       </div>
+
+      
        
 
         <div className="grid md:grid-cols-3 gap-6">

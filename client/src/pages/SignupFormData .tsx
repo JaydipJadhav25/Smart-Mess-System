@@ -1,3 +1,4 @@
+import { axiosInstance } from '@/config/axiosInstances';
 import  { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import type { SubmitHandler } from 'react-hook-form';
@@ -41,8 +42,8 @@ const SignupFormData = () => {
     register,
     handleSubmit,
     watch,
-    formState: { errors },
-    reset
+    formState: { errors  },
+    reset 
   } = useForm<SignupFormData>({
     mode: 'onBlur'
   });
@@ -69,15 +70,29 @@ const SignupFormData = () => {
       // if (!response.ok) throw new Error('Network response was not ok.');
       // const result = await response.json();
 
-      setStatus({ message: 'Signup successful! Welcome.', type: 'success' });
+       const responce = await axiosInstance.post("/user/signup" , signupData);
+       console.log("repose from server : " , responce.data);
+
+       //check response
+      setStatus({ message: responce.data?.message || "user signup suucessfully", type: 'success' });
+      
+
       reset();
+
+      //re-direct on verification
+      
+
     } catch (error) {
+
       console.error('Signup error:', error);
       setStatus({ message: 'Signup failed. Please try again.', type: 'error' });
+
     } finally {
       setIsLoading(false);
     }
   };
+
+
   
   const toggleTheme = () => {
     setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
@@ -173,6 +188,7 @@ const SignupFormData = () => {
                     </div>
                 </div>
 
+
                 {/* Generic Input Field Component */}
                 {(['email', 'password', 'confirmPassword'] as const).map(fieldName => {
                     const isPasswordField = fieldName === 'password' || fieldName === 'confirmPassword';
@@ -204,15 +220,25 @@ const SignupFormData = () => {
                                         errors[fieldName] ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                                     }`}
                                     placeholder={`Enter your ${fieldLabels[fieldName].toLowerCase()}`}
+  
                                     {...register(fieldName, {
                                         required: `${fieldLabels[fieldName]} is required`,
                                         ...(fieldName === 'email' && {
                                             pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, message: 'Please enter a valid email address' }
+                                         ,
+                                          // --- ✨ THIS IS THE NEW PART ---
+                                          // validate: async (value) => {
+                                          //   const isEmailTaken = await checkEmailExists(value);
+                                          //   return isEmailTaken ? 'This email is already registered.' : true;
+                                          // }
+                                          // --- END OF NEW PART ---
                                         }),
+
                                         ...(fieldName === 'password' && {
                                             minLength: { value: 8, message: 'Password must be at least 8 characters' },
                                             pattern: { value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/, message: 'Must contain uppercase, lowercase, number and special character' }
                                         }),
+
                                         ...(fieldName === 'confirmPassword' && {
                                             validate: (value: string) => value === password || 'Passwords do not match'
                                         })

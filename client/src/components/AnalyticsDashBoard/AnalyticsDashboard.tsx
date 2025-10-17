@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, CartesianGrid, PieChart, Pie, Cell, LineChart, Line, Area, AreaChart } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, CartesianGrid, PieChart, Pie, Cell,  Area, AreaChart } from 'recharts';
 import { FiCpu, FiStar, FiBarChart2, FiCheckCircle, FiAlertCircle, FiUsers, FiTrendingUp, FiTrendingDown, FiMessageCircle, FiShield } from 'react-icons/fi';
 import { useLocation } from "react-router-dom";
 
@@ -11,17 +11,17 @@ interface MealPerformance {
   negativeComments?: string[];
 }
 
-interface AnalyticsData {
-  summary: { totalFeedbacks: number; averageRating: number; };
-  positiveFeedbacks: { count: number; };
-  negativeFeedbacks: { count: number; };
-  spammingUsers: { count: number; list: string[]; };
-  mostPositiveMeals: { count: number; meals: MealPerformance[]; };
-  mostNegativeMeals: { count: number; meals: MealPerformance[]; };
-  sentimentDistribution: { "1_star": number; "2_star": number; "3_star": number; "4_star": number; "5_star": number; };
-  aiSuggestions: { goodPoints: string[]; badPoints: string[]; };
-  aiSummaryText: string;
-}
+// interface AnalyticsData {
+//   summary: { totalFeedbacks: number; averageRating: number; };
+//   positiveFeedbacks: { count: number; };
+//   negativeFeedbacks: { count: number; };
+//   spammingUsers: { count: number; list: string[]; };
+//   mostPositiveMeals: { count: number; meals: MealPerformance[]; };
+//   mostNegativeMeals: { count: number; meals: MealPerformance[]; };
+//   sentimentDistribution: { "1_star": number; "2_star": number; "3_star": number; "4_star": number; "5_star": number; };
+//   aiSuggestions: { goodPoints: string[]; badPoints: string[]; };
+//   aiSummaryText: string;
+// }
 
 // --- Main Dashboard Component ---
 // const AnalyticsDashboard: React.FC<{ analysisData: AnalyticsData }> = ({ analysisData }) => {
@@ -33,7 +33,7 @@ const AnalyticsDashboard: React.FC = () => {
 
 
 
-  const [selectedMeal, setSelectedMeal] = useState<string | null>(null);
+  // const [selectedMeal, setSelectedMeal] = useState<string | null>(null);
 
   const [showSpammersList, setShowSpammersList] = useState(false);
 
@@ -275,7 +275,7 @@ const AnalyticsDashboard: React.FC = () => {
               <div className="bg-orange-50 p-4 rounded-2xl max-h-80 overflow-y-auto">
                 {showSpammersList ? (
                   <div className="space-y-2">
-                    {analysisData.spammingUsers.list.map((user, index) => (
+                    {analysisData.spammingUsers.list.map((user : any, index : any) => (
                       <div key={index} className="bg-white p-3 rounded-lg shadow-sm border border-orange-200">
                         <span className="font-medium text-gray-800">{user}</span>
                         <span className="text-sm text-orange-600 ml-2">[Flagged]</span>
@@ -326,7 +326,7 @@ const AnalyticsDashboard: React.FC = () => {
             <FiTrendingUp className="text-green-600" /> Top Performing Meals
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {analysisData.mostPositiveMeals.meals.map((meal, index) => (
+            {analysisData.mostPositiveMeals.meals.map((meal : any, index: any) => (
               <div key={index} className="bg-green-50 p-6 rounded-2xl border border-green-200">
                 <h3 className="text-lg font-bold text-gray-800 mb-4 text-center">{meal.name}</h3>
                 <ResponsiveContainer width="100%" height={200}>
@@ -356,7 +356,7 @@ const AnalyticsDashboard: React.FC = () => {
                       <FiMessageCircle className="text-green-600" /> Comments
                     </h4>
                     <div className="bg-white p-3 rounded-lg max-h-32 overflow-y-auto">
-                      {meal.comments.slice(0, 3).map((comment, idx) => (
+                      {meal.comments.slice(0, 3).map((comment: any, idx: any) => (
                         <p key={idx} className="text-sm text-gray-600 mb-1">• {comment}</p>
                       ))}
                     </div>
@@ -373,7 +373,7 @@ const AnalyticsDashboard: React.FC = () => {
             <FiTrendingDown className="text-red-600" /> Meals Needing Improvement
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {analysisData.mostNegativeMeals.meals.map((meal, index) => (
+            {analysisData.mostNegativeMeals.meals.map((meal: any, index: any) => (
               <div key={index} className="bg-red-50 p-6 rounded-2xl border border-red-200">
                 <h3 className="text-lg font-bold text-gray-800 mb-4 text-center">{meal.name}</h3>
                 <ResponsiveContainer width="100%" height={200}>
@@ -403,7 +403,7 @@ const AnalyticsDashboard: React.FC = () => {
                       <FiMessageCircle className="text-red-600" /> Issues Reported
                     </h4>
                     <div className="bg-white p-3 rounded-lg max-h-32 overflow-y-auto">
-                      {meal.negativeComments.slice(0, 3).map((comment, idx) => (
+                      {meal.negativeComments.slice(0, 3).map((comment: any, idx: any) => (
                         <p key={idx} className="text-sm text-gray-600 mb-1">• {comment}</p>
                       ))}
                     </div>
@@ -425,7 +425,7 @@ const AnalyticsDashboard: React.FC = () => {
                 <FiCheckCircle /> Strengths & Good Points
               </h3>
               <div className="space-y-3">
-                {analysisData.aiSuggestions.goodPoints.map((point, index) => (
+                {analysisData.aiSuggestions.goodPoints.map((point:any, index:number) => (
                   <div key={index} className="bg-white p-4 rounded-lg shadow-sm border border-green-100">
                     <div className="flex items-start gap-3">
                       <div className="bg-green-100 p-2 rounded-full">
@@ -442,7 +442,7 @@ const AnalyticsDashboard: React.FC = () => {
                 <FiAlertCircle /> Areas for Improvement
               </h3>
               <div className="space-y-3">
-                {analysisData.aiSuggestions.badPoints.map((point, index) => (
+                {analysisData.aiSuggestions.badPoints.map((point:any, index:number) => (
                   <div key={index} className="bg-white p-4 rounded-lg shadow-sm border border-red-100">
                     <div className="flex items-start gap-3">
                       <div className="bg-red-100 p-2 rounded-full">

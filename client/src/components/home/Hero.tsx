@@ -1,10 +1,12 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Utensils, AlarmClock, Home } from "lucide-react";
-import LightRays from "../ui/LightRays";
+// import LightRays from "../ui/LightRays";
 // import { useEffect } from "react";
 import { Calendar, Sun, Moon, Star, CheckCircle, RefreshCw, Clock } from 'lucide-react';
   import { useNavigate } from 'react-router-dom';
+import { LayoutTextFlip } from "../ui/layout-text-flip";
+// import { PointerHighlight } from "../ui/pointer-highlight";
 // import { Button } from "@headlessui/react";
 // import LaserFlow from "../ui/LaserFlow";
 
@@ -31,7 +33,7 @@ export default function Hero() {
     hour12: true,
   });
 
-  const mode  = localStorage.getItem("vite-ui-theme");
+  // const mode  = localStorage.getItem("vite-ui-theme");
 
 //  useEffect(() => {
 //   window.location.reload();
@@ -40,7 +42,7 @@ export default function Hero() {
   return (
     <div className="relative min-h-screen w-full overflow-hidden">
       {/* Background Light Rays */}
-      {
+      {/* {
         mode === "dark" ?  <div className="absolute inset-0 -z-10">
         <LightRays
           raysOrigin="top-center"
@@ -55,7 +57,7 @@ export default function Hero() {
           className="custom-rays"
         />
       </div> : <></>
-      }
+      } */}
       {/* Foreground Content */}
       <div className="relative p-6 space-y-6">
         {/* Hero Section */}
@@ -98,9 +100,29 @@ export default function Hero() {
           {/* <div className="absolute left-0 top-[1px] bg-clip-text bg-no-repeat text-transparent bg-gradient-to-r py-4 from-purple-500 via-violet-500 to-pink-500 [text-shadow:0_0_rgba(0,0,0,0.1)]">
             <span className="">Exploding beams.</span>
           </div> */}
-          <span className="block mt-2 bg-clip-text bg-no-repeat text-transparent bg-gradient-to-r py-4 from-purple-700 via-violet-200 to-pink-700 [text-shadow:0_0_rgba(0,0,0,0.1)]">
-            Smart Mess System
+          {/* <span className="block mt-2  bg-clip-text bg-no-repeat dark:text-transparent bg-gradient-to-r py-4 from-purple-700 via-violet-200 to-pink-700 [text-shadow:0_0_rgba(0,0,0,0.1)]"> */}
+          <span className="block mt-2  bg-clip-text text-blue-950 dark:text-white">
+            {/* Smart Mess Platfrom */}
+             {/* <LayoutTextFlip
+          text="Welcome to "
+          words={["Smart Mess Platfrom", "Fight Club", "The Matrix", "The Jungle"]}
+        /> */}
+              <LayoutTextFlip
+                text="Smart Mess "
+                words={[
+                  "Platform",
+                  "AI",
+                  "Automation",
+                  "Tracking",
+                  "Dashboard",
+                  "Sustainability"
+                ]}
+              />
+
+
+
             </span>
+     
         </h2>
 
         <p className="text-lg md:text-xl text-muted-foreground max-w-2xl">

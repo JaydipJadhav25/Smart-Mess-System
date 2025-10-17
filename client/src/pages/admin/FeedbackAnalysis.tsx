@@ -1,4 +1,4 @@
-import AnalyticsDashboard from '@/components/AnalyticsDashBoard/AnalyticsDashboard';
+import AnalyticsDashboard from '@/components/AnalyticsDashBoard/AnalyticsDashboard'; 
 import { axiosInstance } from '@/config/axiosInstances';
 import React, { useEffect, useState } from 'react';
 import { data, useNavigate } from 'react-router-dom';

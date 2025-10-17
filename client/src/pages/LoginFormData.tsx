@@ -51,7 +51,6 @@ const LoginFormData = () => {
       // });
       // if (!response.ok) throw new Error('Invalid credentials');
       // const result = await response.json();
-
       setStatus({ message: 'Login successful! Redirecting...', type: 'success' });
       reset();
     } catch (error) {

@@ -41,6 +41,72 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+
+:root {
+  --radius: 0.625rem;
+
+  /* Base Colors */
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.147 0.004 49.25);
+
+  /* Surfaces */
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.147 0.004 49.25);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.147 0.004 49.25);
+
+  /* Primary Brand Colors (from your new gradient palette) */
+  --primary: #e35f3d; /* vibrant orange-red */
+  --primary-foreground: #ffffff;
+
+  /* Secondary (complementary gradient tones) */
+  --secondary: #a54e86; /* rich purple */
+  --secondary-foreground: #ffffff;
+
+  /* Accent / Muted / Supporting Tones */
+  --accent: #6e548a; /* muted violet */
+  --accent-foreground: #ffffff;
+  --muted: #405277; /* slate blue */
+  --muted-foreground: #d1d5db;
+
+  /* Destructive / Warning */
+  --destructive: #d14b6a; /* magenta red tone */
+  --destructive-foreground: #ffffff;
+
+  /* Borders, Inputs, Rings */
+  --border: #2f4858;
+  --input: #2f4858;
+  --ring: #6e548a;
+
+  /* Chart Colors */
+  --chart-1: #e35f3d;
+  --chart-2: #d14b6a;
+  --chart-3: #a54e86;
+  --chart-4: #6e548a;
+  --chart-5: #405277;
+
+  /* Sidebar */
+  --sidebar: #2f4858;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #e35f3d;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #a54e86;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #405277;
+  --sidebar-ring: #6e548a;
+
+  /* Gradient Utility (extra) */
+  --gradient-generic: linear-gradient(
+    90deg,
+    #e35f3d,
+    #d14b6a,
+    #a54e86,
+    #6e548a,
+    #405277,
+    #2f4858
+  );
+}
+
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -74,7 +140,27 @@
   --sidebar-accent-foreground: oklch(0.216 0.006 56.043);
   --sidebar-border: oklch(0.923 0.003 48.717);
   --sidebar-ring: oklch(0.709 0.01 56.259);
+    --mycolor: linear-gradient(
+    to top,
+    #ebb125,
+    #ff8d49,
+    #ff6e78,
+    #f962a7,
+    #c56cce,
+    #b96acc,
+    #ad68c9,
+    #a166c6,
+    #c455a5,
+    #d54b7e,
+    #d64e58,
+    #c85c34
+  );
 }
+
+
+
+
+
 
 .dark {
   --background: oklch(20.472% 0.01046 268.188 / 0.963);
