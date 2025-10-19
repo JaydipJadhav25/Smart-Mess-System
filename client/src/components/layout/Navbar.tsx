@@ -25,7 +25,7 @@ const navigation = [
   { name: 'Home' , path : '/' },
   { name: 'Todays Plate', path : '/today'  },
   { name: 'Weekly Menu', path : '/menu'  },
-  { name: 'Feedback',  path : '/feedback' },
+  // { name: 'Feedback',  path : '/feedback' },
   { name: 'About Mess',  path : '/about' },
   // { name: 'Feedback',  path : '/feedback' },
   // { name: 'Report Leave',  path : '/report' },
@@ -234,12 +234,12 @@ try {
                 className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-background backdrop-blur-lg py-1 shadow-lg ring-1 ring-black/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
               >
                 <MenuItem>
-                  <a
-                    href="#"
+                  <Link
+                    to={"/profile"}
                     className="block px-4 py-2 text-sm text-gray-700 dark:text-white dark:data-focus:bg-gray-900 data-focus:bg-gray-100 data-focus:outline-hidden"
                   >
                     Your Profile
-                  </a>
+                  </Link>
                 </MenuItem> 
                 <MenuItem>
                   <a
@@ -250,11 +250,11 @@ try {
                   </a>
                 </MenuItem>
                 <MenuItem>
-                    <button
+                    <p
                     onClick={userLogout}
                     className='block px-4 py-2 text-sm text-gray-700 dark:text-white dark:data-focus:bg-gray-900 data-focus:bg-gray-100 data-focus:outline-hidden cursor-pointer' >
                        Sign Out
-                    </button>
+                    </p>
                 </MenuItem>
               </MenuItems>
 
