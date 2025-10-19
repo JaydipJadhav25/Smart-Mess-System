@@ -78,6 +78,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       student_id: null,
     });
     localStorage.removeItem("auth");
+    localStorage.removeItem("token");
   };
 
   return (

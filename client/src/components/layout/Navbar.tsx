@@ -90,6 +90,8 @@ try {
 
   //clear from locastorage
   logout();
+  //remove token
+  //  localStorage.removeItem("token");
 
   navigate("/");
 
