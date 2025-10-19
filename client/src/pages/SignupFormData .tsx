@@ -3,6 +3,9 @@ import  { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import type { SubmitHandler } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { toast } from "sonner"
+
 
 // Define the form data interface
 interface SignupFormData {
@@ -28,6 +31,10 @@ const SignupFormData = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
   const [status, setStatus] = useState<{ message: string; type: 'success' | 'error' | '' }>({ message: '', type: '' });
   
+  //navigater
+  const navigate = useNavigate();
+
+
   // State for theme management
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
@@ -76,16 +83,23 @@ const SignupFormData = () => {
        //check response
       setStatus({ message: responce.data?.message || "user signup suucessfully", type: 'success' });
       
-
-      reset();
+      //success message
+      toast.success("user signup suucessfully");
 
       //re-direct on verification
-      
+      navigate(`/verification/${responce.data.data.email}` , {replace : true});
+      reset();
 
-    } catch (error) {
+    } catch (error : any) {
 
-      console.error('Signup error:', error);
-      setStatus({ message: 'Signup failed. Please try again.', type: 'error' });
+      // console.error('Signup error:', error?.AxiosError?.response?.data);
+      const userError = error?.response?.data.message;
+      console.error('Signup error:', userError);
+
+      //message
+       toast.error("Signup failed. Please try again.");
+
+      setStatus({ message: userError || 'Signup failed. Please try again.', type: 'error' });
 
     } finally {
       setIsLoading(false);

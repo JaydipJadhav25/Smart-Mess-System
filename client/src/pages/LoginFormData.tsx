@@ -1,7 +1,11 @@
-import  { useState, useEffect } from 'react';
+// import { AuthContext } from '@/components/context/AuthContext';
+import useAuth from '@/components/context/useAuth';
+import { axiosInstance } from '@/config/axiosInstances';
+import  { useState, useEffect  } from 'react';
 import { useForm } from 'react-hook-form';
 import type { SubmitHandler } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 // Define the form data interface
 interface LoginFormData {
@@ -17,6 +21,22 @@ const LoginFormData = () => {
   
   // State for theme management
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
+
+    
+  //navigater
+  const navigate = useNavigate();
+
+
+
+
+
+  // use context
+  const {login } = useAuth();
+
+
+
+
+
 
   // Effect to toggle dark class on the root element
   useEffect(() => {
@@ -39,7 +59,7 @@ const LoginFormData = () => {
     setStatus({ message: '', type: '' });
     try {
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      // await new Promise(resolve => setTimeout(resolve, 1500));
 
       console.log('Login Data:', data);
       
@@ -51,11 +71,35 @@ const LoginFormData = () => {
       // });
       // if (!response.ok) throw new Error('Invalid credentials');
       // const result = await response.json();
-      setStatus({ message: 'Login successful! Redirecting...', type: 'success' });
+
+      const response = await axiosInstance.post("/user/login" , data);
+      
+      console.log("response : " , response.data);
+
+      //data store in localstorage
+     if(response.data?.success){
+       login(response.data.data.user.email, response.data.data.user.role,response.data.data.user.student_id);
+       //store token
+       localStorage.setItem("token" , response.data.data.auth);
+     }
+     
+
+      setStatus({ message: response.data.mmessage ||  'Login successful! Redirecting...', type: 'success' });
+       
+      toast.success("Login successful!");
+      
+      //redirect
+      navigate("/" , {replace : true});
       reset();
-    } catch (error) {
-      console.error('Login error:', error);
-      setStatus({ message: 'Login failed. Please check your credentials.', type: 'error' });
+    } catch (error : any) {
+
+      const userError = error?.response?.data.message;
+      console.error('Login error:', error );
+
+      setStatus({ message: userError || 'Login failed. Please check your credentials.', type: 'error' });
+
+      toast.error("Login failed. Please check your credentials.");
+
     } finally {
       setIsLoading(false);
     }

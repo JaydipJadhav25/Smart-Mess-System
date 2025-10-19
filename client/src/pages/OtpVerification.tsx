@@ -1,6 +1,9 @@
+import { axiosInstance } from '@/config/axiosInstances';
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import type { SubmitHandler } from 'react-hook-form';
+  import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'sonner';
 
 // Define the form data interface
 interface OtpFormData {
@@ -10,6 +13,13 @@ interface OtpFormData {
 // Main App Component for OTP Verification
 // The user's email can be passed as a prop for display purposes.
 const OtpVerification = ({ email = "your-email@example.com" }) => {
+
+  //user email 
+  const { userEmail } = useParams();
+  
+  //navigater
+  const navigate = useNavigate();
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [status, setStatus] = useState<{ message: string; type: 'success' | 'error' | '' }>({ message: '', type: '' });
   const [resendCooldown, setResendCooldown] = useState(0);
@@ -60,22 +70,29 @@ const OtpVerification = ({ email = "your-email@example.com" }) => {
     setIsLoading(true);
     setStatus({ message: '', type: '' });
     try {
-      // Simulate API call to verify OTP
-      await new Promise(resolve => setTimeout(resolve, 1500));
       console.log('Verifying OTP:', data.otp);
 
-      // Dummy OTP for testing; replace with your logic
-      if (data.otp !== "123456") {
-        throw new Error("Invalid OTP");
-      }
+     const response = await axiosInstance.post("/user/verify", { otp: data.otp });
+      console.log("responce : " , response.data);
+       toast.success("Verification successful! Your account is now active.'");
+              
 
-      setStatus({ message: 'Verification successful! Your account is now active.', type: 'success' });
+      setStatus({ message: response.data.message  || 'Verification successful! Your account is now active.', type: 'success' });
       reset();
+
+      //navigate
+      navigate("/login" , {replace : true});
+
       setOtpDigits(new Array(6).fill(''));
-    } catch (error) {
+
+    } catch (error : any) {
+      const userError = error?.response?.data.message;
       console.error('OTP verification error:', error);
-      setStatus({ message: 'Verification failed. The code is incorrect.', type: 'error' });
+      
+      setStatus({ message: userError || 'Verification failed. The code is incorrect.', type: 'error' });
+
     } finally {
+
       setIsLoading(false);
     }
   };
@@ -159,7 +176,7 @@ const OtpVerification = ({ email = "your-email@example.com" }) => {
             Email Verification
           </h2>
           <p className="text-gray-600 dark:text-gray-300">
-            Enter the 6-digit code sent to <br/> <span className="font-medium text-gray-800 dark:text-gray-100">{email}</span>
+            Enter the 6-digit code sent to <br/> <span className="font-medium text-gray-800 dark:text-gray-100">{userEmail}</span>
           </p>
         </div>
         

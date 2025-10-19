@@ -1,7 +1,16 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, BellIcon, XMarkIcon , ArrowRightIcon } from '@heroicons/react/24/outline'
 import { ModeToggle } from '../mode-toggle'
-import {NavLink} from "react-router-dom"
+import {Link, NavLink, useNavigate} from "react-router-dom"
+import useAuth from '../context/useAuth'
+import { axiosInstance } from '@/config/axiosInstances'
+import { toast } from 'sonner'
+
+
+
+// import { useEffect, useState } from 'react'
+
+
 
 
 // const navigation = [
@@ -26,13 +35,102 @@ function classNames(...classes :  any) {
   return classes.filter(Boolean).join(' ')
 }
 
+
+
+// const context = useAuth(); // bhai error yenar na function chya outside call krtoy hook
+// const[studentId , setStudentId] = useState<number | null>(null);
+// useEffect(()=>{
+
+//  setStudentId(localStorage.getItem("student_id"));
+
+// },[]);
+
+// const studentId = localStorage.getItem("student_id") || null;
+
+
+
+
+
+
+
+
+
+
 export default function Navbar() {
+
+
+
+
+
+
+  //use state
+// const [studentId, setStudentId] = useState<number | null>(null);
+
+//   useEffect(() => {
+//     const idStr = localStorage.getItem("student_id");
+//     const idNum = idStr ? Number(idStr) : null; // convert string to number
+//     setStudentId(idNum);
+//   }, []);
+
+
+
+const {isAuthenticated , student_id  , logout} = useAuth();
+  //navigater
+  const navigate = useNavigate();
+
+//user logout
+const userLogout = async ()=>{
+try {
+  
+  const response = await axiosInstance.get("/user/logout");
+
+  console.log(response.data);
+  
+  toast.success("User Logout Successfully !");
+
+  //clear from locastorage
+  logout();
+
+  navigate("/");
+
+
+} catch (error:any ) {
+       const userError = error?.response?.data.message;
+   console.log("error : " , userError)
+    toast.success(userError || "User Logout Successfully !");
+  navigate("/");
+
+}finally{
+  navigate("/");
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   return (
     <Disclosure as="nav" className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-lg">
 
   <div className="px-4 sm:px-6 lg:px-8 w-full">
-    <div className="flex justify-between items-center h-16 w-full">
+
+       <div className="flex justify-between items-center h-16 w-full">
+
+      
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+               {/* <div className="flex items-center justify-between sm:hidden w-full"> */}
             {/* Mobile menu button*/}
             <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:ring-2 focus:ring-white focus:outline-hidden focus:ring-inset">
               <span className="absolute -inset-0.5" />
@@ -40,7 +138,10 @@ export default function Navbar() {
               <Bars3Icon aria-hidden="true" className="block size-6 group-data-open:hidden" />
               <XMarkIcon aria-hidden="true" className="hidden size-6 group-data-open:block" />
             </DisclosureButton>
+
+            
           </div> 
+
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             {/* <div className="flex shrink-0 items-center">
               <img
@@ -52,6 +153,7 @@ export default function Navbar() {
               Smart Mess System
           </span>
             </div> */}
+
              <div className="flex items-center space-x-2">
           <img
             src="logo.png"
@@ -62,6 +164,7 @@ export default function Navbar() {
         Smat Mess System
           </span>
         </div>
+
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex items-center space-x-4">
                 {navigation.map((item) => (
@@ -98,22 +201,30 @@ export default function Navbar() {
             </button>
 
             {/* Profile dropdown */}
-            <Menu as="div" className="relative ml-3">
+            {
+              !isAuthenticated ? <>
+                <Link to={"/login"} className='ml-3 flex items-center gap-2 text-sm font-medium bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-md'><span>Profile</span>
+                <ArrowRightIcon  aria-hidden="true" className="size-5" />
+                </Link>              
+              </>: <>
+              <Menu as="div" className="relative ml-3">
+
               <MenuButton className="relative flex rounded-full dark:bg-gray-800 text-sm focus:outline-hidden focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-gray-800">
-                <span className="absolute -inset-1.5" />
-                <span className="sr-only">Open user menu</span>
-                <img
+              <span className="absolute -inset-1.5" />
+          
+                   <img
                   alt=""
                   //src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                  src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
                   className="size-8 rounded-full"
-                />
-              {/* <div className="ml-auto flex items-center space-x-3"> */}
-              {/* <span className="text-sm text-muted-foreground">ID:</span> */}
+                />          
               <span className="text-sm font-medium bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-md">
-                100
+                {
+                   student_id
+                }
               </span>
-            {/* </div> */}
+              
+
               </MenuButton>
 
               <MenuItems
@@ -137,15 +248,18 @@ export default function Navbar() {
                   </a>
                 </MenuItem>
                 <MenuItem>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700 dark:text-white dark:data-focus:bg-gray-900 data-focus:bg-gray-100 data-focus:outline-hidden"
-                  >
-                    Sign out
-                  </a>
+                    <button
+                    onClick={userLogout}
+                    className='block px-4 py-2 text-sm text-gray-700 dark:text-white dark:data-focus:bg-gray-900 data-focus:bg-gray-100 data-focus:outline-hidden cursor-pointer' >
+                       Sign Out
+                    </button>
                 </MenuItem>
               </MenuItems>
+
             </Menu>
+              </>
+            }
+            
              {/* mode  */}
                 <div className='px-3'>
                     <ModeToggle/>
@@ -162,7 +276,10 @@ export default function Navbar() {
         </div>
 
       </div>
-      <DisclosurePanel className="sm:hidden">
+
+
+
+      {/* <DisclosurePanel className="sm:hidden">
         <div className="space-y-1 px-2 pt-2 pb-3">
           {navigation.map((item) => (
             // <DisclosureButton
@@ -194,7 +311,34 @@ export default function Navbar() {
 
           ))}
         </div>
-      </DisclosurePanel>
+      </DisclosurePanel> */}
+
+
+      <DisclosurePanel className="sm:hidden">
+  <div className="space-y-1 px-3 pt-2 pb-3">
+    {navigation.map((item) => (
+      <NavLink
+        key={item.name}
+        to={item.path}
+        className={({ isActive }) =>
+          classNames(
+            isActive
+              ? 'bg-gray-900 text-white'
+              : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+            'block rounded-md px-3 py-2 text-base font-medium'
+          )
+        }
+      >
+        {item.name}
+      </NavLink>
+    ))}
+  </div>
+</DisclosurePanel>
+
+
+
+
+
       <div className="absolute top-0 left-0 h-0.5 w-full bg-white/5 overflow-hidden z-50">
   <div className="h-full w-full bg-gradient-to-r from-blue-700 via-sky-400 to-orange-300 animate-topBar rounded-r-full"></div>
 </div>

@@ -13,6 +13,8 @@ import OtpVerification from "./pages/OtpVerification"
 // import FeedbackForm from "./components/feedback/FeedbackForm"
 import FeedbackAnalysis from "./pages/admin/FeedbackAnalysis"
 import AnalyticsDashboard from "./components/AnalyticsDashBoard/AnalyticsDashboard"
+import { Toaster } from "sonner"
+import { AuthProvider } from "./components/context/AuthContext"
 
 
  const AppRouter = ()=>{
@@ -27,7 +29,7 @@ import AnalyticsDashboard from "./components/AnalyticsDashBoard/AnalyticsDashboa
           <Route  path="/about" element={<About/>}/>
           <Route path="/signup" element={<UserSignup/>}/>
           <Route path="/login" element={<LoginFormData/>}/>
-          <Route path="/verification" element={<OtpVerification/>}/>
+          <Route path="/verification/:userEmail" element={<OtpVerification/>}/>
           {/* <Route path="/feedbackform" element={<FeedbackForm/>}/> */}
 
           <Route path="/ai" element={<FeedbackAnalysis/>}/>
@@ -52,11 +54,14 @@ import AnalyticsDashboard from "./components/AnalyticsDashBoard/AnalyticsDashboa
 function App() {
   return (
      <>
+    <AuthProvider>
      <BrowserRouter>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
          <AppRouter/>
-       </ThemeProvider>
+           <Toaster />
+      </ThemeProvider>
      </BrowserRouter>
+    </AuthProvider>
      </>
   )
 }
