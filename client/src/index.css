@@ -261,3 +261,19 @@
 }
 
 
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+  .animate-shimmer {
+    animation: shimmer 2s infinite;
+  }
+
+
+   @keyframes shrink {
+          0% { width: 100%; }
+          100% { width: 0%; }
+        }
+        .animate-shrink {
+          animation: shrink 2s linear forwards;
+        }

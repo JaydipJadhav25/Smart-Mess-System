@@ -1,11 +1,11 @@
 import AdminLayout from "@/components/admin/AdminLayout"
+import FeedbackAnalysis from "@/components/admin/FeedbackAnalysis"
 
 
 function AdminFeedbacks() {
   return (
     <AdminLayout currentPage="feedbacks">
-
-        <h1>feedbacks page</h1>
+     <FeedbackAnalysis/>
     </AdminLayout>
   )
 }

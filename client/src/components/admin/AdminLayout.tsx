@@ -88,10 +88,10 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
 
    const menuItems = [
     { to: "/admin", icon: <PieChart className="h-4 w-4" />, label: "Dashboard" },
-    { to: "/admin/students", icon: <Users className="h-4 w-4" />, label: "students" },
-    { to: "/admin/feedback", icon: <Calendar className="h-4 w-4" />, label: "feedback" },
-    { to: "/admin/announcements", icon: <Bell className="h-4 w-4" />, label: "Announcements" },
-    { to: "/admin/financials", icon: <PieChart className="h-4 w-4" />, label: "Financials" },
+    { to: "/admin-students", icon: <Users className="h-4 w-4" />, label: "students" },
+    { to: "/admin-feedback", icon: <Calendar className="h-4 w-4" />, label: "feedback Analysis" },
+    { to: "/admin-announcements", icon: <Bell className="h-4 w-4" />, label: "Announcements" },
+    { to: "/admin-financials", icon: <PieChart className="h-4 w-4" />, label: "Financials" },
     { to: "/", icon: <Home className="h-4 w-4" />, label: "home" },
   ];
 

@@ -1,8 +1,9 @@
 // import AnalyticsDashboard from '@/components/AnalyticsDashBoard/AnalyticsDashboard'; 
 import { axiosInstance } from '@/config/axiosInstances';
-import React, { useEffect, useState } from 'react';
-import { data, useNavigate } from 'react-router-dom';
-
+import React, {  useState } from 'react';
+// import { data  } from 'react-router-dom';
+import AnalyticsDashboard from '../AnalyticsDashBoard/AnalyticsDashboard';
+import { MultiStepLoader as Loader } from "../ui/multi-step-loader";
 
 
 // --- Type Definitions (No changes needed) ---
@@ -40,7 +41,7 @@ const FeedbackAnalysis: React.FC = () => {
   const[result , setResult] = useState<any>(null);
 
 
-   const navigate = useNavigate();
+  //  const navigate = useNavigate();
 
 
   const handleFetchFeedback = async (): Promise<void> => {
@@ -75,33 +76,58 @@ const FeedbackAnalysis: React.FC = () => {
     alert(`Starting analysis on ${feedbackData.length} feedback records!`);
     setAnalying(true);
      try {
-  //   const response = await axiosInstance.post("/feedback/feedback-analytics" , feedbackData);
-  //   console.log("response : " , response.data);
-  // localStorage.setItem("answer" , JSON.stringify( response.data));
-  //   setResult(response.data);
-  //   setAnalying(false);
+    const response = await axiosInstance.post("/feedback/feedback-analytics" , feedbackData);
+    console.log("response : " , response.data);
+    localStorage.setItem("answer" , JSON.stringify( response.data));
+    setResult(response.data);
+    // setAnalying(false);
+    localStorage.setItem("data" , response.data);
 
-   navigate("/dashbord", { state: { analysisData:result } }); // 👈 pass data to new page
+    //  navigate("/dashbord", { state: { analysisData:result } }); // 👈 pass data to new page
 
      } catch (error) {
-    setAnalying(false);
-    alert("analying error !");
+      // setAnalying(false);
+      console.log("error is : " , error);
+
+        alert("analying error !");
+
      }finally{
+
         setAnalying(false);
+
      }
 
   };
 
-useEffect(()=>{
-  const data : any = localStorage.getItem("answer");
-  setResult(JSON.parse(data));
-},[])
 
 
-  console.log("data in state : " , data);
+const loadingStates = [
+  { text: "Collecting student feedback..." },
+  { text: "Reading thoughts about today's meal..." },
+  { text: "Analyzing satisfaction levels..." },
+  { text: "Identifying top-rated dishes..." },
+  { text: "Spotting improvement areas..." },
+  { text: "Summarizing feedback insights..." },
+  { text: "Generating analytics report..." },
+  { text: "Almost done — preparing final summary..." },
+];
+
+
+// useEffect(()=>{
+//   const data : any = localStorage.getItem("answer");
+//   setResult(JSON.parse(data));
+// },[])
+
+
 
   return (
-    <div className="font-sans max-w-4xl my-10 mx-auto p-6 shadow-lg rounded-lg bg-white">
+     <>
+       <Loader loadingStates={loadingStates} loading={analying} duration={2000} />
+
+       {
+
+        !result ? <>
+           <div className="font-sans max-w-4xl my-10 mx-auto p-6 shadow-lg rounded-lg bg-white">
       
       {/* --- Professional Title Area --- */}
       <div className="border-b border-gray-200 pb-4 mb-6">
@@ -173,7 +199,17 @@ useEffect(()=>{
      {/* {
         result && <AnalyticsDashboard analysisData={result}/>
      } */}
-    </div>
+           </div> 
+        </>:<>
+        
+         <AnalyticsDashboard analysisData={result}/>
+        
+        </>
+
+
+       }
+     </>
+
   );
 };
 

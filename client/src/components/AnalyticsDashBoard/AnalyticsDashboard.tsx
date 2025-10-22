@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, CartesianGrid, PieChart, Pie, Cell,  Area, AreaChart } from 'recharts';
 import { FiCpu, FiStar, FiBarChart2, FiCheckCircle, FiAlertCircle, FiUsers, FiTrendingUp, FiTrendingDown, FiMessageCircle, FiShield } from 'react-icons/fi';
-import { useLocation } from "react-router-dom";
+// import { useLocation } from "react-router-dom";
 
 // --- Type Definitions ---
 interface MealPerformance {
@@ -11,25 +11,25 @@ interface MealPerformance {
   negativeComments?: string[];
 }
 
-// interface AnalyticsData {
-//   summary: { totalFeedbacks: number; averageRating: number; };
-//   positiveFeedbacks: { count: number; };
-//   negativeFeedbacks: { count: number; };
-//   spammingUsers: { count: number; list: string[]; };
-//   mostPositiveMeals: { count: number; meals: MealPerformance[]; };
-//   mostNegativeMeals: { count: number; meals: MealPerformance[]; };
-//   sentimentDistribution: { "1_star": number; "2_star": number; "3_star": number; "4_star": number; "5_star": number; };
-//   aiSuggestions: { goodPoints: string[]; badPoints: string[]; };
-//   aiSummaryText: string;
-// }
+interface AnalyticsData {
+  summary: { totalFeedbacks: number; averageRating: number; };
+  positiveFeedbacks: { count: number; };
+  negativeFeedbacks: { count: number; };
+  spammingUsers: { count: number; list: string[]; };
+  mostPositiveMeals: { count: number; meals: MealPerformance[]; };
+  mostNegativeMeals: { count: number; meals: MealPerformance[]; };
+  sentimentDistribution: { "1_star": number; "2_star": number; "3_star": number; "4_star": number; "5_star": number; };
+  aiSuggestions: { goodPoints: string[]; badPoints: string[]; };
+  aiSummaryText: string;
+}
 
 // --- Main Dashboard Component ---
-// const AnalyticsDashboard: React.FC<{ analysisData: AnalyticsData }> = ({ analysisData }) => {
-const AnalyticsDashboard: React.FC = () => {
+const AnalyticsDashboard: React.FC<{ analysisData: AnalyticsData }> = ({ analysisData }) => {
+// const AnalyticsDashboard: React.FC = () => {
 
-  const location = useLocation();
-  const analysisData = location.state?.analysisData;
-  console.log("analysidata : " , analysisData);
+  // const location = useLocation();
+  // const analysisData = location.state?.analysisData;
+  // console.log("analysidata : " , analysisData);
 
 
 

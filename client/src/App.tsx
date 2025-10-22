@@ -11,8 +11,8 @@ import UserSignup from "./pages/SignupFormData "
 import LoginFormData from "./pages/LoginFormData"
 import OtpVerification from "./pages/OtpVerification"
 // import FeedbackForm from "./components/feedback/FeedbackForm"
-import FeedbackAnalysis from "./pages/admin/FeedbackAnalysis"
-import AnalyticsDashboard from "./components/AnalyticsDashBoard/AnalyticsDashboard"
+// import FeedbackAnalysis from "./components/admin/FeedbackAnalysis"
+// import AnalyticsDashboard from "./components/AnalyticsDashBoard/AnalyticsDashboard"
 import { Toaster } from "sonner"
 import { AuthProvider } from "./components/context/AuthContext"
 import { AdminPanel } from "./pages/AdminPanel"
@@ -52,14 +52,14 @@ import StudentForm from "./pages/student/StudentForm"
 
              {/* admin routes */}
           <Route path="/admin" element={<AdminPanel/>}/>   
-          <Route path="/admin/students" element={<AdminStudents/>}/>   
-          <Route path="/admin/feedback" element={<AdminFeedbacks/>}/>   
-          <Route path="/admin/announcements" element={<AdminAnnouncements/>}/>   
-          <Route path="/admin/financials" element={<AdminFinancials/>}/>   
+          <Route path="/admin-students" element={<AdminStudents/>}/>   
+          <Route path="/admin-feedback" element={<AdminFeedbacks/>}/>   
+          <Route path="/admin-announcements" element={<AdminAnnouncements/>}/>   
+          <Route path="/admin-financials" element={<AdminFinancials/>}/>   
         
-
-          <Route path="/ai" element={<FeedbackAnalysis/>}/>
-          <Route path="/dashbord" element={<AnalyticsDashboard/>}/>
+        
+          {/* <Route path="/ai" element={<FeedbackAnalysis/>}/> */}
+          {/* <Route path="/dashbord" element={<AnalyticsDashboard/>}/> */}
           <Route path="*" element={<NotFound/>}/>
         </Routes>
         </>
