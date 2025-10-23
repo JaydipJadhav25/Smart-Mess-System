@@ -255,7 +255,7 @@ export default function AddressInfo({ next, back, data } : any) {
         )} */}
 
         {/* Action Buttons */}
-        <div className="flex justify-between pt-6">
+        <div className="flex sm:justify-between pt-6">
           <button
             type="button"
             onClick={back}
@@ -263,7 +263,7 @@ export default function AddressInfo({ next, back, data } : any) {
           >
             Back
           </button>
-          <div className="space-x-4">
+          <div className="space-x-4 flex justify-center items-center">
             <button
               type="button"
               className="px-6 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"

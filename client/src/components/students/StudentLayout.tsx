@@ -89,7 +89,7 @@ const StudentLayout: React.FC<StudentLayoutProps> = ({ children }) => {
    const menuItems = [
     { to: "/profile", icon: <PieChart className="h-4 w-4" />, label: "profile" },
     { to: "/profile/feedback", icon: <Calendar className="h-4 w-4" />, label: "feedback" },
-    { to: "/profile/form", icon: <Users className="h-4 w-4" />, label: "form" },
+    { to: "/profile/form", icon: <Users className="h-4 w-4" />, label: "Application Form" },
     { to: "/profile/plane", icon: <Bell className="h-4 w-4" />, label: "plane" },
     // { to: "/profile/financials", icon: <PieChart className="h-4 w-4" />, label: "Financials" },
     { to: "/", icon: <Home className="h-4 w-4" />, label: "home" },

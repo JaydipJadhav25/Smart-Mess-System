@@ -30,11 +30,11 @@ import {
 const steps = [
   { name: "Personal Information", icon: User },
   { name: "Address Information", icon: MapPin },
-  { name: "Parent/Guardian Details", icon: Users },
+  { name: "Parent Details", icon: Users },
   { name: "Current Course", icon: BookOpen },
   // { name: "Past Qualification", icon: GraduationCap },
   { name: "Hostel Details", icon: Home },
-  { name: "Review & Submit", icon: CheckCircle },
+  { name: "Review & Submite", icon: CheckCircle },
 ];
 
 export default function MessAdmissionWizard() {
@@ -240,7 +240,7 @@ export default function MessAdmissionWizard() {
           {/* Main Content */}
           <div className="flex-1">
             {/* Progress Steps */}
-            <div className="bg-backgroud rounded-lg shadow-sm p-6 mb-6">
+            <div className="bg-backgroud rounded-lg shadow-sm p-0 sm:p-6 mb-6">
               <div className="flex items-center justify-between">
 
                 {/* {steps.map((step, index) => (
@@ -265,13 +265,13 @@ export default function MessAdmissionWizard() {
                   </div>
                 ))} */}
 
-                {steps.map((step, index) => {
+  {steps.map((step, index) => {
   const Icon = step.icon;
   return (
     <div key={index} className="relative flex flex-col items-center">
       {/* Step Circle */}
       <div
-        className={`w-12 h-12 rounded-full flex items-center justify-center text-white ${
+        className={`w-8 h-8 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-white ${
           index < currentStep
             ? 'bg-green-500'
             : index === currentStep
