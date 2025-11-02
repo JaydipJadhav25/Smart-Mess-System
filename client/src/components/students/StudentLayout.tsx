@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import {   NavLink, useLocation } from "react-router-dom";
-import { LogOut, Users, Calendar, Bell, PieChart, Menu, X, Home } from "lucide-react";
+import { LogOut, Users, Calendar, Bell, PieChart, Menu, X, Home , LibraryBig , CardSim } from "lucide-react";
 // import { Button } from "@/components/ui/button";
 // import {
 //   SidebarProvider,
@@ -29,7 +29,7 @@ import { LogOut, Users, Calendar, Bell, PieChart, Menu, X, Home } from "lucide-r
 
 interface StudentLayoutProps {
   children: React.ReactNode;
-  currentPage: "profile" | "feedback" | "form" | "plane";
+  currentPage: "profile" | "feedback" | "form" | "plane" | "leave" | "records";
 }
 
 const StudentLayout: React.FC<StudentLayoutProps> = ({ children }) => {
@@ -87,10 +87,12 @@ const StudentLayout: React.FC<StudentLayoutProps> = ({ children }) => {
   }, [open]);
 
    const menuItems = [
-    { to: "/profile", icon: <PieChart className="h-4 w-4" />, label: "profile" },
-    { to: "/profile/feedback", icon: <Calendar className="h-4 w-4" />, label: "feedback" },
-    { to: "/profile/form", icon: <Users className="h-4 w-4" />, label: "Application Form" },
-    { to: "/profile/plane", icon: <Bell className="h-4 w-4" />, label: "plane" },
+    { to: "/profile", icon: <Users className="h-4 w-4" />, label: "profile" },
+    { to: "/profile-records", icon: <LibraryBig className="h-4 w-4" />, label: "Records" },
+    { to: "/profile-feedback", icon: <Calendar className="h-4 w-4" />, label: "feedback" },
+    { to: "/profile-leave", icon: <Bell className="h-4 w-4" />, label: "leave" },
+    { to: "/profile-plane", icon: <PieChart className="h-4 w-4" />, label: "plane" },
+    { to: "/profile-form", icon: <CardSim className="h-4 w-4" />, label: "Application Form" },
     // { to: "/profile/financials", icon: <PieChart className="h-4 w-4" />, label: "Financials" },
     { to: "/", icon: <Home className="h-4 w-4" />, label: "home" },
   ];

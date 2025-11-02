@@ -1,11 +1,51 @@
 
+import useAuth from "@/components/context/useAuth";
+import { axiosInstance } from "@/config/axiosInstances";
+import { useState } from "react";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
-export default function ReviewSubmit({ data , back }:any) {
-  const handleSubmit = () => {
+
+export default function ReviewSubmit ({ data , back }:any) {
+
+  
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
+  const{ applicationSubmit } = useAuth();
+
+
+  const handleSubmit = async() => {
     // API call to submit the form
     console.log("Submitting form data:", data);
-    alert("Application submitted successfully!");
-    // Navigate to success page or dashboard
+    // alert("Application submitted successfully!");
+    setIsLoading(true);
+     try {
+      const response = await axiosInstance.post("/user/appplication/create" , data);
+
+      console.log("responce from server : " , response.data);
+       
+      //save in locastorage
+      applicationSubmit()//update field
+      //message
+      toast.success("Application submitted successfully!");
+      
+      // Navigate to success page or dashboard
+      navigate("/profile");
+
+     } catch (error : any) {
+
+        const Error = error?.response?.data.message;
+        console.log("eror : " , Error);
+        alert("Application submitted Error!");
+      toast.error("Application submitted Error!");
+
+     }finally{
+      setIsLoading(false);
+     }
+    
+
+
+
   };
 
   return (
@@ -89,16 +129,20 @@ export default function ReviewSubmit({ data , back }:any) {
       {/* Action Buttons */}
       <div className="flex justify-between pt-8">
         <button
+          disabled={isLoading}
           onClick={back}
           className="px-8 py-3 bg-gray-500 text-white rounded-md hover:bg-gray-600 font-medium"
         >
           Back
         </button>
         <button
+          disabled={isLoading}
           onClick={handleSubmit}
           className="px-8 py-3 bg-green-500 text-white rounded-md hover:bg-green-600 font-medium"
         >
-          Submit Application
+          {
+            !isLoading ? "Sumite Application" : "Loading........"
+          }
         </button>
       </div>
     </div>

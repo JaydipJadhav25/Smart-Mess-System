@@ -24,6 +24,8 @@ import { StudentPanel } from "./pages/StudentPanel"
 import Feedback from "./pages/student/Feedback"
 import StudentPlane from "./pages/student/StudentPlane"
 import StudentForm from "./pages/student/StudentForm"
+import LeavePopup from "./pages/student/LeavePopup"
+import Records from "./pages/student/Records"
 
 
  const AppRouter = ()=>{
@@ -43,9 +45,11 @@ import StudentForm from "./pages/student/StudentForm"
 
           {/* Stunndents routes */}
           <Route path="/profile" element={<StudentPanel/>}/>   
-          <Route path="/profile/feedback" element={<Feedback/>}/>   
-          <Route path="/profile/plane" element={<StudentPlane/>}/>   
-          <Route path="/profile/form" element={<StudentForm/>}/>   
+          <Route path="/profile-feedback" element={<Feedback/>}/>   
+          <Route path="/profile-records" element={<Records/>}/>
+          <Route path="/profile-plane" element={<StudentPlane/>}/>   
+          <Route path="/profile-form" element={<StudentForm/>}/>
+          <Route path="/profile-leave" element={<LeavePopup/>}/>   
 
 
 

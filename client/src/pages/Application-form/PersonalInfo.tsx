@@ -8,6 +8,11 @@ import { useForm } from "react-hook-form";
 export default function PersonalInfo({ next , data }:{next : any , data : any}) {
       const [showToast, setShowToast] = useState(false);
 
+        const {username} = useAuth();
+
+
+
+
   const {
     register,
     handleSubmit,
@@ -18,16 +23,15 @@ export default function PersonalInfo({ next , data }:{next : any , data : any}) 
       name: data.name || "",
       dob: data.dob || "",
       gender: data.gender || "",
-      email: data.email || "",
+      email: username || "",
       mobile: data.mobile || "",
     },
   });
 
 //   const onSubmit = (formData) => next(formData);
 
-
-const {username} = useAuth();
 console.log("errors "  , errors);
+
 
 
 

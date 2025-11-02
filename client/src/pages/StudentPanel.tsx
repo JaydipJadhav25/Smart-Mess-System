@@ -22,7 +22,7 @@ export const StudentPanel = () => {
 
 
   //aacess student data 
-  const{student_id , username , isAuthenticated} = useAuth();
+  const{student_id , username , isAuthenticated , isFormSubmitted} = useAuth();
 
 
   return (
@@ -42,10 +42,19 @@ export const StudentPanel = () => {
           <p className="text-xl font-bold truncate">{username}</p>
           {/* <p className="text-sm text-muted-foreground mt-2">+3 this month</p> */}
         </div>
+
         <div className={`bg-card p-6 rounded-lg border shadow-sm flex justify-center items-center ${isAuthenticated ?'bg-green-400' : 'bg-red-800'}`}>
           {/* <h3 className="text-lg font-medium mb-1">Verifed</h3> */}
           <p className={`text-3xl font-bold`}>{
             isAuthenticated ? "verifed" : "UnVerifed"
+            }</p>
+          {/* <p className="text-sm text-muted-foreground mt-2">+3 this month</p> */}
+        </div>
+
+         <div className={`bg-card p-6 rounded-lg border shadow-sm flex justify-center items-center ${isFormSubmitted ?'bg-green-400' : 'bg-red-800'}`}>
+          {/* <h3 className="text-lg font-medium mb-1">Verifed</h3> */}
+          <p className={`text-3xl font-bold`}>{
+            isFormSubmitted ? "Form filled" : "Form unFiiled"
             }</p>
           {/* <p className="text-sm text-muted-foreground mt-2">+3 this month</p> */}
         </div>
