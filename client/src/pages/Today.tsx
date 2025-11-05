@@ -21,7 +21,7 @@ export default function TodayNutrition() {
 //api call
   //react-query
 const { isError, isLoading, data, error } = useQuery({
-  queryKey: ["menu"],
+  queryKey: ["Messmenu"],
   queryFn: async () => {
     const response = await axiosInstance("/menu");
     console.log("API called only once...");
