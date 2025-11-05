@@ -22,13 +22,13 @@ export const AdminPanel = () => {
     <AdminLayout currentPage="dashboard">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="bg-card p-6 rounded-lg border shadow-sm">
-          <h3 className="text-lg font-medium mb-1">Total Members</h3>
-          <p className="text-3xl font-bold">42</p>
+          <h3 className="text-lg font-medium mb-1">Total Stundes</h3>
+          <p className="text-3xl font-bold">0</p>
           <p className="text-sm text-muted-foreground mt-2">+3 this month</p>
         </div>
         
         <div className="bg-card p-6 rounded-lg border shadow-sm">
-          <h3 className="text-lg font-medium mb-1">Upcoming Events</h3>
+          <h3 className="text-lg font-medium mb-1">Leaves</h3>
           <p className="text-3xl font-bold">7</p>
           <p className="text-sm text-muted-foreground mt-2">Next: Hackathon 2023</p>
         </div>
@@ -50,19 +50,19 @@ export const AdminPanel = () => {
         <div className="bg-card p-6 rounded-lg border shadow-sm">
           <h2 className="text-xl font-semibold mb-4">Quick Access</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <Link to="/admin/members" className="p-4 hover:bg-muted/50 rounded-md flex flex-col items-center text-center">
+            <Link to="/admin" className="p-4 hover:bg-muted/50 rounded-md flex flex-col items-center text-center">
               <Users className="h-6 w-6 mb-2" />
-              <span>Manage Members</span>
+              <span>Applications</span>
             </Link>
-            <Link to="/admin/events" className="p-4 hover:bg-muted/50 rounded-md flex flex-col items-center text-center">
+            <Link to="/admin" className="p-4 hover:bg-muted/50 rounded-md flex flex-col items-center text-center">
               <Calendar className="h-6 w-6 mb-2" />
-              <span>Create Event</span>
+              <span>Feedbacks</span>
             </Link>
-            <Link to="/admin/announcements" className="p-4 hover:bg-muted/50 rounded-md flex flex-col items-center text-center">
+            <Link to="/admin" className="p-4 hover:bg-muted/50 rounded-md flex flex-col items-center text-center">
               <Bell className="h-6 w-6 mb-2" />
               <span>Post Announcement</span>
             </Link>
-            <Link to="/admin/financials" className="p-4 hover:bg-muted/50 rounded-md flex flex-col items-center text-center">
+            <Link to="/admin" className="p-4 hover:bg-muted/50 rounded-md flex flex-col items-center text-center">
               <PieChart className="h-6 w-6 mb-2" />
               <span>Budget Overview</span>
             </Link>

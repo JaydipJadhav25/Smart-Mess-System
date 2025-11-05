@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import {   NavLink, useLocation } from "react-router-dom";
-import { LogOut, Users, Calendar, Bell, PieChart, Menu, X, Home } from "lucide-react";
+import {  Users, Bell, PieChart, Menu, X, Home , SquareLibrary , MenuIcon , AppWindowIcon , ChartSpline  , Wallet} from "lucide-react";
 // import { Button } from "@/components/ui/button";
 // import {
 //   SidebarProvider,
@@ -29,7 +29,7 @@ import { LogOut, Users, Calendar, Bell, PieChart, Menu, X, Home } from "lucide-r
 
 interface AdminLayoutProps {
   children: React.ReactNode;
-  currentPage: "dashboard" | "students" | "feedbacks" | "announcements" | "financials";
+  currentPage: "dashboard" | "students" | "feedbacks" | "announcements" | "financials" | "ManageApplications" | "MenuUpdate" | "Attendance";
 }
 
 const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
@@ -88,10 +88,13 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
 
    const menuItems = [
     { to: "/admin", icon: <PieChart className="h-4 w-4" />, label: "Dashboard" },
-    { to: "/admin-students", icon: <Users className="h-4 w-4" />, label: "students" },
-    { to: "/admin-feedback", icon: <Calendar className="h-4 w-4" />, label: "feedback Analysis" },
+    { to: "/admin-students", icon: <Users className="h-4 w-4" />, label: "Manage Students" },
+    { to: "/admin-Attendence", icon: <SquareLibrary className="h-4 w-4" />, label: "Attendance" },
+    { to: "/admin-manageApplications", icon: <MenuIcon className="h-4 w-4" />, label: "Manu Update" },
+    { to: "/admin-menuUpdate", icon: <AppWindowIcon className="h-4 w-4" />, label: "Manage Applications" },
     { to: "/admin-announcements", icon: <Bell className="h-4 w-4" />, label: "Announcements" },
-    { to: "/admin-financials", icon: <PieChart className="h-4 w-4" />, label: "Financials" },
+    { to: "/admin-feedback", icon: <ChartSpline className="h-4 w-4" />, label: "feedback Analysis" },
+    { to: "/admin-financials", icon: <Wallet className="h-4 w-4" />, label: "Financials" },
     { to: "/", icon: <Home className="h-4 w-4" />, label: "home" },
   ];
 
@@ -166,7 +169,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
         </div>
 
         {/* Logout button */}
-        <div className="p-4 border-t border-gray-200 dark:border-gray-700">
+        {/* <div className="p-4 border-t border-gray-200 dark:border-gray-700">
           <button
             // onClick={handleLogout}
             className="w-full flex items-center gap-3 p-2 rounded-lg transition-colors text-red-600 hover:bg-red-100 dark:hover:bg-red-900"
@@ -174,7 +177,9 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
             <LogOut className="h-4 w-4" />
             <span>Log out</span>
           </button>
-        </div>
+        </div> */}
+
+
       </aside>
 
       {/* Content area (with margin on desktop) */}

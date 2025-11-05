@@ -6,7 +6,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PointerHighlight } from "@/components/ui/pointer-highlight";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 import { BarChart, Bar, XAxis, YAxis,  CartesianGrid } from "recharts";
-
+import {useQuery } from "@tanstack/react-query"
+import { axiosInstance } from "@/config/axiosInstances";
+import { useNavigate } from "react-router-dom";
+import { Loader2, WifiOff } from "lucide-react";
 
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
@@ -15,160 +18,76 @@ const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
 export default function TodayNutrition() {
 
-const weeklyMenu = [
-  {
-    day: "Monday",
-    meals: {
-      breakfast: {
-        items: ["Idli", "Sambar"],
-        nutrition: { calories: 320, protein: 10, carbs: 60, fat: 5 },
-        image :"/"
-      },
-      lunch: {
-        items: ["Rice", "Dal", "Bhindi", "2 Chapati"],
-        nutrition: { calories: 550, protein: 18, carbs: 90, fat: 12 },
-        image :"/"
-      },
-      dinner: {
-        items: ["Roti", "Paneer", "Salad", "2 Chapati"],
-        nutrition: { calories: 600, protein: 22, carbs: 80, fat: 15 },
-        image :"/"
-      },
-    },
+//api call
+  //react-query
+const { isError, isLoading, data, error } = useQuery({
+  queryKey: ["adminAnnouncements"],
+  queryFn: async () => {
+    const response = await axiosInstance("/menu");
+    console.log("API called only once...");
+    return response?.data?.data?.menu;
+  },
+  staleTime: Infinity,        // never becomes stale
+  gcTime: Infinity,           // never garbage collect cached data
+  refetchOnWindowFocus: false,
+  refetchOnReconnect: false,
+  refetchOnMount: false,
+  retry: false,               // optional: no retries if it fails
+});
 
-  },
-  {
-    day: "Tuesday",
-    meals: {
-      breakfast: {
-        items: ["Poha"],
-        nutrition: { calories: 280, protein: 6, carbs: 50, fat: 8 },
-        image : "/"
-      },
-      lunch: {
-        items: ["Rajma", "Rice", "2 Chapati"],
-        nutrition: { calories: 620, protein: 20, carbs: 95, fat: 14 },
-        image : "/"
-      },
-      dinner: {
-        items: ["Chole", "Roti", "2 Chapati"],
-        nutrition: { calories: 610, protein: 19, carbs: 92, fat: 16 },
-        image : "/"
-      },
-    },
 
-  },
-  {
-    day: "Wednesday",
-    meals: {
-      breakfast: {
-        items: ["Dosa"],
-        nutrition: { calories: 300, protein: 7, carbs: 55, fat: 9 },
-        image : "/"
-      },
-      lunch: {
-        items: ["Sambar", "Rice", "2 Chapati"],
-        nutrition: { calories: 540, protein: 16, carbs: 88, fat: 11 },
-        image : "/"
-      },
-      dinner: {
-        items: ["Paratha", "Aloo Sabzi", "2 Chapati"],
-        nutrition: { calories: 580, protein: 14, carbs: 90, fat: 18 },
-        image : "/"
-      },
-    },
 
-  },
-  {
-    day: "Thursday",
-    meals: {
-      breakfast: {
-        items: ["Upma"],
-        nutrition: { calories: 270, protein: 7, carbs: 45, fat: 8 },
-        image : "/"
-      },
-      lunch: {
-        items: ["Kadhi", "Rice", "2 Chapati"],
-        nutrition: { calories: 560, protein: 15, carbs: 92, fat: 13 },
-        image : "/"
-      },
-      dinner: {
-        items: ["Roti", "Mix Veg", "2 Chapati"],
-        nutrition: { calories: 570, protein: 17, carbs: 88, fat: 12 },
-        image : "/"
-      },
-    },
+console.log("data : " , data);
+console.log("error : " , error);
+  
 
-  },
-  {
-    day: "Friday",
-    meals: {
-      breakfast: {
-        items: ["Bread Butter"],
-        nutrition: { calories: 310, protein: 6, carbs: 40, fat: 12 },
-        image : "/"
-      },
-      lunch: {
-        items: ["Paneer Rice", "2 Chapati"],
-        nutrition: { calories: 600, protein: 20, carbs: 85, fat: 15 },
-        image : "/"
-      },
-      dinner: {
-        items: ["Dal", "Roti", "2 Chapati"],
-        nutrition: { calories: 540, protein: 18, carbs: 82, fat: 11 },
-        image : "/"
-      },
-    },
-  },
-  {
-    day: "Saturday",
-    meals: {
-      breakfast: {
-        items: ["Aloo Puri"],
-        nutrition: { calories: 400, protein: 8, carbs: 65, fat: 14 },
-        image : "/"
-      },
-      lunch: {
-        items: ["Veg Biryani", "2 Chapati"],
-        nutrition: { calories: 620, protein: 16, carbs: 95, fat: 18 },
-        image : "/"
-      },
-      dinner: {
-        items: ["Pav Bhaji", "2 Chapati"],
-        nutrition: { calories: 650, protein: 15, carbs: 98, fat: 20 },
-        image : "/"
-      },
-    },
+// if (isLoading) return <p>Loading...</p>;
+// if (isError) return <p>Error fetching data</p>;
 
-  },
-  {
-    day: "Sunday",
-    meals: {
-      breakfast: {
-        items: ["Chole Bhature"],
-        nutrition: { calories: 500, protein: 14, carbs: 70, fat: 22 },
-        image : "/"
-      },
-      lunch: {
-        items: ["Fried Rice", "Manchurian", "2 Chapati"],
-        nutrition: { calories: 680, protein: 18, carbs: 100, fat: 22 },
-        image : "/"
-      },
-      dinner: {
-        items: ["Pizza", "Salad", "2 Chapati"],
-        nutrition: { calories: 720, protein: 20, carbs: 95, fat: 25 },
-        image : "/"
-      },
-    },
 
-  },
-];
+
+  const navigate = useNavigate();
+
+  if (isLoading) {
+    return (
+      <div className="bg-background flex flex-col items-center justify-center min-h-screen text-gray-700 dark:text-white">
+        <Loader2 className="animate-spin w-12 h-12 text-blue-500 mb-4" />
+        <h2 className="text-xl font-semibold">Loading, please wait...</h2>
+        <p className="text-sm text-gray-500 mt-2">
+          Fetching latest data from the server.
+        </p>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen bg-red-50 text-gray-800">
+        <WifiOff className="w-14 h-14 text-red-500 mb-4" />
+        <h2 className="text-2xl font-semibold mb-2">Connection Error</h2>
+        <p className="text-sm text-gray-600 mb-6 text-center max-w-md">
+          We couldn’t fetch the data. Please check your internet connection or
+          try again later.
+        </p>
+        <button
+          onClick={() => navigate("/")}
+          className="px-6 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition-all"
+        >
+          Go Back Home
+        </button>
+      </div>
+    );
+  }
 
 
   const todayIndex = new Date().getDay(); // Sunday=0
   // Map Sunday=0 → index 6, Monday=1 → index 0, etc.
   const mapDayIndex = [6, 0, 1, 2, 3, 4, 5];
-  const today = weeklyMenu[mapDayIndex[todayIndex]];
+  const today = data[mapDayIndex[todayIndex]] ;
+  // const today = data?.data?.[mapDayIndex[todayIndex]];
+
+
+  console.log("today : " , today);
 
   // const meals = [
   //   { name: "Breakfast", data: today.meals.breakfast.nutrition, image: today.meals.breakfast?.image || " "},
@@ -186,21 +105,21 @@ const weeklyMenu = [
   const meals = [
   {
     name: "Breakfast",
-    data: today.meals.breakfast.nutrition,
-    items: today.meals.breakfast?.items || [],
-    image: today.meals.breakfast?.image || dummyImages.breakfast,
+    data: today?.meals.breakfast.nutrition,
+    items: today?.meals.breakfast?.items || [],
+    image: today?.meals.breakfast?.image || dummyImages.breakfast,
   },
   {
     name: "Lunch",
-    data: today.meals.lunch.nutrition,
-    items: today.meals.lunch?.items || [],
-    image: today.meals.lunch?.image || dummyImages.breakfast,
+    data: today?.meals.lunch.nutrition,
+    items: today?.meals.lunch?.items || [],
+    image: today?.meals.lunch?.image || dummyImages.breakfast,
   },
   {
     name: "Dinner",
-    data: today.meals.dinner.nutrition,
-    items: today.meals.dinner?.items || [],
-    image: today.meals.dinner?.image || dummyImages.breakfast,
+    data: today?.meals.dinner.nutrition,
+    items: today?.meals.dinner?.items || [],
+    image: today?.meals.dinner?.image || dummyImages.breakfast,
   },
 ];
 
@@ -227,40 +146,45 @@ const recommendedNutrition = [
     <div className="min-h-screen flex flex-col">
       <Loading />
       <Navbar />
-          <main className="flex-1 p-6 space-y-6">
+      <main className="flex-1 p-6 space-y-6">
 
-           <div className="bg-background backdrop-blur-lg rounded-xl p-6 text-center space-y-1">
+    <div className="bg-background backdrop-blur-lg rounded-xl p-6 text-center space-y-1">
      {/* <h1 className="text-3xl font-bold text-center mb-6">{today.day} Meals &  <PointerHighlight>
         <span> Nutrition</span>
       </PointerHighlight></h1> */}
-      <h1 className="text-3xl font-bold text-center mb-6">{today.day} Meals & <PointerHighlight containerClassName="inline-block">Nutrition</PointerHighlight></h1>
+      <h1 className="text-3xl font-bold text-center mb-6">{today && today.day || " "} Meals & <PointerHighlight containerClassName="inline-block">Nutrition</PointerHighlight></h1>
 
       </div>
+       {
 
-      
-       
-
-        <div className="grid md:grid-cols-3 gap-6">
-          {meals.map((meal) => {
+        isLoading ? <>
+                <h1 className="text-green-600">Loading....!</h1>
+        </>:<>
+          {
+            isError ? <>
+                     <h1 className="text-red-500"> Check NetWork Connectio!</h1>
+            </>:<>
+             <div className="grid md:grid-cols-3 gap-6">
+          {meals && meals.map((meal) => {
             const chartData = [
-              { name: "Calories(kcal)", value: meal.data.calories },
-              { name: "Protein(g)", value: meal.data.protein },
-              { name: "Carbs(g)", value: meal.data.carbs },
+              { name: "Calories(kcal)", value: meal.data?.calories },
+              { name: "Protein(g)", value: meal.data?.protein },
+              { name: "Carbs(g)", value: meal.data?.carbs },
               { name: "Fat(g)", value: meal.data.fat },
             ];
 
             return (
            <Card key={meal.name} className="shadow-lg hover:shadow-2xl transition bg-background border-2">
-  <CardHeader>
-    <CardTitle className="text-xl">{meal.name}</CardTitle>
-  </CardHeader>
-  <CardContent className="flex flex-col items-center space-y-4">
+     <CardHeader>
+     <CardTitle className="text-xl">{meal.name}</CardTitle>
+    </CardHeader>
+    <CardContent className="flex flex-col items-center space-y-4">
     {/* Meal Image */}
-    <img src={meal.image} alt={meal.name} className="w-40 h-40 object-cover rounded-lg shadow-md" />
+       {/* <img src={meal.image} alt={meal.name} className="w-40 h-40 object-cover rounded-lg shadow-md" /> */}
 
               {/* Meal Items */}
             <div className="flex flex-wrap justify-center gap-2">
-              {meal.items.map((item, idx) => (
+              {meal.items.map((item : any, idx : number) => (
                 <span
                   key={idx}
                   className="bg-primary/20 text-primary px-3 py-1 rounded-full text-sm font-medium"
@@ -296,6 +220,13 @@ const recommendedNutrition = [
             );
           })}
         </div>
+            </>
+          }
+        </>
+
+       }
+
+
 
       {/* recomaedation netrutionn */}
       <div>

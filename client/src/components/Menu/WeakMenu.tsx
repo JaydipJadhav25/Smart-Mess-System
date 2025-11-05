@@ -1,66 +1,51 @@
 import { Card, CardContent, } from "@/components/ui/card";
+import { axiosInstance } from "@/config/axiosInstances";
+import { useQuery } from "@tanstack/react-query";
+import { Loader2  } from "lucide-react";
 
 
-const weeklyMenu = [
-  {
-    day: "Monday",
-    meals: {
-      breakfast: "Idli + Sambar",
-      lunch: "Rice, Dal, Bhindi",
-      dinner: "Roti, Paneer, Salad",
-    },
-  },
-  {
-    day: "Tuesday",
-    meals: {
-      breakfast: "Poha",
-      lunch: "Rajma, Rice",
-      dinner: "Chole, Roti",
-    },
-  },
-  {
-    day: "Wednesday",
-    meals: {
-      breakfast: "Dosa",
-      lunch: "Sambar, Rice",
-      dinner: "Paratha, Aloo Sabzi",
-    },
-  },
-  {
-    day: "Thursday",
-    meals: {
-      breakfast: "Upma",
-      lunch: "Kadhi, Rice",
-      dinner: "Roti, Mix Veg",
-    },
-  },
-  {
-    day: "Friday",
-    meals: {
-      breakfast: "Bread Butter",
-      lunch: "Paneer Rice",
-      dinner: "Dal, Roti",
-    },
-  },
-  {
-    day: "Saturday",
-    meals: {
-      breakfast: "Aloo Puri",
-      lunch: "Veg Biryani",
-      dinner: "Pav Bhaji",
-    },
-  },
-  {
-    day: "Sunday",
-    meals: {
-      breakfast: "Chole Bhature",
-      lunch: "Fried Rice, Manchurian",
-      dinner: "Pizza, Salad",
-    },
-  },
-];
+
+
+
+
+
+
+
 
 export default function WeakMenu() {
+
+
+
+  
+//api call
+  //react-query
+const { isError, isLoading, data, error } = useQuery({
+  queryKey: ["adminAnnouncements"],
+  queryFn: async () => {
+    const response = await axiosInstance("/menu");
+    console.log("API called only once...");
+    return response?.data?.data?.menu;
+  },
+  staleTime: Infinity,        // never becomes stale
+  gcTime: Infinity,           // never garbage collect cached data
+  refetchOnWindowFocus: false,
+  refetchOnReconnect: false,
+  refetchOnMount: false,
+  retry: false,               // optional: no retries if it fails
+});
+
+
+
+// console.log("data : " , data)
+console.log("error : " , error)
+
+
+
+
+
+
+
+
   const today = new Date().toLocaleDateString("en-US", { weekday: "long" });
 
   return (
@@ -77,7 +62,23 @@ export default function WeakMenu() {
           })}</p>
       </div>
 
-      {/* Weekly Menu */}
+     {
+      isLoading ? <>
+              {/* <h1 className="text-green-400">Loading....</h1> */}
+               <div className="bg-background flex flex-col items-center justify-center min-h-screen text-gray-700 dark:text-white">
+        <Loader2 className="animate-spin w-12 h-12 text-blue-500 mb-4" />
+        <h2 className="text-xl font-semibold">Loading, please wait...</h2>
+        <p className="text-sm text-gray-500 mt-2">
+          Fetching latest data from the server.
+        </p>
+      </div>
+      </>:<>
+        {
+          isError ? <>
+              <h1 className="text-red-400">Check Network connection!</h1>
+          
+          </>:<>
+           {/* Weekly Menu */}
       <Card className="bg-background backdrop-blur-lg hover:shadow-lg transition">
         {/* <CardHeader>
           <CardTitle>🗓️ Weekly Menu</CardTitle>
@@ -93,7 +94,7 @@ export default function WeakMenu() {
               </tr>
             </thead>
             <tbody>
-              {weeklyMenu.map((item) => (
+              {data && data.map((item: any) => (
                 <tr
                   key={item.day}
                   className={
@@ -101,15 +102,27 @@ export default function WeakMenu() {
                   }
                 >
                   <td className="py-2 font-medium px-0.5">{item.day}</td>
-                  <td className="py-2">{item.meals.breakfast}</td>
-                  <td className="py-2">{item.meals.lunch}</td>
-                  <td className="py-2">{item.meals.dinner}</td>
+                   <td className="py-2">
+                      {item.meals.breakfast.items.join(", ")}
+                    </td>
+                    <td className="py-2">
+                      {item.meals.lunch.items.join(", ")}
+                    </td>
+                    <td className="py-2">
+                      {item.meals.dinner.items.join(", ")}
+                    </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </CardContent> 
       </Card>
+          </>
+        }
+      </>
+     }
+
+
     </div>
   );
 }

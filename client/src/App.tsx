@@ -26,6 +26,12 @@ import StudentPlane from "./pages/student/StudentPlane"
 import StudentForm from "./pages/student/StudentForm"
 import LeavePopup from "./pages/student/LeavePopup"
 import Records from "./pages/student/Records"
+import {QueryClientProvider , QueryClient} from "@tanstack/react-query"
+import AdminManegApplications from "./pages/admin/AdminManegApplications"
+import AdminUpdateMenu from "./pages/admin/AdminUpdateMenu"
+import AdminAttendence from "./pages/admin/AdminAttendence"
+
+
 
 
  const AppRouter = ()=>{
@@ -60,8 +66,12 @@ import Records from "./pages/student/Records"
           <Route path="/admin-feedback" element={<AdminFeedbacks/>}/>   
           <Route path="/admin-announcements" element={<AdminAnnouncements/>}/>   
           <Route path="/admin-financials" element={<AdminFinancials/>}/>   
+          <Route path="/admin-manageApplications" element={<AdminManegApplications/>}/>   
+          <Route path="/admin-menuUpdate" element={<AdminUpdateMenu/>}/>   
+          <Route path="/admin-Attendence" element={<AdminAttendence/>}/>   
         
         
+
           {/* <Route path="/ai" element={<FeedbackAnalysis/>}/> */}
           {/* <Route path="/dashbord" element={<AnalyticsDashboard/>}/> */}
           <Route path="*" element={<NotFound/>}/>
@@ -80,11 +90,15 @@ import Records from "./pages/student/Records"
 // ]
 
 
+//create client of react - query
+const client = new QueryClient();
+
 
 function App() {
   return (
      <>
-    <AuthProvider>
+     <QueryClientProvider client={client}>
+      <AuthProvider>
      <BrowserRouter>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
          <AppRouter/>
@@ -92,6 +106,7 @@ function App() {
       </ThemeProvider>
      </BrowserRouter>
     </AuthProvider>
+     </QueryClientProvider>
      </>
   )
 }

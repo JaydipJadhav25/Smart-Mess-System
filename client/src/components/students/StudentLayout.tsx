@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import {   NavLink, useLocation } from "react-router-dom";
-import { LogOut, Users, Calendar, Bell, PieChart, Menu, X, Home , LibraryBig , CardSim } from "lucide-react";
+import {  Users, Calendar, Bell, PieChart, Menu, X, Home , LibraryBig , CardSim } from "lucide-react";
 // import { Button } from "@/components/ui/button";
 // import {
 //   SidebarProvider,
@@ -168,7 +168,7 @@ const StudentLayout: React.FC<StudentLayoutProps> = ({ children }) => {
         </div>
 
         {/* Logout button */}
-        <div className="p-4 border-t border-gray-200 dark:border-gray-700">
+        {/* <div className="p-4 border-t border-gray-200 dark:border-gray-700">
           <button
             // onClick={handleLogout}
             className="w-full flex items-center gap-3 p-2 rounded-lg transition-colors text-red-600 hover:bg-red-100 dark:hover:bg-red-900"
@@ -176,7 +176,9 @@ const StudentLayout: React.FC<StudentLayoutProps> = ({ children }) => {
             <LogOut className="h-4 w-4" />
             <span>Log out</span>
           </button>
-        </div>
+        </div> */}
+
+
       </aside>
 
       {/* Content area (with margin on desktop) */}
