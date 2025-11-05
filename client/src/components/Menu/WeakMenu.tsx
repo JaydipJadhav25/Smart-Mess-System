@@ -20,7 +20,7 @@ export default function WeakMenu() {
 //api call
   //react-query
 const { isError, isLoading, data, error } = useQuery({
-  queryKey: ["adminAnnouncements"],
+  queryKey: ["menu"],
   queryFn: async () => {
     const response = await axiosInstance("/menu");
     console.log("API called only once...");
