@@ -4,6 +4,7 @@ import express from "express"
 import cors from "cors"
 import { dbConnect } from './db/dbConnet.js';
 import feedbackRouter from "./routes/feedback.routes.js"
+import { Attendence } from './model/attendences.mode.js';
 
 
 
@@ -29,6 +30,29 @@ app.get("/" , async(req , res)=>{
 //routes :////////////////////////////
 //feedback router/////////////////
 app.use("/feedback" , feedbackRouter);
+
+
+
+app.get("/data" , async(req , res)=>{
+try {
+    
+    const reponse = await Attendence.find();
+
+
+    return res.json(reponse);
+
+
+} catch (error) {
+    console.log("error :" , error);
+
+    return res.json({
+        message : "error"
+    })
+    
+}
+
+
+});
 
 
 

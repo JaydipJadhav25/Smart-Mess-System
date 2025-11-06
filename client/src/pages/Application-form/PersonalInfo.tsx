@@ -1,12 +1,13 @@
 import useAuth from "@/components/context/useAuth";
-import Popup from "@/components/ui/Popup";
-import  { useState } from "react";
+// import Popup from "@/components/ui/Popup";
+// import  { useState } from "react";
 import { useForm } from "react-hook-form";
 
 
 
 export default function PersonalInfo({ next , data }:{next : any , data : any}) {
-      const [showToast, setShowToast] = useState(false);
+
+      // const [showToast, setShowToast] = useState(false);
 
         const {username} = useAuth();
 
@@ -37,9 +38,9 @@ console.log("errors "  , errors);
 
 
   const onSubmit = (formData:any) => {
-    setShowToast(true);
+    // setShowToast(true);
     setTimeout(() => {
-      setShowToast(false);
+      // setShowToast(false);
       next(formData);
     }, 2000); // show toast for 2 seconds
   };
