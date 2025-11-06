@@ -201,13 +201,12 @@ export default function About() {
                 satisfaction through smart management.
                 </CardDescription>
               </CardHeader>
-            </Card>
-                          
+            </Card>    
           </div>
          </section>
     {/* Vision Section */}
 <section className="container mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
-  {/* Text */}
+  {/* Text */}  
   <div>
     <h2 className="text-4xl font-bold mb-6 flex items-center gap-3">
       <Eye className="w-8 h-8 text-indigo-500" />

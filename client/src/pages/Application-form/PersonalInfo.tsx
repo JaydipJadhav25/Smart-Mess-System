@@ -47,7 +47,7 @@ console.log("errors "  , errors);
   return (
     <div>
         {/* popup */}
-          <Popup show={showToast} message="Personal Information saved successfully!"/>
+          {/* <Popup show={showToast} message="Personal Information saved successfully!"/> */}
           
       <div className="border-b border-orange-200 pb-4 mb-6">
         <h2 className="text-2xl font-bold text-orange-600">Personal Details</h2>

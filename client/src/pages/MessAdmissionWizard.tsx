@@ -88,8 +88,12 @@ export default function MessAdmissionWizard() {
           </div>
         </div>
       </div> */}
-      <div className="bg-background shadow-xl border-b border-gray-200 max-w-full">
+
+
+
+  <div className="bg-backgroud shadow-xl border-b border-gray-200 max-w-full">
   <div className="max-w-6xl mx-auto px-3 sm:px-4 py-4 sm:py-6">
+
     <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
       
       {/* Left: Logo, Title & Progress Info */}
@@ -121,13 +125,20 @@ export default function MessAdmissionWizard() {
               </span>
             </div>
           </div>
+          
         </div>
+
+
+
+        
       </div>
 
       {/* Right: Progress Info & Actions */}
+      
       <div className="flex items-center justify-between lg:justify-end space-x-4">
         
         {/* Progress Circle & Percentage */}
+        
         <div className="flex items-center space-x-4">
           <div className="text-right">
             <div className="text-2xl sm:text-3xl font-bold text-green-600">
@@ -167,6 +178,8 @@ export default function MessAdmissionWizard() {
           </div>
         </div>
 
+
+
         {/* Action Buttons */}
         {/* <div className="flex items-center space-x-2 sm:space-x-3">
           <div className="bg-blue-50 border border-blue-200 px-3 sm:px-4 py-2 rounded-lg">
@@ -188,6 +201,9 @@ export default function MessAdmissionWizard() {
         </div> */}
 
       </div>
+
+
+
     </div>
 
     {/* Bottom Progress Bar */}

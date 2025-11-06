@@ -13,8 +13,10 @@ function StudentForm() {
 
   return (
     <StudentLayout currentPage='form'>
-           {
-            isFormSubmitted ? <>
+        
+       <main>
+             {
+              isFormSubmitted ? <>
             {/* <h1>Form successfully sumbited!</h1> */}
             <FormStatus />
             </> :
@@ -22,6 +24,7 @@ function StudentForm() {
             <MessAdmissionWizard/>
             </>
            }
+       </main>
     </StudentLayout>
   )
 }
