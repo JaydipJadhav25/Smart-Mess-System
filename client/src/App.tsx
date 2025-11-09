@@ -30,6 +30,7 @@ import {QueryClientProvider , QueryClient} from "@tanstack/react-query"
 import AdminManegApplications from "./pages/admin/AdminManegApplications"
 import AdminUpdateMenu from "./pages/admin/AdminUpdateMenu"
 import AdminAttendence from "./pages/admin/AdminAttendence"
+import AdminRecipeGenerator from "./pages/admin/adminRecipeGenerator"
 
 
 
@@ -69,7 +70,7 @@ import AdminAttendence from "./pages/admin/AdminAttendence"
           <Route path="/admin-manageApplications" element={<AdminManegApplications/>}/>   
           <Route path="/admin-menuUpdate" element={<AdminUpdateMenu/>}/>   
           <Route path="/admin-Attendence" element={<AdminAttendence/>}/>   
-        
+          <Route  path="/admin-RecipeGenerator" element={<AdminRecipeGenerator/>}/>
         
 
           {/* <Route path="/ai" element={<FeedbackAnalysis/>}/> */}

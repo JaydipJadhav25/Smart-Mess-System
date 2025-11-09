@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import {   NavLink, useLocation } from "react-router-dom";
-import {  Users, Bell, PieChart, Menu, X, Home , SquareLibrary , MenuIcon , AppWindowIcon , ChartSpline  , Wallet} from "lucide-react";
+import {  Users, Bell, PieChart, Menu, X, Home , SquareLibrary , MenuIcon , AppWindowIcon , ChartSpline  , Wallet , CookingPotIcon} from "lucide-react";
 // import { Button } from "@/components/ui/button";
 // import {
 //   SidebarProvider,
@@ -29,7 +29,7 @@ import {  Users, Bell, PieChart, Menu, X, Home , SquareLibrary , MenuIcon , AppW
 
 interface AdminLayoutProps {
   children: React.ReactNode;
-  currentPage: "dashboard" | "students" | "feedbacks" | "announcements" | "financials" | "ManageApplications" | "MenuUpdate" | "Attendance";
+  currentPage: "dashboard" | "students" | "feedbacks" | "announcements" | "financials" | "ManageApplications" | "MenuUpdate" | "Attendance" | "RecipeGenerator";
 }
 
 const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
@@ -94,6 +94,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
     { to: "/admin-menuUpdate", icon: <AppWindowIcon className="h-4 w-4" />, label: "Manage Applications" },
     { to: "/admin-announcements", icon: <Bell className="h-4 w-4" />, label: "Announcements" },
     { to: "/admin-feedback", icon: <ChartSpline className="h-4 w-4" />, label: "feedback Analysis" },
+    {to : "/admin-RecipeGenerator" , icon :<CookingPotIcon className="h-4 w-4" />  , label : "Recipe Generator"},
     { to: "/admin-financials", icon: <Wallet className="h-4 w-4" />, label: "Financials" },
     { to: "/", icon: <Home className="h-4 w-4" />, label: "home" },
   ];

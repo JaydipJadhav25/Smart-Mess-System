@@ -99,7 +99,7 @@ const { isLoading, data, isError, error } = useQuery({
 
 
 console.log("today data : " , data)
-console.log("error : " ,error)
+console.log("error : " ,error , isError)
 
 
 
@@ -119,13 +119,12 @@ console.log("error : " ,error)
               <TabsTrigger value="today">Today</TabsTrigger>
               <TabsTrigger value="history">History</TabsTrigger>
             </TabsList>
-
             <TabsContent value="today">
-          {isLoading && <h1 className="text-green-700">Loading.....</h1>}
-            {isError && <h1 className="text-red-500 font-semibold">Server error. Please try again later.</h1>}
+          {isLoading  && <h1 className="text-green-700">Loading.....</h1>}
+            {/* {isError && <h1 className="text-red-500 font-semibold">Server error. Please try again later.</h1>} */}
              {
                
-               !data ? <>
+               !data && isError ? <>
                      <h1 className="text-red-400">Today's records are not updated on the server yet. Please wait...</h1>
                </>:
                <>
@@ -194,7 +193,6 @@ console.log("error : " ,error)
                   <input 
                     id="startDate"
                     type="date" 
-                    // value={startDate} 
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDate(e.target.value)}
                     className="dark:text-black p-2 rounded border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                   />
@@ -209,7 +207,7 @@ console.log("error : " ,error)
                   {isLoading2 ? 'Fetching...' : 'Attendace'}
                 </button>
               </div>
-                   </div> 
+            </div> 
             {
               attendaces &&
               
