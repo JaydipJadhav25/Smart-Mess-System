@@ -30,7 +30,8 @@ import {QueryClientProvider , QueryClient} from "@tanstack/react-query"
 import AdminManegApplications from "./pages/admin/AdminManegApplications"
 import AdminUpdateMenu from "./pages/admin/AdminUpdateMenu"
 import AdminAttendence from "./pages/admin/AdminAttendence"
-import AdminRecipeGenerator from "./pages/admin/adminRecipeGenerator"
+import AdminRecipeGenerator from "./pages/admin/AdminRecipeGenerator"
+
 
 
 

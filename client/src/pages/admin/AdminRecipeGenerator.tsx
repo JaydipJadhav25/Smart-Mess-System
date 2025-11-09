@@ -6,7 +6,6 @@ import { axiosInstance } from "@/config/axiosInstances";
 import { useQuery } from "@tanstack/react-query";
 import { Loader2, WifiOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
 import HistoryRecipe from "@/components/admin/HistoryRecipe";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MultiStepLoader as Loader } from "@/components/ui/multi-step-loader";
