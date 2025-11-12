@@ -1,7 +1,7 @@
 
 
 
-function FormStatus({status = "Pendding"}) {
+function FormStatus() {
  return (
     <div className="relative flex flex-col w-84 h-32 bg-[#29292c] rounded-xl overflow-hidden font-sans text-base isolate group">
       {/* Inner background */}
@@ -16,18 +16,21 @@ function FormStatus({status = "Pendding"}) {
 
       {/* Content */}
       <div className="relative z-50 text-[#32a6ff] font-medium text-lg px-5 pt-2 pb-1 transition-transform duration-300 group-hover:translate-x-[0.15rem]">
-     Application submitted successfully !
+         Application submitted successfully !
       </div>
       {/* <div className="relative z-50 text-[#99999d] px-5 transition-transform duration-300 group-hover:translate-x-[0.25rem]">
         Your details have been sent for verification.
       </div> */}
-
-       <div className="relative z-50 text-[#b5b5b0] px-5 transition-transform duration-300 group-hover:translate-x-[0.25rem]">
+       
+         <div className="relative z-50 text-[#b5b5b0] px-5 transition-transform duration-300 group-hover:translate-x-[0.25rem]">
         Contact your mess manager to verify details & <span className="font-semibold text-orange-700">Aadhaar copy.</span>
       </div>
         <div className="relative z-50 text-[#99999d]  px-5 transition-transform duration-300 group-hover:translate-x-[0.25rem]">
-        Status :  <span className="font-semibold text-orange-700">{status}</span>
+        Status :  <span className="font-semibold text-orange-700">pending</span>
       </div>
+
+      
+      
     </div>
   );
 }

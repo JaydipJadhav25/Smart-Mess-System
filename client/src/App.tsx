@@ -31,6 +31,7 @@ import AdminManegApplications from "./pages/admin/AdminManegApplications"
 import AdminUpdateMenu from "./pages/admin/AdminUpdateMenu"
 import AdminAttendence from "./pages/admin/AdminAttendence"
 import AdminRecipeGenerator from "./pages/admin/AdminRecipeGenerator"
+import ApplicationReview from "./components/admin/ApplicationReview"
 
 
 
@@ -72,7 +73,7 @@ import AdminRecipeGenerator from "./pages/admin/AdminRecipeGenerator"
           <Route path="/admin-menuUpdate" element={<AdminUpdateMenu/>}/>   
           <Route path="/admin-Attendence" element={<AdminAttendence/>}/>   
           <Route  path="/admin-RecipeGenerator" element={<AdminRecipeGenerator/>}/>
-        
+           <Route path="/admin-applicationReview/:id"  element={<ApplicationReview/>}/>
 
           {/* <Route path="/ai" element={<FeedbackAnalysis/>}/> */}
           {/* <Route path="/dashbord" element={<AnalyticsDashboard/>}/> */}
