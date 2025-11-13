@@ -60,7 +60,7 @@ const confirmedApplications = applications.filter(
 
   return (
     <AdminLayout currentPage="ManageApplications">
-        <main className="flex-1 bg-muted/80 rounded-2xl">
+      <main className="flex-1 bg-muted/80 rounded-2xl">
         <div className="container mx-auto px-4 py-8">
            <Tabs value={tab} onValueChange={setTab} className="space-y-6">
             <div className="flex flex-col p-1 justify-center items-center gap-6">
