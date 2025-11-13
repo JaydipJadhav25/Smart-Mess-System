@@ -1,69 +1,70 @@
-import  { useState } from "react";
+// import  { useState } from "react";
 import AdminLayout from "@/components/admin/AdminLayout";
-import { Button } from "@/components/ui/button";
-import { 
-  Plus, 
-  Filter, 
-  Download, 
-  Calendar,
-  ArrowUp,
-  ArrowDown,
-} from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  ResponsiveContainer,
-  BarChart,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Bar,
-  PieChart,
-  Pie,
-  Cell,
-  Legend
-} from "recharts";
-import { Badge } from "@/components/ui/badge";
+// import { Button } from "@/components/ui/button";
+// import { 
+//   Plus, 
+//   Filter, 
+//   Download, 
+//   Calendar,
+//   ArrowUp,
+//   ArrowDown,
+// } from "lucide-react";
+// import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+// import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+// import {
+//   ResponsiveContainer,
+//   BarChart,
+//   XAxis,
+//   YAxis,
+//   Tooltip,
+//   Bar,
+//   PieChart,
+//   Pie,
+//   Cell,
+//   Legend
+// } from "recharts";
+// import { Badge } from "@/components/ui/badge";
+import { ComingSoon } from "@/components/ComingSoon";
 
-const budgetData = [
-  { name: "Hackathon", planned: 5000, actual: 4800 },
-  { name: "ML Workshop", planned: 3000, actual: 2700 },
-  { name: "Tech Talk", planned: 2000, actual: 2100 },
-  { name: "Industrial Visit", planned: 8000, actual: 8500 },
-];
+// const budgetData = [
+//   { name: "Hackathon", planned: 5000, actual: 4800 },
+//   { name: "ML Workshop", planned: 3000, actual: 2700 },
+//   { name: "Tech Talk", planned: 2000, actual: 2100 },
+//   { name: "Industrial Visit", planned: 8000, actual: 8500 },
+// ];
 
-const expenseCategories = [
-  { name: "Venue", value: 4500, color: "#8884d8" },
-  { name: "Refreshments", value: 2800, color: "#82ca9d" },
-  { name: "Marketing", value: 1500, color: "#ffc658" },
-  { name: "Prizes", value: 3500, color: "#ff8042" },
-  { name: "Speakers", value: 5000, color: "#a4de6c" },
-];
+// const expenseCategories = [
+//   { name: "Venue", value: 4500, color: "#8884d8" },
+//   { name: "Refreshments", value: 2800, color: "#82ca9d" },
+//   { name: "Marketing", value: 1500, color: "#ffc658" },
+//   { name: "Prizes", value: 3500, color: "#ff8042" },
+//   { name: "Speakers", value: 5000, color: "#a4de6c" },
+// ];
 
-const recentTransactions = [
-  { id: 1, description: "Venue booking for Hackathon", amount: -3000, date: "2023-11-25", category: "Expense" },
-  { id: 2, description: "Sponsorship - TechCorp", amount: 10000, date: "2023-11-20", category: "Income" },
-  { id: 3, description: "Refreshments for ML Workshop", amount: -1500, date: "2023-11-15", category: "Expense" },
-  { id: 4, description: "Registration fees collected", amount: 7500, date: "2023-11-10", category: "Income" },
-  { id: 5, description: "Speaker accommodation", amount: -2000, date: "2023-11-08", category: "Expense" },
-];
+// const recentTransactions = [
+//   { id: 1, description: "Venue booking for Hackathon", amount: -3000, date: "2023-11-25", category: "Expense" },
+//   { id: 2, description: "Sponsorship - TechCorp", amount: 10000, date: "2023-11-20", category: "Income" },
+//   { id: 3, description: "Refreshments for ML Workshop", amount: -1500, date: "2023-11-15", category: "Expense" },
+//   { id: 4, description: "Registration fees collected", amount: 7500, date: "2023-11-10", category: "Income" },
+//   { id: 5, description: "Speaker accommodation", amount: -2000, date: "2023-11-08", category: "Expense" },
+// ];
 
 const AdminFinancials = () => {
-  const [tab, setTab] = useState("overview");
+  // const [tab, setTab] = useState("overview");
 
-  const totalIncome = recentTransactions
-    .filter(t => t.amount > 0)
-    .reduce((sum, t) => sum + t.amount, 0);
+  // const totalIncome = recentTransactions
+  //   .filter(t => t.amount > 0)
+  //   .reduce((sum, t) => sum + t.amount, 0);
   
-  const totalExpense = recentTransactions
-    .filter(t => t.amount < 0)
-    .reduce((sum, t) => sum + Math.abs(t.amount), 0);
+  // const totalExpense = recentTransactions
+  //   .filter(t => t.amount < 0)
+  //   .reduce((sum, t) => sum + Math.abs(t.amount), 0);
   
-  const balance = totalIncome - totalExpense;
+  // const balance = totalIncome - totalExpense;
 
   return (
     <AdminLayout currentPage="financials">
-      <Tabs value={tab} onValueChange={setTab} className="space-y-6">
+      {/* <Tabs value={tab} onValueChange={setTab} className="space-y-6">
         <TabsList>
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="budgets">Budgets</TabsTrigger>
@@ -326,7 +327,10 @@ const AdminFinancials = () => {
             </Card>
           </div>
         </TabsContent>
-      </Tabs>
+      </Tabs> */}
+       <div className='flex justify-center items-center h-screen'>
+             <ComingSoon/>
+          </div>
     </AdminLayout>
   );
 };

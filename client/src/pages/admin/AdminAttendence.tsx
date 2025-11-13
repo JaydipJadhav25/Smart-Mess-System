@@ -109,10 +109,39 @@ console.log("error : " ,error , isError)
     <AdminLayout currentPage="Attendance">
         <main className="flex-1 bg-muted/30">
         <div className="container mx-auto px-4 py-8">
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold">Students Attendance</h1>
-            <p className="text-muted-foreground">View and manage student attendance for today in real time</p>
-          </div>
+           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+  {/* Title Section */}
+  <div className="w-full">
+    <h1 className="text-3xl font-bold">Students Attendance</h1>
+    <p className="text-muted-foreground">
+      View and manage student attendance for today in real time
+    </p>
+  </div>
+
+  {/* Cards Section */}
+  <div className="w-full mb-2.5">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+      {/* Today Leaves */}
+      <div
+        className="p-6 rounded-2xl border shadow bg-gradient-to-br from-yellow-500/20 to-blue-700/20 hover:shadow-xl transition-all duration-200" >
+        <h3 className="text-lg font-semibold mb-1">Today Leaves</h3>
+        <p className="text-4xl font-bold tracking-tight">0</p>
+        <p className="text-sm text-muted-foreground mt-2">Recent leaves</p>
+      </div>
+
+      {/* Estimation */}
+      <div
+        className="p-6 rounded-2xl border shadow-sm bg-gradient-to-br from-yellow-500/20 to-orange-700/20 hover:shadow-md transition-all duration-200"
+      >
+        <h3 className="text-lg font-semibold mb-1">Estimation</h3>
+        <p className="text-4xl font-bold tracking-tight">0</p>
+        <p className="text-sm text-muted-foreground mt-2">Leave — Attendance</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 
           <Tabs value={tab} onValueChange={setTab} className="space-y-6">
             <TabsList>

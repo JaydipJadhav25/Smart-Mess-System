@@ -92,7 +92,6 @@ try {
   logout();
   //remove token
   //  localStorage.removeItem("token");
-
   navigate("/");
 
 

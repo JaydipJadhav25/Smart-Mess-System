@@ -45,13 +45,18 @@ const pendingApplications = applications.filter(
   (ele: any) => ele?.isAccepted !== true
 ).filter((ele : any)=> ele.name.toLowerCase().includes(searchTerm.toLowerCase().trim()));
 
+const pending = applications.filter(
+  (ele: any) => ele?.isAccepted !== true
+)
 
 
 // Confirmed applications (accepted)
 const confirmedApplications = applications.filter(
   (ele: any) => ele?.isAccepted === true
 ).filter((ele : any)=> ele.name.toLowerCase().includes(searchTerm.toLowerCase().trim()));
-
+const submited = applications.filter(
+  (ele: any) => ele?.isAccepted === true
+)
 
 
 
@@ -68,7 +73,36 @@ const confirmedApplications = applications.filter(
            <div>
             <h1 className="text-4xl font-bold text-slate-800 text-center dark:text-white">Stundents Applications  </h1>
            </div>
-    
+           
+                    {/* card */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[
+                {
+                  title: "Total Applications",
+                  value: applications.length,
+                  gradient: "from-purple-500/20 to-blue-700/20",
+                },
+                {
+                  title: "Pending Applications",
+                  value: pending.length,
+                  gradient: "from-yellow-500/20 to-blue-700/20",
+                },
+                {
+                  title: "Submitted Applications",
+                  value: submited.length,
+                  gradient: "from-red-500/20 to-yellow-500/20",
+                },
+              ].map((item, index) => (
+                <div
+                  key={index}
+                  className={`p-6 rounded-2xl border shadow bg-gradient-to-br ${item.gradient} hover:shadow-xl transition-all duration-200`}
+                >
+                  <h3 className="text-lg font-semibold mb-1">{item.title}</h3>
+                  <p className="text-4xl font-bold">{item.value}</p>
+                </div>
+              ))}
+            </div>
+
 
             <TabsList>
               <TabsTrigger onClick={()=>setSearchTerm("")}  value="all">All</TabsTrigger>
@@ -80,7 +114,7 @@ const confirmedApplications = applications.filter(
             <TabsContent value="all">
                 <Input
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="bg-orange-800 w-full"  placeholder="Search Student by name "/>
+                className="bg-background w-full"  placeholder="Search Student by name "/>
                 {/* load all students records */}
                   <div className="max-w-5xl mx-auto p-4 md:p-6">
                   {/* <h1 className="text-2xl md:text-3xl font-bold text-orange-600 mb-6">
