@@ -5,7 +5,8 @@ import cors from "cors"
 import { dbConnect } from './db/dbConnet.js';
 import feedbackRouter from "./routes/feedback.routes.js"
 import { Attendence } from './model/attendences.mode.js';
-
+import { createMessage } from './service/sms.service.js';
+import { smsService } from "./service/smsService.js"
 
 
 //database connecction
@@ -20,9 +21,12 @@ app.use(express.urlencoded({extended : true}));
 
 app.get("/" , async(req , res)=>{
 
+    // const reponse  = await createMessage();
+  const response =   await smsService.sendFeePaymentSMS(+917249824513,"jaydip" , 3000);
 
     return res.json({
-        text : "smart mess system" , 
+        text : "smart mess system", 
+        response
     });
 })
 

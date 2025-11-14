@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { axiosInstance } from "@/config/axiosInstances";
+import { number } from "motion/react";
 import {  useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -131,7 +132,8 @@ const historyMonth = allFees.filter((ele : any) => ele.month === month).filter((
                     studentEmail: ele.email,
                     month: ele.selectedMonth,
                     amount: Number(ele.amount),
-             method: ele.selectedMethod || "cash",
+                    mobile : Number(ele.mobile),
+                   method: ele.selectedMethod || "cash",
            }
 
 
