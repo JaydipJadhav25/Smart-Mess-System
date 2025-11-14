@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { axiosInstance } from "@/config/axiosInstances";
-import { number } from "motion/react";
+
 import {  useEffect, useState } from "react";
 import { toast } from "sonner";
 
