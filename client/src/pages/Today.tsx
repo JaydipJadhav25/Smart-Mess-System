@@ -83,8 +83,8 @@ console.log("error : " , error);
   const todayIndex = new Date().getDay(); // Sunday=0
   
   // Map Sunday=0 → index 6, Monday=1 → index 0, etc.
-  // const mapDayIndex = [6, 0, 1, 2, 3, 4, 5];
-  const mapDayIndex = [4, 5, 2, 3, 0, 1, 6];// as per my online-Db
+  const mapDayIndex = [6, 0, 1, 2, 3, 4, 5];
+  // const mapDayIndex = [4, 5, 2, 3, 0, 1, 6];// as per my online-Db
   const today = data[mapDayIndex[todayIndex]] ;
   // const today = data?.data?.[mapDayIndex[todayIndex]];
 
