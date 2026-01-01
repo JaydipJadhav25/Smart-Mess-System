@@ -3,10 +3,17 @@ import StudentLayout from "@/components/students/StudentLayout";
 import { axiosInstance } from "@/config/axiosInstances";
 import { useQuery } from "@tanstack/react-query";
 // import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useState } from "react";
+import { useNavigate} from "react-router-dom"
 
 function Records() {
   const { student_id } = useAuth();
+  const [tab, setTab] = useState("feePay");
+  const navigation = useNavigate();
 
+
+  //fethc from server
   const { data, isError, isLoading } = useQuery({
     queryKey: ["myRecord"],
     queryFn: async () => {
@@ -15,14 +22,78 @@ function Records() {
       return res.data || [];
     },
   });
+  
+
+
+const studentFeePaidMonth: string[] = data?.map((ele: any) => {
+  if(ele.status === "paid"){
+    return ele.month;
+  }
+}) || [];
+
+const allMonths = [
+  "January","February","March","April","May","June",
+  "July","August","September","October","November","December"
+];
+
+const studentFeeRemainingMonth = allMonths.filter(
+  (month) => !studentFeePaidMonth.includes(month)
+);
+
+// console.log("Paid Months:", studentFeePaidMonth);
+// console.log("Remaining Months:", studentFeeRemainingMonth);
+
+
+
+
+//stunde online pay fee
+ async function createOrder(month : string){
+   try {
+    
+    //ask fro conform online payment
+    let userChoice = confirm("Proceed with payment of 3,300?");
+    if(!userChoice) return;
+    //1 . create razorpay order
+   const orderRes = await axiosInstance.post("/user/payment/create-order" , {student_id , month});
+    console.log("reponse : " , orderRes.data);
+
+    //2 .verify the order
+    const options = {
+        key: "rzp_test_Rn001LFlwYYOaD",
+        amount: orderRes.data.order.amount,
+        currency: "INR",
+        name: "Smart Mess System",
+        order_id: orderRes.data.order.id,
+        handler : async function(response : any){
+        const verifyRes  = await axiosInstance.post("/user/payment/verify-payment"  , response);
+        console.log("verifyed payment : " , verifyRes.data);
+        }
+    }
+   
+    // const rzp = new window.Razorpay(options); 
+    const rzp = new (window as any).Razorpay(options);
+    rzp.open();
+   } catch (error) {
+    console.log("create order error !" , error);
+    alert("line payment Error !");
+
+   }finally{
+
+    navigation("/profile-records");
+
+   }   
+  }
+
+
+
+
 
   return (
     <StudentLayout currentPage="records">
       <div className="max-w-3xl mx-auto p-4">
-        <h1 className="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-white">
+        {/* <h1 className="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-white">
           My Fee Records
-        </h1>
-
+        </h1> */}
         {/* Loading */}
         {isLoading && (
           <p className="text-center text-gray-500">Loading records...</p>
@@ -35,63 +106,199 @@ function Records() {
           </p>
         )}
 
-        {/* No Records */}
-        {!isLoading && data?.length === 0 && (
-          <p className="text-center text-gray-500">No fee records found!</p>
-        )}
 
-        {/* Records */}
-        <div className="space-y-4 mt-4">
-          {data?.map((fee: any, index: number) => (
-       <div
-  key={index}
-  className={`p-6 rounded-xl border shadow-sm transition hover:shadow-md
-    ${fee.amount > 0 
-      ? "bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-700" 
-      : "bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-700"
-    }`}
->
-  {/* Month & Year */}
-  <div className="flex justify-between items-center mb-3">
-    <span className="px-3 py-1 text-sm font-medium rounded-full
-      bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700
-      shadow-sm">
-      {fee.month} {fee.year}
-    </span>
 
-    <span className="text-xs text-gray-500 dark:text-gray-400">
-      Receipt ID: {fee._id}
-    </span>
+        <Tabs value={tab} onValueChange={setTab} className="space-y-6">
+            <TabsList>
+              <TabsTrigger value="feePay">FeePay</TabsTrigger>
+              <TabsTrigger value="history">History</TabsTrigger>
+            </TabsList>
+       <TabsContent value="feePay" className="mt-6">
+
+  {/* Header */}
+  <div className="mb-6 text-center">
+    <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+      Pending Fee Payments
+    </h2>
+    <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+      Pay your remaining mess fees securely online
+    </p>
   </div>
 
-  {/* Amount */}
-  <p className="text-3xl font-bold text-green-600 dark:text-green-400">
-    ₹{fee.amount}
-  </p>
+  {/* No Records */}
+  {!isLoading && studentFeeRemainingMonth?.length === 0 && (
+    <p className="text-center text-gray-500 mt-10">
+       All fees are paid. No pending dues!
+    </p>
+  )}
 
-  {/* Method */}
-  <p className="mt-2 text-sm font-medium text-gray-800 dark:text-gray-200">
-    Payment Method:{" "}
-    <span className="font-semibold">
-      {fee.method.toUpperCase()}
-    </span>
-  </p>
+  {/* Fee Cards */}
+  <div className="space-y-5">
+    {studentFeeRemainingMonth?.map((month: string, index: number) => (
+      <div
+        key={index}
+        className="p-6 rounded-2xl border bg-white dark:bg-background
+                   shadow-sm hover:shadow-md transition
+                   border-gray-200 dark:border-gray-700"
+      >
+        {/* Top Row */}
+        <div className="flex justify-between items-center">
+          <div>
+            <p className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+              {month} 2026
+            </p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+              Mess Fee
+            </p>
+          </div>
 
-  {/* Date */}
-  <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-    Paid On: {new Date(fee.paymentDate).toLocaleString()}
-  </p>
-</div>
-
-            
-          ))}
+          <span
+          className="px-3 py-1 text-xs font-medium rounded-full
+            bg-yellow-100 text-yellow-700
+            dark:bg-yellow-900/30 dark:text-yellow-400">
+            Pending
+          </span>
         </div>
 
-        
+        {/* Amount */}
+        <div className="mt-4 flex items-center justify-between">
+          <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">
+            ₹3,300
+          </p>
+
+          {/* Pay Button */}
+          <button
+            className="px-6 py-2 rounded-xl font-semibold
+                       bg-green-600 text-white
+                       hover:bg-green-700 active:scale-95
+                       transition"
+            onClick={() => {
+              // YOU will handle payment logic here
+              createOrder(month);
+            }}
+          >
+            Pay Online
+          </button>
+        </div>
+
+        {/* Footer Info */}
+        <p className="mt-3 text-xs text-gray-500 dark:text-gray-400">
+          Secure online payment • Instant confirmation
+        </p>
+      </div>
+    ))}
+  </div>
+
+       </TabsContent>
+
+            <TabsContent value="history" className="mt-6">
+
+  {/* Header */}
+  <div className="mb-8 text-center">
+    <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+      Payment History
+    </h2>
+    <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+      Secure & transparent fee transactions
+    </p>
+  </div>
+
+  {/* No Records */}
+  {!isLoading && data?.length === 0 && (
+    <p className="text-center text-gray-500 mt-10">
+      No payment history available.
+    </p>
+  )}
+
+  {/* Timeline */}
+  <div className="relative pl-8">
+    {/* Vertical Line */}
+    <div className="absolute left-3 top-0 h-full w-[2px] bg-green-300 dark:bg-green-700"></div>
+
+    <div className="space-y-8">
+      {data?.map((fee: any, index: number) => (
+        <div key={index} className="relative">
+
+          {/* Dot */}
+          <div className="absolute -left-[2px] top-2 w-4 h-4 rounded-full
+                          bg-green-500 border-4 border-white dark:border-background">
+          </div>
+
+          {/* Card */}
+          <div className={`ml-6 p-5 rounded-xl border bg-white dark:bg-background
+                          shadow-sm hover:shadow-md transition
+                          ${fee.status === "pending" && 'bg-yellow-300 dark:bg-yellow-900'}
+                          ${fee.status === "failed" && 'dark:bg-red-700 bg-red-300'}
+                          `}>
+            {/* Top */}
+            <div className="flex justify-between items-center">
+              <p className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                {fee.month} {fee.year}
+              </p>
+
+              {/* {
+                fee.status === "pending" ? <>
+                <span className="px-3 py-1 text-xs font-medium rounded-full
+                               bg-green-100 text-green-700
+                               dark:bg-green-900/30 dark:text-white
+                               ">
+                Pending
+              </span>
+                </>:<>
+                <span className="px-3 py-1 text-xs font-medium rounded-full
+                               bg-green-100 text-green-700
+                               dark:bg-green-900/30 dark:text-green-400
+                               ">
+                Paid
+              </span>
+                
+                </>
+              } */}
+
+                <span className="px-3 py-1 text-xs font-medium rounded-full
+                               bg-green-100 text-green-700
+                               dark:bg-green-900/30 dark:text-green-400
+                               ">
+                {fee.status}
+              </span>
+                
+           
+
+              {/* <span className="px-3 py-1 text-xs font-medium rounded-full
+                               bg-green-100 text-green-700
+                               dark:bg-green-900/30 dark:text-green-400
+                               ">
+                Paid
+              </span> */}
+            </div>
+
+            {/* Amount */}
+            <p className="mt-3 text-3xl font-bold text-green-600 dark:text-green-400">
+              ₹{fee.amount}
+            </p>
+
+            {/* Meta */}
+            <div className="mt-2 text-sm text-gray-700 dark:text-gray-300">
+              <p>
+                Method: <span className="font-semibold">{fee.method?.toUpperCase()}</span>
+              </p>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                Paid On: {new Date(fee.paymentDate).toLocaleString()}
+              </p>
+              <p className="text-xs text-gray-400 mt-1">
+                Receipt ID: {fee._id}
+              </p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+</TabsContent>
 
 
-
-
+            </Tabs>
       </div>
     </StudentLayout>
   );
@@ -145,3 +352,73 @@ export default Records;
 //                 </div>
 //               </CardContent>
 //             </Card>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//green -bg vala
+
+  // <TabsContent value="history">
+  //               {/* No Records */}
+  //                     {!isLoading && data?.length === 0 && (
+  //                       <p className="text-center text-gray-500">No fee records found!</p>
+  //                     )}
+
+  //                     {/* Records */}
+  //                     <div className="space-y-4 mt-4">
+  //                       {data?.map((fee: any, index: number) => (
+  //                   <div
+  //               key={index}
+  //               className={`p-6 rounded-xl border shadow-sm transition hover:shadow-md
+  //                 ${fee.amount > 0 
+  //                   ? "bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-700" 
+  //                   : "bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-700"
+  //                 }`}
+  //             >
+  //               {/* Month & Year */}
+  //               <div className="flex justify-between items-center mb-3">
+  //                 <span className="px-3 py-1 text-sm font-medium rounded-full
+  //                   bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700
+  //                   shadow-sm">
+  //                   {fee.month} {fee.year}
+  //                 </span>
+
+  //                 <span className="text-xs text-gray-500 dark:text-gray-400">
+  //                   Receipt ID: {fee._id}
+  //                 </span>
+  //               </div>
+
+  //               {/* Amount */}
+  //               <p className="text-3xl font-bold text-green-600 dark:text-green-400">
+  //                 ₹{fee.amount}
+  //               </p>
+
+  //               {/* Method */}
+  //               <p className="mt-2 text-sm font-medium text-gray-800 dark:text-gray-200">
+  //                 Payment Method:{" "}
+  //                 <span className="font-semibold">
+  //                   {fee.method.toUpperCase()}
+  //                 </span>
+  //               </p>
+
+  //               {/* Date */}
+  //               <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+  //                 Paid On: {new Date(fee.paymentDate).toLocaleString()}
+  //               </p>
+  //             </div>
+
+                          
+  //                       ))}
+  //                     </div>
+  //           </TabsContent>

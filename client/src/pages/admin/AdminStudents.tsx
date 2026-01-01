@@ -482,12 +482,25 @@ const historyMonth = allFees.filter((ele : any) => ele.month === month).filter((
         {studentFees.map((fee : any, index ) => (
           <div
             key={index}
-            className="p-4 border rounded-lg shadow-md bg-white dark:bg-gray-800 hover:shadow-lg transition"
+            className={`p-4 border rounded-lg shadow-md bg-white dark:bg-gray-800 hover:shadow-lg transition
+              ${fee.status === "pending" && 'dark:bg-yellow-800 bg-yellow-300'}
+              ${fee.status === "failed" && 'dark:bg-red-800 bg-red-500'}
+              `}
           >
             <div className="flex justify-between items-center">
               <p className="font-semibold text-lg">{fee.studentName}</p>
 
               <div className="text-right">
+                
+             
+                <span className="px-3 py-1 text-xs font-medium rounded-full
+                               bg-green-100 text-green-700
+                               dark:bg-background/40 dark:text-yellow-600
+                               ">
+                {fee.status}
+              </span>
+               
+
                 <p className="text-green-600 font-semibold text-xl">
                   ₹{fee.amount}
                 </p>
@@ -498,6 +511,7 @@ const historyMonth = allFees.filter((ele : any) => ele.month === month).filter((
             <p className="text-gray-700 dark:text-gray-300 mt-1 text-sm">
               {fee.month} {fee.year}
             </p>
+
 
             <p className="text-gray-500 text-xs mt-1">
               Paid On: {new Date(fee.paymentDate).toLocaleString()}
