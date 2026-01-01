@@ -15,7 +15,7 @@ function Records() {
 
   //fethc from server
   const { data, isError, isLoading } = useQuery({
-    queryKey: ["myRecord"],
+    queryKey: ["myRecord" , student_id],
     queryFn: async () => {
       if (!student_id) return [];
       const res = await axiosInstance.get(`/open/fees/records/${student_id}`);
@@ -31,6 +31,7 @@ const studentFeePaidMonth: string[] = data?.map((ele: any) => {
   }
 }) || [];
 
+
 const allMonths = [
   "January","February","March","April","May","June",
   "July","August","September","October","November","December"
@@ -43,46 +44,92 @@ const studentFeeRemainingMonth = allMonths.filter(
 // console.log("Paid Months:", studentFeePaidMonth);
 // console.log("Remaining Months:", studentFeeRemainingMonth);
 
-
-
-
 //stunde online pay fee
- async function createOrder(month : string){
-   try {
+//  async function createOrder(month : string){
+//    try {
     
-    //ask fro conform online payment
-    let userChoice = confirm("Proceed with payment of 3,300?");
-    if(!userChoice) return;
-    //1 . create razorpay order
-   const orderRes = await axiosInstance.post("/user/payment/create-order" , {student_id , month});
-    console.log("reponse : " , orderRes.data);
+//     //ask fro conform online payment
+//     let userChoice = confirm("Proceed with payment of 3,300?");
+//     if(!userChoice) return;
+//     //1 . create razorpay order
+//    const orderRes = await axiosInstance.post("/user/payment/create-order" , {student_id , month});
+//     console.log("reponse : " , orderRes.data);
 
-    //2 .verify the order
-    const options = {
-        key: "rzp_test_Rn001LFlwYYOaD",
-        amount: orderRes.data.order.amount,
-        currency: "INR",
-        name: "Smart Mess System",
-        order_id: orderRes.data.order.id,
-        handler : async function(response : any){
-        const verifyRes  = await axiosInstance.post("/user/payment/verify-payment"  , response);
-        console.log("verifyed payment : " , verifyRes.data);
-        }
-    }
+//     //2 .verify the order
+//     const options = {
+//         key: "rzp_test_Rn001LFlwYYOaD",
+//         amount: orderRes.data.order.amount,
+//         currency: "INR",
+//         name: "Smart Mess System",
+//         order_id: orderRes.data.order.id,
+//         handler : async function(response : any){
+//         const verifyRes  = await axiosInstance.post("/user/payment/verify-payment"  , response);
+//         console.log("verifyed payment : " , verifyRes.data);
+//         navigation("/profile-records");
+//         }
+//     }
    
-    // const rzp = new window.Razorpay(options); 
+//     // const rzp = new window.Razorpay(options); 
+//     const rzp = new (window as any).Razorpay(options);
+//     rzp.open();
+
+//    } catch (error) {
+
+//     console.log("create order error !" , error);
+//     alert("line payment Error !");
+
+//    } 
+//   }
+
+
+async function createOrder(month: string) {
+  try {
+    if (!confirm("Proceed with payment of ₹3,300?")) return;
+
+    const orderRes = await axiosInstance.post(
+      "/user/payment/create-order",
+      { student_id, month }
+    );
+
+    const options = {
+      key: "rzp_test_Rn001LFlwYYOaD",
+      amount: orderRes.data.order.amount,
+      currency: "INR",
+      name: "Smart Mess System",
+      description: `Mess Fees -₹3,300`,
+      order_id: orderRes.data.order.id,
+      prefill: {
+      name: "Student",
+      email: "student@email.com",
+      },
+        theme: {
+          color: "#22c55e",
+        },
+      handler: async (response: any) => {
+        const verifyRes = await axiosInstance.post(
+          "/user/payment/verify-payment",
+          response
+        );
+
+        if (verifyRes.data.success) {
+          // alert("Payment successful!");
+          navigation("/profile");
+        }
+      },
+    };
+
     const rzp = new (window as any).Razorpay(options);
+
+    rzp.on("payment.failed", () => {
+      alert("Payment failed or cancelled");
+    });
+
     rzp.open();
-   } catch (error) {
-    console.log("create order error !" , error);
-    alert("line payment Error !");
-
-   }finally{
-
-    navigation("/profile-records");
-
-   }   
+  } catch (error) {
+    console.error(error);
+    alert("Online payment error");
   }
+}
 
 
 
@@ -218,7 +265,7 @@ const studentFeeRemainingMonth = allMonths.filter(
     <div className="space-y-8">
       {data?.map((fee: any, index: number) => (
         <div key={index} className="relative">
-
+ 
           {/* Dot */}
           <div className="absolute -left-[2px] top-2 w-4 h-4 rounded-full
                           bg-green-500 border-4 border-white dark:border-background">
