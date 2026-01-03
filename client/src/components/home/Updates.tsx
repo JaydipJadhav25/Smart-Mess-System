@@ -1,90 +1,87 @@
-import { Card  } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
+import { axiosInstance } from "@/config/axiosInstances";
+import { useQuery } from "@tanstack/react-query";
 
 function Updates() {
+  const { isError, isLoading, data } = useQuery({
+    queryKey: ["adminanncements"],
+    queryFn: async () => {
+      const response = await axiosInstance("/open/announcements");
+      return response.data;
+    }
+  });
 
- const updates  =   [
-  {
-    "id": 1,
-    "title": "New Menu Added",
-    "description": "We have updated the weekly menu. Check the latest breakfast, lunch, and dinner options in your dashboard."
-  },
-  {
-    "id": 2,
-    "title": "Auto Attendance Activated",
-    "description": "From today, auto attendance will be recorded for all students. Make sure to check your login and meals daily."
-  },
-  {
-    "id": 3,
-    "title": "Maintenance Notice",
-    "description": "The mess will be closed for 2 hours on Friday for cleaning and maintenance. Please plan your meals accordingly."
-  },
-  {
-    "id": 4,
-    "title": "Feedback Reminder",
-    "description": "Students are encouraged to submit feedback for last week's meals. Your feedback helps us improve food quality."
-  }
-]
+  // 1. Sort by date (newest first) and 2. Limit to top 4
+  // const recentAnnouncements = data 
+  //   ? [...data].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()).slice(0, 4) 
+  //   : [];
 
+
+  console.log("data : " , data);
+
+    // Sort by createdAt (newest first) and take the top 4
+  // const recentAnnouncements = data
+  //   ? [...data]
+  //       .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+  //       .slice(0, 4)
+  //   : [];
+
+
+
+    const recentAnnouncements = data 
+    ? [...data].reverse().slice(0, 4) 
+    : [];
 
   return (
-    <>
+    <div className="max-w-5xl mx-auto px-4 mt-24 mb-3">
+      <div className="text-center mb-10">
+        <span className="text-sm font-semibold text-orange-600 bg-orange-100 px-4 py-1 rounded-full">
+          📢 Important Updates
+        </span>
+        <h2 className="text-4xl font-bold mt-4 mb-2 tracking-tight text-primary">
+          Stay In The Loop
+        </h2>
+      </div>
 
-        <div className="max-w-5xl mx-auto px-4 mt-24 mb-3">
-  <div className="text-center mb-10">
-    <span className="text-sm font-semibold text-orange-600 bg-orange-100 px-4 py-1 rounded-full">
-      📢 Important Updates
-    </span>
-
- <h2 className="text-4xl font-bold mt-4 mb-2 tracking-tight text-primary">
-       Stay In The Loop
-    </h2>
-
-  </div>
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-    {updates?.map((announcement) => (
-      <Card key={announcement.id} className="hover:shadow-xl transition-shadow border bg-background hover:bg-background/10 p-6">
-        <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center space-x-2">
-            <div className="bg-primary/10 text-primary rounded-full p-2">
-              📣
-            </div>
-            <h3 className="text-xl font-semibold">{announcement.title}</h3>
-          </div>
-          {/* {announcement.tag && (
-            <Badge
-              variant="outline"
-              className={`text-xs px-2 py-0.5 rounded-full ${
-                announcement.tag.toLowerCase() === "important"
-                  ? "bg-red-100 text-red-600"
-                  : "bg-secondary"
-              }`}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {isLoading ? (
+          <h1 className="text-green-300 text-center col-span-2">Loading...</h1>
+        ) : isError ? (
+          <h1 className="text-red-500 text-center col-span-2">
+            Server Error! Check your network connection.
+          </h1>
+        ) : (
+          recentAnnouncements.map((announcement: any) => (
+            <Card
+              key={announcement._id}
+              className="hover:shadow-xl transition-shadow border bg-background hover:bg-background/10 p-6 flex flex-col justify-between"
             >
-              {announcement.tag}
-            </Badge>
-          )} */}
-        </div>
-
-        <p className="text-muted-foreground mb-3">{announcement.description}</p>
-
-        {/* <p className="text-xs text-muted-foreground mt-auto">
-          {new Date(announcement.date).toLocaleDateString("en-US", {
-            weekday: "short",
-            year: "numeric",
-            month: "short",
-            day: "numeric",
-          })}
-        </p> */}
-      </Card>
-    ))}
-  </div>
-
-
-
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center space-x-2">
+                    <div className="bg-primary/10 text-primary rounded-full p-2">
+                      📣
+                    </div>
+                    <h3 className="text-xl font-semibold">{announcement.title}</h3>
+                  </div>
+                </div>
+                <p className="text-muted-foreground mb-3">
+                  {announcement.description}
+                </p>
+              </div>
+              
+              {/* Optional: Display how long ago it was posted */}
+              {announcement.createdAt && (
+                <p className="text-xs text-muted-foreground mt-4">
+                  {new Date(announcement.createdAt).toLocaleDateString()}
+                </p>
+              )}
+            </Card>
+          ))
+        )}
+      </div>
     </div>
-   
-
-    </>
-  )
+  );
 }
 
-export default Updates
+export default Updates;

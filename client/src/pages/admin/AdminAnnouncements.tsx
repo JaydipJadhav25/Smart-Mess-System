@@ -38,7 +38,7 @@ const { isError, isLoading, data, error } = useQuery({
   queryKey: ["adminanncements"],
   queryFn: async () => {
     const response = await axiosInstance("/open/announcements");
-    console.log("api call ......................................");
+    // console.log("api call ......................................");
     return response.data;
   },
   staleTime: 5 * 60 * 1000,      // 5 minutes = 300000 ms
@@ -54,23 +54,18 @@ const { isError, isLoading, data, error } = useQuery({
 //create
  const mutation = useMutation({
     mutationFn : async(formData)=>{
-     const responce = await axiosInstance.post("/admin/announcements" ,formData );
+     const responce = await axiosInstance.post("/admin/add/announcements" ,formData );
     return responce.data;
     },
     onSuccess : async(data : any)=>{
           console.log("annceuncement add successfully : " , data);
          alert("Announcement add successfully ")
-          
           // refresh the members list
-        
           queryClient.invalidateQueries({ queryKey: ["adminanncements"] });
           //close         
-          setShowForm(false);
-                  
+          setShowForm(false);    
       // clear form after success
       reset();
-
-
     //   // //add activity => not good way
     //    await axiosInstance.post("/admin/activities" ,{
     //   action : "Add New Announcement"
@@ -80,20 +75,12 @@ const { isError, isLoading, data, error } = useQuery({
     
     //good way 
    
-
-
-
-
     } ,
     onError : async(error)=>{
          console.error("Error adding anncements:", error);
          alert("Error adding anncements:");
          // clear form after success
       reset();
-
-  
-    
-
     }
   });
 
@@ -102,7 +89,7 @@ const { isError, isLoading, data, error } = useQuery({
   //use mutation -delete // in future i will use optimistic update
   const mutationDelete = useMutation({
      mutationFn : async(id)=>{
-         const response = await axiosInstance.post("/admin/announcement/delete" , { id});
+         const response = await axiosInstance.post("/admin/delete/announcements" , {id});
          return response.data;
      },
      onMutate :async (id) =>{
@@ -123,19 +110,14 @@ const { isError, isLoading, data, error } = useQuery({
      },
      onSuccess : (data)=>{
        console.log("announcement deleted successfully......." , data);
-       alert("Announcement delete Successfully !");   
+       alert("Announcement delete Successfully!");   
           // refresh the 
           queryClient.invalidateQueries({ queryKey: ["adminanncements"] });
-     
-           
-
-
+    
      },
       onError : (error ,id , context)=>{
          console.error("Error announcement member:", error);
-         alert("Announcement Delete member!");
-  
-
+         alert("Announcement Delete Error!");
       console.log("userid : " , id);
       queryClient.setQueryData(["adminanncements"] , context?.previoseData);
 
@@ -153,13 +135,14 @@ const { isError, isLoading, data, error } = useQuery({
   const mutationUpdate = useMutation({
      mutationFn : async(data)=>{
       console.log("data : " , data);
-         const response = await axiosInstance.post("/admin/announcement/update" ,  data );
+         const response = await axiosInstance.post("/admin/update/announcements" ,  data );
          return response.data;
 
         // console.log("data update hit : " , data)
         // return data
      },
      onSuccess : (data)=>{
+
        console.log("announcement update successfully......." , data);
             alert("Announcement update Successfully ");
      
@@ -194,11 +177,13 @@ const { isError, isLoading, data, error } = useQuery({
 
  //upodate from
  function handleUpdate (data : any){
+
   const updateAnnouncement = {
-    id : oldAnnouncement._id ,
+    id : oldAnnouncement._id,
      ...data
   }
   mutationUpdate.mutate(updateAnnouncement);
+
  }
 
 
@@ -230,7 +215,7 @@ const { isError, isLoading, data, error } = useQuery({
             />
           </div>
           <Button onClick={() => setShowForm(true)}>
-            <Plus className="mr-2 h-4 w-4" /> New Announcement
+            <Plus className="mr-2 h-4 w-4"/> New Announcement
           </Button>
         </div>
 
@@ -252,14 +237,12 @@ const { isError, isLoading, data, error } = useQuery({
                 <div className="flex justify-between">
                   <div className="flex items-start gap-2">
                     <h3 className="text-lg font-semibold">{announcement.title}</h3>
-
                     {announcement.category && (
                       // <Badge variant="outline" className={categoryColors[announcement.category] || ""}>
                       <Badge variant="outline" className={""}>
                         {announcement.category}
                       </Badge>
                     )}
-
                   </div>
                   <div className="flex gap-2">
                     <Button
@@ -287,10 +270,9 @@ const { isError, isLoading, data, error } = useQuery({
                 </div>
               </div>
             </Card>
-          ))}
-                  
-                  </>
-               }
+                  ))}                
+        </>
+        }
           </>
         }
        
@@ -308,6 +290,7 @@ const { isError, isLoading, data, error } = useQuery({
                 placeholder="Title"
                {...register("title")}
               />
+
               <Textarea
                 placeholder="Description"
                 {...register("description")}
@@ -328,6 +311,8 @@ const { isError, isLoading, data, error } = useQuery({
             </form>
           </DialogContent>
         </Dialog>
+
+
 
         {/* update announcement */}
          <Dialog 
@@ -360,7 +345,6 @@ const { isError, isLoading, data, error } = useQuery({
               
               <Input
                 type="date"
-              
                 {...register("date")}
               />
               <DialogFooter>
@@ -375,6 +359,7 @@ const { isError, isLoading, data, error } = useQuery({
             </form>
           </DialogContent>
         </Dialog>
+
       </div>
     </AdminLayout>
   );
