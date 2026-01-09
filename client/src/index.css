@@ -277,3 +277,24 @@
         .animate-shrink {
           animation: shrink 2s linear forwards;
         }
+
+
+ 
+        
+
+        /* html2canvas-safe.css */
+/* html2canvas-ignore,
+.html2canvas-ignore {
+  all: initial !important;
+}
+
+.receipt-root,
+.receipt-root * {
+  color: #000 !important;
+  background: #fff !important;
+  border-color: #ccc !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+} */
+
+

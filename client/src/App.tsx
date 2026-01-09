@@ -32,6 +32,7 @@ import AdminUpdateMenu from "./pages/admin/AdminUpdateMenu"
 import AdminAttendence from "./pages/admin/AdminAttendence"
 import AdminRecipeGenerator from "./pages/admin/AdminRecipeGenerator"
 import ApplicationReview from "./components/admin/ApplicationReview"
+import Recipt from "./pages/Recipt"
 
 
 
@@ -50,6 +51,8 @@ import ApplicationReview from "./components/admin/ApplicationReview"
           <Route path="/signup" element={<UserSignup/>}/>
           <Route path="/login" element={<LoginFormData/>}/>
           <Route path="/verification/:userEmail" element={<OtpVerification/>}/>
+
+          <Route path="/receipt/:id" element={<Recipt/>}/>
           {/* <Route path="/feedbackform" element={<FeedbackForm/>}/> */}
 
           {/* Stunndents routes */}
