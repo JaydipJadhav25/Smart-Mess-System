@@ -1,10 +1,11 @@
+
 // import { AuthContext } from '@/components/context/AuthContext';
 import useAuth from '@/components/context/useAuth';
 import { axiosInstance } from '@/config/axiosInstances';
-import  { useState, useEffect  } from 'react';
+import  { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import type { SubmitHandler } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate  , Navigate} from 'react-router-dom';
 import { toast } from 'sonner';
 
 // Define the form data interface
@@ -14,13 +15,12 @@ interface LoginFormData {
 }
 
 // Main App Component for Login
-const LoginFormData = () => {
+const AdminLogin = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [status, setStatus] = useState<{ message: string; type: 'success' | 'error' | '' }>({ message: '', type: '' });
   
-  // State for theme management
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+
 
     
   //navigater
@@ -31,20 +31,17 @@ const LoginFormData = () => {
 
 
   // use context
-  const {login } = useAuth();
+  const {login , role } = useAuth();
 
 
 
+//check student and return home
+if((role!=="admin" && role) || role ==="admin"){
+  return <Navigate to={"/"}/>
+}
 
 
-
-  // Effect to toggle dark class on the root element
-  useEffect(() => {
-    const root = window.document.documentElement;
-    root.classList.remove(theme === 'light' ? 'dark' : 'light');
-    root.classList.add(theme);
-  }, [theme]);
-
+ 
   const {
     register,
     handleSubmit,
@@ -58,57 +55,35 @@ const LoginFormData = () => {
     setIsLoading(true);
     setStatus({ message: '', type: '' });
     try {
-      // Simulate API call
-      // await new Promise(resolve => setTimeout(resolve, 1500));
-
-      console.log('Login Data:', data);
-      
-      // Example API call:
-      // const response = await fetch('/api/login', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(data)
-      // });
-      // if (!response.ok) throw new Error('Invalid credentials');
-      // const result = await response.json();
-
-      const response = await axiosInstance.post("/user/login" , data);
-      
-      console.log("response : " , response.data);
-
+    console.log('Login Data:', data);
+    const response = await axiosInstance.post("/admin/access/login" , data);
+    console.log("response : " , response.data);
       //data store in localstorage
      if(response.data?.success){
-       login(response.data.data.user.email, response.data.data.user.role,response.data.data.user.student_id);
+       login(response.data.data.user.email, response.data.data.user.role, response.data.data.user.student_id);
        //store token
        localStorage.setItem("token" , response.data.data.auth);
      }
      
-
       setStatus({ message: response.data.mmessage ||  'Login successful! Redirecting...', type: 'success' });
        
       toast.success("Login successful!");
       
       //redirect
-      navigate("/" , {replace : true});
+      navigate("/admin" , {replace : true});
+      // In  futures send otp fro verify admin when lagin
       reset();
     } catch (error : any) {
-
       const userError = error?.response?.data.message;
       console.error('Login error:', error );
-
       setStatus({ message: userError || 'Login failed. Please check your credentials.', type: 'error' });
-
       toast.error("Login failed. Please check your credentials.");
-
     } finally {
       setIsLoading(false);
     }
   };
   
-  const toggleTheme = () => {
-    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
-  };
-
+ 
   const EyeIcon = () => (
     <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -122,40 +97,42 @@ const LoginFormData = () => {
     </svg>
   );
   
-  const SunIcon = () => (
-     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-  );
-
-  const MoonIcon = () => (
-     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-  );
 
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
-      <div className="absolute top-4 right-4">
-          <button
-              onClick={toggleTheme}
-              className="p-2 rounded-full text-gray-500 dark:text-gray-400 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-gray-900 transition-all duration-300"
-              aria-label="Toggle dark mode"
-          >
-              {theme === 'light' ? <MoonIcon /> : <SunIcon />}
-          </button>
-      </div>
-        
-      <div className="max-w-md w-full space-y-8 bg-white dark:bg-gray-800 p-8 md:p-10 rounded-2xl shadow-xl transition-colors duration-300">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-100 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8 transition-colors duration-300">    
+      <div className="max-w-md w-full space-y-8 bg-gradient-to-br from-orange-900 via-gray-900 to-yellow-800 text-gray-100 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8 transition-colors duration-500 p-8 md:p-10 rounded-2xl shadow-xl">
         <div className="text-center">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            Welcome Back!
-          </h2>
-          <p className="text-gray-600 dark:text-gray-300">Sign in to your account</p>
+          <h2 className="text-3xl font-bold text-white mb-2 flex items-center gap-3">
+            Welcome Back
+            <h2
+                className="
+                inline-flex items-center
+                px-2 py-0.5
+                rounded-full
+                text-[10px]
+                font-semibold
+                uppercase
+                tracking-widest
+                text-zinc-300
+                bg-zinc-800
+                border border-zinc-700
+                "
+            >
+                Administrator
+            </h2>
+            </h2>
+       <p className="text-sm tracking-wide text-zinc-400">
+        Restricted access. Authorized personnel only.
+       </p>
+
         </div>
         
         <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-6">
             <div className="space-y-4">
                 {/* Email */}
                 <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">
                         Email Address *
                     </label>
                     <input
@@ -177,7 +154,7 @@ const LoginFormData = () => {
 
                 {/* Password */}
                 <div>
-                    <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    <label htmlFor="password" className="block text-sm font-medium text-gray-300 dark:text-gray-300 mb-1">
                         Password *
                     </label>
                     <div className="relative">
@@ -234,22 +211,10 @@ const LoginFormData = () => {
                 )}
               </button>
             </div>
-
-            <div className="text-center">
+             <div className="text-center">
               <p className="text-sm text-gray-600 dark:text-gray-300">
-                Don't have an account?{' '}
-                 <Link to={"/signup"} className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 transition duration-200">
-                  Sign up here
-                </Link>
-              </p>
-
-              <p className="text-sm text-gray-600 dark:text-gray-300">
-                 Login as {" "}
-                <Link
-                  to="/admin-login"
-                  className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 transition duration-200"
-                >
-                   Admin
+                <Link to={"/login"} className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 transition duration-200">
+                  {/* Back ! */}
                 </Link>
               </p>
             </div>
@@ -259,4 +224,4 @@ const LoginFormData = () => {
   );
 };
 
-export default LoginFormData;
+export default AdminLogin;

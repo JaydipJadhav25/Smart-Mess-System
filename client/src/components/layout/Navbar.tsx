@@ -74,9 +74,9 @@ export default function Navbar() {
 
 
 
-const {isAuthenticated , student_id  , logout} = useAuth();
+const {isAuthenticated , student_id  , logout , role} = useAuth();
   //navigater
-  const navigate = useNavigate();
+const navigate = useNavigate();
 
 //user logout
 const userLogout = async ()=>{
@@ -112,18 +112,8 @@ try {
 
 
 
-
-
-
-
-
-
-
-
-
-
   return (
-    <Disclosure as="nav" className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-lg">
+<Disclosure as="nav" className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-lg">
 
   <div className="px-4 sm:px-6 lg:px-8 w-full">
 
@@ -209,29 +199,97 @@ try {
                 </Link>              
               </>: <>
               <Menu as="div" className="relative ml-3">
-
+{/* 
               <MenuButton className="relative flex rounded-full dark:bg-gray-800 text-sm focus:outline-hidden focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-gray-800">
               <span className="absolute -inset-1.5" />
-          
-                   <img
+               {
+                role === "admin" ?   <img
+                  alt=""
+                  //src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                 src="/admin.png"
+                  className="size-8 rounded-full"
+                />  :
+
+                <img
                   alt=""
                   //src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                  src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
                   className="size-8 rounded-full"
-                />          
+                />   
+               }
+
               <span className="text-sm font-medium bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-md">
                 {
                    student_id
                 }
               </span>
-              
+              </MenuButton> */}
 
-              </MenuButton>
+                <MenuButton
+                  className="
+                    relative flex items-center gap-1 rounded-full
+                    dark:bg-gray-800 text-sm
+                    focus:outline-none
+                    focus-visible:ring-2
+                    focus-visible:ring-white
+                    focus-visible:ring-offset-2
+                    focus-visible:ring-offset-gray-800
+                  "
+                >
+                  {/* Avatar Wrapper */}
+                  <div
+                    className={`relative rounded-full p-0.5 ${
+                      role === "admin"
+                        ? "bg-gradient-to-tr from-amber-400 via-yellow-500 to-amber-600"
+                        : ""
+                    }`}
+                  >
+                    <img
+                      alt=""
+                      src={role === "admin" ? "/admin2.png" : "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"}
+                      className="size-8 rounded-full bg-gray-900"
+                    />
+
+                    {/* Admin Badge */}
+                    {role === "admin" && (
+                      <span
+                        className="
+                          absolute -bottom-1 -right-1
+                          bg-amber-500 text-black
+                          text-[9px] font-bold
+                          px-1.5 py-0.5
+                          rounded-full
+                          shadow-md
+                        "
+                      >
+                        ADMIN
+                      </span>
+                    )}
+                  </div>
+
+                  {/* ID / Label */}
+                  <span className="text-xs font-medium bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-md">
+                    {/* {role === "admin" ? "Administrator" : student_id} */}
+                    {
+                      student_id
+                    }
+                  </span>
+                </MenuButton>
+
 
               <MenuItems
                 transition
                 className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-background backdrop-blur-lg py-1 shadow-lg ring-1 ring-black/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
               >
+                 {role && role === "admin" &&   <MenuItem>
+                  <Link
+                    to={"/admin"}
+                    className="block px-4 py-2 text-sm text-gray-700 dark:text-white dark:data-focus:bg-gray-900 data-focus:bg-gray-100 data-focus:outline-hidden"
+                  >
+                    Dashboard
+                  </Link>
+                </MenuItem> } 
+
                 <MenuItem>
                   <Link
                     to={"/profile"}
@@ -240,6 +298,8 @@ try {
                     Your Profile
                   </Link>
                 </MenuItem> 
+
+               
                 <MenuItem>
                   <a
                     href="#"

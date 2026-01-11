@@ -33,6 +33,9 @@ import AdminAttendence from "./pages/admin/AdminAttendence"
 import AdminRecipeGenerator from "./pages/admin/AdminRecipeGenerator"
 import ApplicationReview from "./components/admin/ApplicationReview"
 import Recipt from "./pages/Recipt"
+import Unauthorized from "./pages/Unauthorized"
+import ProtectedRoute from "./utils/ProtectedRoute"
+import AdminLogin from "./pages/admin/AdminLogin"
 
 
 
@@ -52,34 +55,108 @@ import Recipt from "./pages/Recipt"
           <Route path="/login" element={<LoginFormData/>}/>
           <Route path="/verification/:userEmail" element={<OtpVerification/>}/>
 
+           
           <Route path="/receipt/:id" element={<Recipt/>}/>
+
           {/* <Route path="/feedbackform" element={<FeedbackForm/>}/> */}
 
+
           {/* Stunndents routes */}
-          <Route path="/profile" element={<StudentPanel/>}/>   
-          <Route path="/profile-feedback" element={<Feedback/>}/>   
-          <Route path="/profile-records" element={<Records/>}/>
-          <Route path="/profile-plane" element={<StudentPlane/>}/>   
-          <Route path="/profile-form" element={<StudentForm/>}/>
-          <Route path="/profile-leave" element={<LeavePopup/>}/>   
+         
+          <Route path="/profile" element={
+            <ProtectedRoute allowedRoles={["student" , "admin"]}>
+               <StudentPanel/>
+            </ProtectedRoute>
+            }/>   
+          <Route path="/profile-feedback" element={
+            <ProtectedRoute allowedRoles={["student" , "admin"]}>
+               <Feedback/>
+            </ProtectedRoute>
+            }/>   
+          <Route path="/profile-records" element={
+            <ProtectedRoute allowedRoles={["student" , "admin"]}>
+            <Records/>
+            </ProtectedRoute>
+            }/>
+          <Route path="/profile-plane" element={
+            <ProtectedRoute allowedRoles={["student" , "admin"]}>        
+            <StudentPlane/>
+            </ProtectedRoute>
+            }/>   
+          <Route path="/profile-form" element={
+            <ProtectedRoute allowedRoles={["student" , "admin"]}>
+            <StudentForm/>
+            </ProtectedRoute>
+            }/>
+          <Route path="/profile-leave" element={
+            <ProtectedRoute allowedRoles={["student" , "admin"]}>
+            <LeavePopup/>
+            </ProtectedRoute>
+            }/>   
 
-
+             {/* adminlogin */}
+            <Route  path="/admin-login" element={<AdminLogin/>}/>
 
 
              {/* admin routes */}
-          <Route path="/admin" element={<AdminPanel/>}/>   
-          <Route path="/admin-students" element={<AdminStudents/>}/>   
-          <Route path="/admin-feedback" element={<AdminFeedbacks/>}/>   
-          <Route path="/admin-announcements" element={<AdminAnnouncements/>}/>   
-          <Route path="/admin-financials" element={<AdminFinancials/>}/>   
-          <Route path="/admin-manageApplications" element={<AdminManegApplications/>}/>   
-          <Route path="/admin-menuUpdate" element={<AdminUpdateMenu/>}/>   
-          <Route path="/admin-Attendence" element={<AdminAttendence/>}/>   
-          <Route  path="/admin-RecipeGenerator" element={<AdminRecipeGenerator/>}/>
-           <Route path="/admin-applicationReview/:id"  element={<ApplicationReview/>}/>
+          <Route path="/admin" element={
+            <ProtectedRoute allowedRoles={["admin"]}>
+              <AdminPanel/>
+            </ProtectedRoute>
+            }/>   
+          <Route path="/admin-students" element={
+            <ProtectedRoute allowedRoles={["admin"]}>
+              <AdminStudents/>
+            </ProtectedRoute>
+            }/>   
+          <Route path="/admin-feedback" element={
+            <ProtectedRoute allowedRoles={["admin"]}>
+            <AdminFeedbacks/>
+            </ProtectedRoute>
+            }/>   
+          <Route path="/admin-announcements" element={
+            <ProtectedRoute allowedRoles={["admin"]}>
+            <AdminAnnouncements/>
+            </ProtectedRoute>
+            }/>   
+          <Route path="/admin-financials" element={
+            <ProtectedRoute allowedRoles={["admin"]}>
+            <AdminFinancials/>
+            </ProtectedRoute>
+            }/>   
+          <Route path="/admin-manageApplications" element={
+            <ProtectedRoute allowedRoles={["admin"]}>
+            <AdminManegApplications/>
+            </ProtectedRoute>
+            }/>   
+          <Route path="/admin-menuUpdate" element={
+            <ProtectedRoute allowedRoles={["admin"]}>
+            <AdminUpdateMenu/>
+            </ProtectedRoute>
+            }/>   
+          <Route path="/admin-Attendence" element={
+            <ProtectedRoute allowedRoles={["admin"]}>
+            <AdminAttendence/>
+            </ProtectedRoute>
+            }/>   
+          <Route  path="/admin-RecipeGenerator" element={
+            <ProtectedRoute allowedRoles={["admin"]}>
+            <AdminRecipeGenerator/>
+            </ProtectedRoute>
+            }/>
+          <Route path="/admin-applicationReview/:id"  element={
+            <ProtectedRoute allowedRoles={["admin"]}>
+            <ApplicationReview/>
+            </ProtectedRoute>
+            }/>
 
           {/* <Route path="/ai" element={<FeedbackAnalysis/>}/> */}
           {/* <Route path="/dashbord" element={<AnalyticsDashboard/>}/> */}
+
+
+
+
+          <Route   path="/unauthorized" element={<Unauthorized />} />
           <Route path="*" element={<NotFound/>}/>
         </Routes>
         </>
