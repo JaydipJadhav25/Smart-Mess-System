@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 // import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
-import { useNavigate} from "react-router-dom"
+import {  useNavigate} from "react-router-dom"
 
 function Records() {
   const { student_id } = useAuth();
@@ -263,63 +263,50 @@ async function createOrder(month: string) {
     <div className="absolute left-3 top-0 h-full w-[2px] bg-green-300 dark:bg-green-700"></div>
 
     <div className="space-y-8">
-      {data?.map((fee: any, index: number) => (
-        <div key={index} className="relative">
- 
-          {/* Dot */}
-          <div className="absolute -left-[2px] top-2 w-4 h-4 rounded-full
-                          bg-green-500 border-4 border-white dark:border-background">
-          </div>
+  {data?.map((fee: any, index: number) => (
+    <div key={index} className="relative">
 
-          {/* Card */}
-          <div className={`ml-6 p-5 rounded-xl border bg-white dark:bg-background
-                          shadow-sm hover:shadow-md transition
-                          ${fee.status === "pending" && 'bg-yellow-300 dark:bg-yellow-900'}
-                          ${fee.status === "failed" && 'dark:bg-red-700 bg-red-300'}
-                          `}>
-            {/* Top */}
-            <div className="flex justify-between items-center">
-              <p className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                {fee.month} {fee.year}
-              </p>
+      {/* Timeline Dot */}
+      <div
+        className="absolute -left-[2px] top-3 w-4 h-4 rounded-full
+                   bg-green-500 border-4 border-white dark:border-background"
+      />
 
-              {/* {
-                fee.status === "pending" ? <>
-                <span className="px-3 py-1 text-xs font-medium rounded-full
-                               bg-green-100 text-green-700
-                               dark:bg-green-900/30 dark:text-white
-                               ">
-                Pending
-              </span>
-                </>:<>
-                <span className="px-3 py-1 text-xs font-medium rounded-full
-                               bg-green-100 text-green-700
-                               dark:bg-green-900/30 dark:text-green-400
-                               ">
-                Paid
-              </span>
-                
-                </>
-              } */}
+      {/* Card */}
+      <div
+        className={`ml-6 p-5 rounded-xl border bg-white border-emerald-400/90 dark:bg-background
+                    shadow-sm hover:shadow-md transition
+                    ${fee.status === "pending" && "bg-yellow-100 dark:bg-yellow-900/40"}
+                    ${fee.status === "failed" && "bg-red-100 dark:bg-red-900/40"}
+                   `}
+      >
+        {/* Header */}
+        <div className="flex justify-between items-center gap-4">
+          <p className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+            {fee.month} {fee.year}
+          </p>
 
-              <span className="px-3 py-1 text-xs font-medium rounded-full
-                               bg-green-100 text-green-700
-                               dark:bg-green-900/30 dark:text-green-400
-                               ">
-                {fee.status}
-              </span>   
+          <span
+            className={`px-3 py-1 text-xs font-medium rounded-full
+              ${fee.status === "paid" && "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"}
+              ${fee.status === "pending" && "bg-yellow-200 text-yellow-800"}
+              ${fee.status === "failed" && "bg-red-200 text-red-800"}
+            `}
+          >
+            {fee.status.toUpperCase()}
+          </span>
 
-             <button
-            onClick={()=>{
-              navigation(`/receipt/${fee._id}`)
-            }}
-            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all shadow-sm hover:shadow active:scale-95"
+          <button
+            onClick={() => navigation(`/receipt/${fee._id}`)}
+            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700
+                       text-white px-4 py-2 rounded-lg text-sm font-medium
+                       transition-all shadow-sm hover:shadow active:scale-95"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              strokeWidth={1}
+              strokeWidth={1.5}
               stroke="currentColor"
               className="w-4 h-4"
             >
@@ -329,44 +316,125 @@ async function createOrder(month: string) {
                 d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"
               />
             </svg>
-          </button>    
-                   
-           
-              {/* <span className="px-3 py-1 text-xs font-medium rounded-full
-                               bg-green-100 text-green-700
-                               dark:bg-green-900/30 dark:text-green-400
-                               ">
-                Paid
-              </span> */}
-            </div>
-            
-            {/* Amount */}
-            <p className="mt-3 text-3xl font-bold text-green-600 dark:text-green-400">
-              ₹{fee.amount}
-            </p>
-
-            {/* Meta */}
-            <div className="mt-2 text-sm text-gray-700 dark:text-gray-300">
-              <p>
-                Method: <span className="font-semibold">{fee.method?.toUpperCase()}</span>
-              </p>
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                Paid On: {new Date(fee.paymentDate).toLocaleString()}
-              </p>
-              <p className="text-xs text-gray-400 mt-1">
-                Receipt ID: {fee._id}
-              </p>
-
-          
-             
-            </div>
-
-          
-
-          </div>
+            Receipt
+          </button>
         </div>
-      ))}
+
+        {/* Amount */}
+        <p className="mt-3 text-3xl font-bold text-green-600 dark:text-green-400">
+          ₹{fee.amount}
+        </p>
+
+        {/* Meta Info */}
+        <div className="mt-2 text-sm text-gray-700 dark:text-gray-300 space-y-1">
+          <p>
+            Method:{" "}
+            <span className="font-semibold">
+              {fee.method?.toUpperCase()}
+            </span>
+          </p>
+
+          <p className="text-xs text-gray-500 dark:text-gray-400">
+            Paid On: {new Date(fee.paymentDate).toLocaleString()}
+          </p>
+
+          <p className="text-xs text-gray-400">
+            Receipt ID: {fee._id}
+          </p>
+        </div>
+
+        {/* PREMIUM BLOCKCHAIN PROOF */}
+        {fee.hash && (
+          <div
+            className="mt-5 relative overflow-hidden rounded-xl
+                       border border-emerald-400/30
+                       bg-gradient-to-br from-emerald-950 via-gray-900 to-black
+                       p-5 shadow-lg shadow-emerald-500/10"
+          >
+
+            {/* Badge */}
+            <div
+              className="absolute top-3 right-3 px-3 py-1 text-[10px]
+                         font-semibold rounded-full
+                         bg-emerald-500/10 text-emerald-400
+                         border border-emerald-400/30"
+            >
+              BLOCKCHAIN VERIFIED
+            </div>
+
+            {/* Title */}
+            <h4 className="flex items-center gap-2 text-sm font-semibold text-emerald-400">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 12l2 2 4-4m5-1a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              Payment Secured on Blockchain
+            </h4>
+
+            {/* Blockchain Details */}
+            <div className="mt-3 space-y-1 text-xs text-gray-300">
+              <p>
+                <span className="text-gray-400">Transaction Hash:</span>{" "}
+                <span className="font-mono text-emerald-300">
+                  {/* {fee.hash.slice(0, 10)}...{fee.hash.slice(-8)} */}
+                  {fee.hash}
+                </span>
+              </p>
+
+              <p>
+                <span className="text-gray-400">Block Number:</span>{" "}
+                <span className="text-gray-200">
+                  {fee.blockNumber}
+                </span>
+              </p>
+
+              <a
+                href={`https://sepolia.etherscan.io/tx/${fee.hash}#eventlog`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 mt-2
+                           text-orange-400 hover:text-emerald-300
+                           underline underline-offset-2"
+              >
+                View on Etherscan
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-3 w-3"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M14 3h7m0 0v7m0-7L10 14"
+                  />
+                </svg>
+              </a>
+
+              <p className="mt-2 text-[11px] text-gray-400 italic">
+                This record is permanently stored on the Ethereum blockchain and cannot be altered.
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
+  ))}
+</div>
+
+
   </div>
 
 </TabsContent>

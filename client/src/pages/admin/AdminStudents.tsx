@@ -516,6 +516,78 @@ const historyMonth = allFees.filter((ele : any) => ele.month === month).filter((
             <p className="text-gray-500 text-xs mt-1">
               Paid On: {new Date(fee.paymentDate).toLocaleString()}
             </p>
+
+                              {/* Blockchain Proof Section */}
+                  {fee.hash && (
+                    <div className="mt-5 relative overflow-hidden rounded-xl
+                                    border border-emerald-400/30
+                                    bg-background-to-br from-emerald-950 via-gray-900 to-black
+                                    p-5 shadow-lg shadow-emerald-500/10">
+
+                      {/* Glow badge */}
+                      <div className="absolute top-3 right-3 px-3 py-1 text-[10px] font-semibold
+                                      rounded-full bg-emerald-500/10 text-emerald-400
+                                      border border-emerald-400/30">
+                        BLOCKCHAIN VERIFIED
+                      </div>
+
+                      {/* Title */}
+                      <h4 className="flex items-center gap-2 text-sm font-semibold text-emerald-400">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-4 w-4"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 12l2 2 4-4m5-1a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
+                        </svg>
+                        Payment Secured on Blockchain
+                      </h4>
+
+                      {/* Details */}
+                      <div className="mt-3 space-y-1 text-xs text-gray-300">
+
+                        <p>
+                          <span className="text-gray-400">Transaction Hash:</span>{" "}
+                          <span className="font-mono text-emerald-300">
+                            {fee.hash.slice(0, 10)}...{fee.hash.slice(-8)}
+                          </span>
+                        </p>
+
+                        <p>
+                          <span className="text-gray-400">Block Number:</span>{" "}
+                          <span className="text-gray-200">{fee.blockNumber}</span>
+                        </p>
+
+                        <a
+                          href={`https://sepolia.etherscan.io/tx/${fee.hash}#eventlog`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 mt-2 text-emerald-400 hover:text-emerald-300
+                                    underline underline-offset-2"
+                        >
+                          View on Etherscan
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-3 w-3"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                              d="M14 3h7m0 0v7m0-7L10 14" />
+                          </svg>
+                        </a>
+                      </div>
+                    </div>
+                  )}
+
           </div>
         ))}
       </div>
