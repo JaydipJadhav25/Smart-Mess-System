@@ -14,6 +14,7 @@ import { useAdminSettings } from "@/components/context/useAdminSettings";
     feedbackEnabled,
     toggleOnlinePayment,
     toggleFeedback,
+    loading
   } = admin;
 
   return (
@@ -41,7 +42,10 @@ import { useAdminSettings } from "@/components/context/useAdminSettings";
       </nav>
 
       {/* ---------- SETTINGS ---------- */}
-      <div className="max-w-4xl mx-auto p-6 space-y-6">
+      {
+        loading ? <p className="text-green-800 text-center pt-2.5 font-semibold">Loading... </p>
+         : 
+         <div className="max-w-4xl mx-auto p-6 space-y-6">
         {/* Online Payment Toggle */}
         <SettingCard
           title="Online Payments"
@@ -58,6 +62,7 @@ import { useAdminSettings } from "@/components/context/useAdminSettings";
           onToggle={toggleFeedback}
         />
       </div>
+      }
     </div>
   );
 }
