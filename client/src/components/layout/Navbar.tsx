@@ -299,15 +299,18 @@ try {
                   </Link>
                 </MenuItem> 
 
+                
                
                 <MenuItem>
-                  <a
-                    href="#"
+                  <Link
+                     to={role === "admin" ? "/admin-settings" : ""}
                     className="block px-4 py-2 text-sm text-gray-700 dark:text-white dark:data-focus:bg-gray-900 data-focus:bg-gray-100 data-focus:outline-hidden"
                   >
                     Settings
-                  </a>
+                  </Link>
                 </MenuItem>
+
+
                 <MenuItem>
                     <p
                     onClick={userLogout}

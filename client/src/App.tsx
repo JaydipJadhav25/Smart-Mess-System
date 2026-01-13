@@ -36,6 +36,8 @@ import Recipt from "./pages/Recipt"
 import Unauthorized from "./pages/Unauthorized"
 import ProtectedRoute from "./utils/ProtectedRoute"
 import AdminLogin from "./pages/admin/AdminLogin"
+import AdminSettingPage from "./pages/admin/AdminSettingPage"
+import { AdminSettingProvider } from "./components/context/AdminSetting"
 
 
 
@@ -150,6 +152,14 @@ import AdminLogin from "./pages/admin/AdminLogin"
             </ProtectedRoute>
             }/>
 
+
+            {/* admin setting page */}
+            <Route path="/admin-settings"  element={
+            <ProtectedRoute allowedRoles={["admin"]}>
+             <AdminSettingPage/>
+            </ProtectedRoute>
+            }/>
+
           {/* <Route path="/ai" element={<FeedbackAnalysis/>}/> */}
           {/* <Route path="/dashbord" element={<AnalyticsDashboard/>}/> */}
 
@@ -181,6 +191,7 @@ function App() {
   return (
      <>
      <QueryClientProvider client={client}>
+      <AdminSettingProvider>
       <AuthProvider>
      <BrowserRouter>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
@@ -189,6 +200,7 @@ function App() {
       </ThemeProvider>
      </BrowserRouter>
     </AuthProvider>
+    </AdminSettingProvider>
      </QueryClientProvider>
      </>
   )

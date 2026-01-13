@@ -6,11 +6,17 @@ import { useQuery } from "@tanstack/react-query";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
 import {  useNavigate} from "react-router-dom"
+import PaymentInfoNote from "@/components/StudentMessage/PaymentInfoNote";
+import { useAdminSettings } from "@/components/context/useAdminSettings";
 
 function Records() {
   const { student_id } = useAuth();
   const [tab, setTab] = useState("feePay");
   const navigation = useNavigate();
+
+  //admin settings get
+  const {onlinePaymentEnabled} = useAdminSettings();
+
 
 
   //fethc from server
@@ -84,6 +90,7 @@ const studentFeeRemainingMonth = allMonths.filter(
 
 async function createOrder(month: string) {
   try {
+    if(!onlinePaymentEnabled) return;
     if (!confirm("Proceed with payment of ₹3,300?")) return;
 
     const orderRes = await axiosInstance.post(
@@ -137,6 +144,10 @@ async function createOrder(month: string) {
 
   return (
     <StudentLayout currentPage="records">
+      {/* payment dely note */}
+       <PaymentInfoNote  onlinePaymentStatus={onlinePaymentEnabled}/>
+  
+
       <div className="max-w-3xl mx-auto p-4">
         {/* <h1 className="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-white">
           My Fee Records
@@ -215,10 +226,11 @@ async function createOrder(month: string) {
 
           {/* Pay Button */}
           <button
+           disabled={!onlinePaymentEnabled}
             className="px-6 py-2 rounded-xl font-semibold
                        bg-green-600 text-white
                        hover:bg-green-700 active:scale-95
-                       transition"
+                       transition disabled:cursor-not-allowed"
             onClick={() => {
               // YOU will handle payment logic here
               createOrder(month);
@@ -226,6 +238,8 @@ async function createOrder(month: string) {
           >
             Pay Online
           </button>
+
+        
         </div>
 
         {/* Footer Info */}
@@ -237,7 +251,6 @@ async function createOrder(month: string) {
   </div>
 
        </TabsContent>
-
             <TabsContent value="history" className="mt-6">
 
   {/* Header */}
@@ -357,7 +370,7 @@ async function createOrder(month: string) {
               className="absolute top-3 right-3 px-3 py-1 text-[10px]
                          font-semibold rounded-full
                          bg-emerald-500/10 text-emerald-400
-                         border border-emerald-400/30"
+                         border border-emerald-400/30 hidden md:block"
             >
               BLOCKCHAIN VERIFIED
             </div>

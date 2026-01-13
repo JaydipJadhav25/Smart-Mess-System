@@ -61,6 +61,7 @@ const getInitialAuthState = (): AuthState => {
   }
 };
 
+
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [auth, setAuth] = useState<AuthState>(getInitialAuthState);
 

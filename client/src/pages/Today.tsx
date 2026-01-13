@@ -10,6 +10,7 @@ import {useQuery } from "@tanstack/react-query"
 import { axiosInstance } from "@/config/axiosInstances";
 import { useNavigate } from "react-router-dom";
 import { Loader2, WifiOff } from "lucide-react";
+import NutritionNode from "@/components/StudentMessage/NutritionNode";
 
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
@@ -155,6 +156,10 @@ const recommendedNutrition = [
         <span> Nutrition</span>
       </PointerHighlight></h1> */}
       <h1 className="text-3xl font-bold text-center mb-6">{today && today.day || " "} Meals & <PointerHighlight containerClassName="inline-block">Nutrition</PointerHighlight></h1>
+       
+       {/* show note */}
+       <NutritionNode/>
+
 
       </div>
        {

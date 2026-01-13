@@ -1,15 +1,19 @@
 import StudentLayout from "@/components/students/StudentLayout";
-import  { useState, useEffect } from "react";
+import { axiosInstance } from "@/config/axiosInstances";
+import { useState, useEffect } from "react";
+import { toast } from "sonner";
 
 // interface LeavePopupProps {
 //   onSubmit: (reason: string) => void;
 // }
 
-const LeavePopup  = () => {
-
-//   const [showPopup, setShowPopup] = useState(false);
+const LeavePopup = () => {
+  //   const [showPopup, setShowPopup] = useState(false);
   const [selectedReason, setSelectedReason] = useState("");
   const [customReason, setCustomReason] = useState("");
+  const [leaveHistory, setStudentLeaveHistory] = useState<any[]>([]);
+  const [totalCount, setTotalCount] = useState(0);
+
 
   const reasons = [
     "Going home for personal work",
@@ -27,27 +31,67 @@ const LeavePopup  = () => {
     const isNightLeave = hours >= 17 && hours <= 19;
 
     if (isMorningLeave || isNightLeave) {
-    //   setShowPopup(true);
+      //   setShowPopup(true);
     }
   }, []);
 
-//   if (!showPopup) return null;
+  //   if (!showPopup) return null;
 
   const now = new Date();
   // const day = now.toLocaleDateString("en-US", { weekday: "long" });
   // const time = now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 
   const hours = now.getHours();
-  console.log("houser : " , hours)
+  console.log("houser : ", hours);
+  
   const leaveType =
-    hours >= 7 && hours <= 10
-      ? "🌅 Morning Leave"
-      :  hours <= 19
-      ? "🌙 Night Leave"
-      : null;
+    hours >= 7 && hours <= 10 ? "morning" : hours <= 19 ? "night" : null;
 
-      
-  const handleSubmit = () => {
+  async function onSubmit(finalReason: string) {
+    try {
+      const response = await axiosInstance.post("/user/leave/add", {
+        reason: finalReason,
+        mode: leaveType,
+      });
+      // setShowPopup(false);
+      console.log("responce : ", response.data);
+      //check response
+      toast.success(`${leaveType} mess leave applied successfully`);
+    } catch (error) {
+      console.log("error :", error);
+      toast.warning(`You already took ${leaveType} mess leave for today! `);
+    }
+  }
+
+  //get all studentts leavs
+  useEffect(() => {
+    async function fetchData(){
+      const response = await axiosInstance("/user/leave/history");
+      // console.log("result : " , leavesHistory.data);
+       setStudentLeaveHistory(response.data.data);
+     setTotalCount(response.data.count);
+
+    }
+    fetchData();
+  }, []);
+
+ 
+  //check istoday
+  const isToday = (date: string) => {
+  const today = new Date();
+  const leaveDate = new Date(date);
+
+  return (
+    today.getDate() === leaveDate.getDate() &&
+    today.getMonth() === leaveDate.getMonth() &&
+    today.getFullYear() === leaveDate.getFullYear()
+  );
+};
+
+
+
+
+  const handleSubmit = async () => {
     const finalReason =
       selectedReason === "Other" ? customReason.trim() : selectedReason;
 
@@ -55,40 +99,25 @@ const LeavePopup  = () => {
       alert("Please select or enter a reason!");
       return;
     }
-
-    // onSubmit(finalReason);
-
-    console.log("rsone : " , finalReason);
-    // setShowPopup(false);
+    console.log("rsone : ", finalReason);
+    onSubmit(finalReason);
   };
 
-  console.log("lveav type:" , !leaveType)
-
   return (
-         <StudentLayout currentPage="leave">
-
-            <div className="font-sans max-w-4xl my-10 mx-auto p-6 shadow-lg rounded-lg bg-white">
-      {/* <div className="bg-white dark:bg-[#1e1e1e] text-gray-800 dark:text-gray-100 rounded-2xl p-6 w-96 shadow-lg relative"> */}
-        <h2 className="dark:text-black text-xl font-semibold text-center mb-2">
-          {leaveType}
+    <StudentLayout currentPage="leave">
+      <div className="font-sans max-w-4xl my-10 mx-auto p-6 shadow-lg rounded-lg bg-white">
+        {/* <div className="bg-white dark:bg-[#1e1e1e] text-gray-800 dark:text-gray-100 rounded-2xl p-6 w-96 shadow-lg relative"> */}
+        <h2 className="dark:text-black text-xl font-semibold text-center mb-2 capitalize">
+          {leaveType} Leave
         </h2>
         <h2 className="dark:text-black text-xl font-semibold text-center mb-2">
-         {new Date().toLocaleDateString("en-US", {
-            weekday: "long",
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
-        </h2>
-         {/* Date */}
-        {/* <p className="text-sm text-black md:text-base font-medium tracking-wide">
           {new Date().toLocaleDateString("en-US", {
             weekday: "long",
             year: "numeric",
             month: "long",
             day: "numeric",
           })}
-        </p> */}
+        </h2>
         <p className="text-sm text-center text-gray-500 mb-4">
           Select your reason for today’s leave:
         </p>
@@ -118,23 +147,68 @@ const LeavePopup  = () => {
         )}
 
         <button
-         disabled={!leaveType}
+          disabled={!leaveType}
           onClick={handleSubmit}
           hidden={!leaveType}
           className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition cursor-pointer"
         >
           Submit Leave
         </button>
-
-        {/* <button
-          onClick={() => console.log("done")}
-          className="absolute top-2 right-3 text-gray-400 hover:text-gray-600 text-xl"
-        >
-          ×
-        </button> */}
       </div>
 
-         </StudentLayout>
+      {/* Leave History */}
+<div className="mt-10">
+  <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">
+    Leave History
+  </h3>
+
+  <p className="text-sm text-gray-500 mb-4">
+    Total Leaves Taken: <span className="font-semibold">{totalCount}</span>
+  </p>
+
+  {leaveHistory.length === 0 ? (
+    <p className="text-sm text-gray-400 text-center">
+      No leave history found
+    </p>
+  ) : (
+    <div className="space-y-3">
+      {leaveHistory.map((leave) => {
+        const todayLeave = isToday(leave.leaveDate);
+
+        return (
+          <div
+            key={leave._id}
+            className={`p-4 rounded-lg border flex justify-between items-center
+              ${todayLeave
+                ? "bg-blue-50 border-blue-500"
+                : "bg-gray-50 border-gray-200"
+              }`}
+          >
+            <div>
+              <p className="font-medium text-gray-800 capitalize">
+                {leave.mealType} Meal
+              </p>
+              <p className="text-sm text-gray-500">
+                {new Date(leave.leaveDate).toDateString()}
+              </p>
+              <p className="text-xs text-gray-400 mt-1">
+                Reason: {leave.reason}
+              </p>
+            </div>
+
+            {todayLeave && (
+              <span className="text-xs font-semibold text-blue-600 bg-blue-100 px-3 py-1 rounded-full">
+                TODAY
+              </span>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  )}
+</div>
+
+    </StudentLayout>
   );
 };
 
