@@ -3,15 +3,6 @@ import { axiosInstance } from "@/config/axiosInstances";
 import { useQuery } from "@tanstack/react-query";
 import { Loader2  } from "lucide-react";
 
-
-
-
-
-
-
-
-
-
 export default function WeakMenu() {
 
 

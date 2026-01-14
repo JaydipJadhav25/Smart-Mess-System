@@ -5,7 +5,7 @@ function Feedback() {
   return (
   
       <StudentLayout currentPage="feedback">
-        <main className="flex-1">
+      <main className="flex-1">
        <FeedbackForm/>
       </main>
       </StudentLayout>

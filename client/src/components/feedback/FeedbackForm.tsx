@@ -1,4 +1,8 @@
-import React from 'react';
+import { axiosInstance } from '@/config/axiosInstances';
+import { useQuery } from '@tanstack/react-query';
+import React, { useState } from 'react';
+import { Loader2  } from "lucide-react";
+import { useNavigate } from 'react-router-dom';
 
 // --- Type Definitions ---
 interface FeedbackTagProps {
@@ -106,15 +110,15 @@ const ItemFeedback: React.FC<ItemFeedbackProps> = ({ itemName, feedback, onFeedb
 };
 
 // --- Menu Data ---
-const weeklyMenu = [
-  { day: "Monday", meals: { breakfast: "Idli + Sambar", lunch: "Rice, Dal, Bhindi", dinner: "Roti, Paneer, Salad" } },
-  { day: "Tuesday", meals: { breakfast: "Poha", lunch: "Rajma, Rice", dinner: "Chole, Roti" } },
-  { day: "Wednesday", meals: { breakfast: "Dosa", lunch: "Sambar, Rice", dinner: "Paratha, Aloo Sabzi" } },
-  { day: "Thursday", meals: { breakfast: "Upma", lunch: "Kadhi, Rice", dinner: "Roti, Mix Veg" } },
-  { day: "Friday", meals: { breakfast: "Bread Butter", lunch: "Paneer Rice", dinner: "Dal, Roti" } },
-  { day: "Saturday", meals: { breakfast: "Aloo Puri", lunch: "Veg Biryani", dinner: "Pav Bhaji" } },
-  { day: "Sunday", meals: { breakfast: "Chole Bhature", lunch: "Fried Rice, Manchurian", dinner: "Pizza, Salad" } },
-];
+// const weeklyMenu = [
+//   { day: "Monday", meals: { breakfast: "Idli + Sambar", lunch: "Dal, Bhindi", dinner: "Paneer, Salad" } },
+//   { day: "Tuesday", meals: { breakfast: "Poha", lunch: "Rajma ", dinner: "Chole" } },
+//   { day: "Wednesday", meals: { breakfast: "Dosa", lunch: "Sambar", dinner: "Paratha, Aloo Sabzi" } },
+//   { day: "Thursday", meals: { breakfast: "Upma", lunch: "Kadhi ", dinner: "Mix Veg" } },
+//   { day: "Friday", meals: { breakfast: "Bread Butter", lunch: "Paneer", dinner: "Dal" } },
+//   { day: "Saturday", meals: { breakfast: "Aloo Puri", lunch: "Veg Biryani", dinner: "Pav Bhaji" } },
+//   { day: "Sunday", meals: { breakfast: "Chole Bhature", lunch: "Fried Rice, Manchurian", dinner: "Pizza, Salad" } },
+// ];
 
 
 
@@ -126,22 +130,99 @@ const FeedbackForm: React.FC = () => {
   const [overallRating, setOverallRating] = React.useState<number>(0);
   const [hoverOverallRating, setHoverOverallRating] = React.useState<number>(0);
   const [itemFeedback, setItemFeedback] = React.useState<Record<string, ItemFeedbackState>>({});
-
-  const mealOptions = React.useMemo(() => {
-    return weeklyMenu.flatMap(dayItem => {
-      const mealsToShow: { value: string; label: string }[] = [];
-      if (dayItem.meals.lunch) {
-        mealsToShow.push({ value: dayItem.meals.lunch, label: dayItem.meals.lunch });
-      }
-      if (dayItem.meals.dinner) {
-        mealsToShow.push({ value: dayItem.meals.dinner, label: dayItem.meals.dinner });
-      }
-      return mealsToShow;
-    });
-  }, []);
-
-  const [selectedMeal, setSelectedMeal] = React.useState<string>(mealOptions[0]?.value || '');
+  const [loading , setLoading] = useState<boolean>(false)
   
+  const navigate = useNavigate();
+
+
+  //api call
+  //react-query
+const { isError, isLoading, data, error } = useQuery({
+  queryKey: ["Messmenu"],
+  queryFn: async () => {
+    const response = await axiosInstance("/menu");
+    console.log("API called only once...");
+    return response?.data?.data?.menu;
+  },
+  staleTime: Infinity,        // never becomes stale
+  gcTime: Infinity,           // never garbage collect cached data
+  refetchOnWindowFocus: false,
+  refetchOnReconnect: false,
+  refetchOnMount: false,
+  retry: false,               // optional: no retries if it fails
+});
+
+
+console.log(isError , isLoading , error , data);
+
+
+// if (isLoading) {
+//   return(
+//       <div className="bg-background flex flex-col items-center justify-center min-h-screen text-gray-700 dark:text-white">
+//         <Loader2 className="animate-spin w-12 h-12 text-blue-500 mb-4" />
+//         <h2 className="text-xl font-semibold">Loading, please wait...</h2>
+//         <p className="text-sm text-gray-500 mt-2">
+//           Fetching latest data from the server.
+//         </p>
+//       </div>
+//   )
+// }
+
+  // const mealOptions = React.useMemo(() => {
+
+  //   return weeklyMenu.flatMap(dayItem => {
+      
+  //     const mealsToShow: { value: string; label: string }[] = [];
+  //     if (dayItem.meals.lunch) {
+  //       mealsToShow.push({ value: dayItem.meals.lunch, label: dayItem.meals.lunch });
+  //     }
+  //     if (dayItem.meals.dinner) {
+  //       mealsToShow.push({ value: dayItem.meals.dinner, label: dayItem.meals.dinner });
+  //     }
+  //     return mealsToShow;
+  //   });
+  // }, []);
+
+
+const mealOptions = React.useMemo(() => {
+  if (!data) return [];
+
+  const EXCLUDED_ITEMS = ["2 Chapati", "Rice", "Roti"];
+
+  return data.flatMap((dayItem: any) => {
+    const mealsToShow = [];
+
+    const cleanItems = (items: string[]) =>
+      items.filter(item => !EXCLUDED_ITEMS.includes(item));
+
+    if (dayItem.meals?.lunch) {
+      const items = cleanItems(dayItem.meals.lunch.items);
+
+      mealsToShow.push({
+        value: items.join(", "),
+        label: items.join(", "),
+      });
+    }
+
+    if (dayItem.meals?.dinner) {
+      const items = cleanItems(dayItem.meals.dinner.items);
+
+      mealsToShow.push({
+        value: items.join(", "),
+        label: items.join(", "),
+      });
+    }
+
+    return mealsToShow;
+  });
+}, [data]);
+
+  
+const [selectedMeal, setSelectedMeal] = React.useState<string>(mealOptions[0]?.value || '');
+  
+
+
+
   React.useEffect(() => {
     setItemFeedback({});
   }, [selectedMeal]);
@@ -163,7 +244,12 @@ const FeedbackForm: React.FC = () => {
     );
   };
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
+   
+    if (loading) {
+      return;
+    }
+
     e.preventDefault();
     const feedbackData = {
       meal: selectedMeal,
@@ -173,8 +259,14 @@ const FeedbackForm: React.FC = () => {
       negativeTags: negativeFeedback,
       comment
     };
+    setLoading(true)
     console.log('Feedback Submitted:', feedbackData);
-    const messageBox = document.getElementById('messageBox');
+
+   try {
+
+    const response = await axiosInstance.post("/user/addfeedback" , feedbackData);
+    console.log("response : " , response.data);
+     const messageBox = document.getElementById('messageBox');
     if (messageBox) {
         messageBox.innerText = 'Thank you for your feedback!';
         messageBox.classList.remove('opacity-0');
@@ -182,6 +274,29 @@ const FeedbackForm: React.FC = () => {
             messageBox.classList.add('opacity-0');
         }, 3000);
     }
+
+
+   setTimeout(()=>{
+     navigate("/profile")
+   },3000);
+    
+   } catch (error) {
+
+    console.log("responce : " , error);
+
+     const messageBox = document.getElementById('messageBox2');
+    if (messageBox) {
+        messageBox.innerText = 'Server Error!';
+        messageBox.classList.remove('opacity-0');
+        setTimeout(() => {
+            messageBox.classList.add('opacity-0');
+        }, 3000);
+    }
+    
+   }finally {
+    setLoading(false)
+   }
+
   };
   
   const positiveOptions = ['Good Portion Size', 'Great Service'];
@@ -194,6 +309,11 @@ const FeedbackForm: React.FC = () => {
       <div id="messageBox" className="fixed top-5 bg-emerald-500 text-white py-2 px-4 rounded-lg shadow-lg opacity-0 transition-opacity duration-300 z-50">
         Thank you for your feedback!
       </div>
+
+            <div id="messageBox2" className="fixed top-5 bg-red-500 text-white py-2 px-4 rounded-lg shadow-lg opacity-0 transition-opacity duration-300 z-50">
+       Server Error Try Agin !
+      </div>
+
       <div className="w-full max-w-2xl">
         <form 
           onSubmit={handleSubmit}
@@ -212,9 +332,9 @@ const FeedbackForm: React.FC = () => {
               onChange={(e) => setSelectedMeal(e.target.value)}
               className="w-full p-3 bg-background border-2 border-border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-all"
             >
-              {mealOptions.map(option => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
+              {mealOptions.map((option : any ) => (
+                <option key={option?.value} value={option?.value}>
+                  {option?.label}
                 </option>
               ))}
             </select>
@@ -286,10 +406,16 @@ const FeedbackForm: React.FC = () => {
           </div>
           
           <button 
+           disabled={loading}
             type="submit"
-            className="w-full p-4 bg-primary text-primary-foreground font-bold text-lg rounded-lg hover:opacity-90 transition-opacity transform hover:scale-[1.01]"
+            className="w-full p-4 bg-primary text-primary-foreground font-bold text-lg rounded-lg hover:opacity-90 transition-opacity transform hover:scale-[1.01] disabled:cursor-not-allowed"
           >
-            Submit Feedback
+            {loading ?  
+             <>
+             <Loader2 className="animate-spin  w-12 h-12 text-white mb-4 mx-auto" />
+           <h2 className="text-xl font-semibold">Loading, please wait...</h2>
+             </>
+            : "Submit Feedback"}
           </button>
         </form>
       </div>
