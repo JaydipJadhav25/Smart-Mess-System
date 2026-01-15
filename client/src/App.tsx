@@ -38,6 +38,7 @@ import ProtectedRoute from "./utils/ProtectedRoute"
 import AdminLogin from "./pages/admin/AdminLogin"
 import AdminSettingPage from "./pages/admin/AdminSettingPage"
 import { AdminSettingProvider } from "./components/context/AdminSetting"
+import TranscationSuccess from "./components/Transcations/TranscationSuccess"
 
 
 
@@ -94,7 +95,16 @@ import { AdminSettingProvider } from "./components/context/AdminSetting"
             <ProtectedRoute allowedRoles={["student" , "admin"]}>
             <LeavePopup/>
             </ProtectedRoute>
-            }/>   
+            }/> 
+
+            <Route path="/transcation-success" element={
+            <ProtectedRoute allowedRoles={["student" , "admin"]}>
+             <TranscationSuccess/>
+            </ProtectedRoute>
+            }/>     
+
+
+
 
              {/* adminlogin */}
             <Route  path="/admin-login" element={<AdminLogin/>}/>
@@ -151,6 +161,8 @@ import { AdminSettingProvider } from "./components/context/AdminSetting"
             <ApplicationReview/>
             </ProtectedRoute>
             }/>
+
+
 
 
             {/* admin setting page */}

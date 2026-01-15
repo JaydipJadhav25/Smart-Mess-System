@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Loader2  } from "lucide-react";
 import { useNavigate } from 'react-router-dom';
 
+
 // --- Type Definitions ---
 interface FeedbackTagProps {
   label: string;
@@ -131,9 +132,9 @@ const FeedbackForm: React.FC = () => {
   const [hoverOverallRating, setHoverOverallRating] = React.useState<number>(0);
   const [itemFeedback, setItemFeedback] = React.useState<Record<string, ItemFeedbackState>>({});
   const [loading , setLoading] = useState<boolean>(false)
-  
   const navigate = useNavigate();
 
+  // const {isFormSubmitted} = useAuth()
 
   //api call
   //react-query
@@ -310,7 +311,7 @@ const [selectedMeal, setSelectedMeal] = React.useState<string>(mealOptions[0]?.v
         Thank you for your feedback!
       </div>
 
-            <div id="messageBox2" className="fixed top-5 bg-red-500 text-white py-2 px-4 rounded-lg shadow-lg opacity-0 transition-opacity duration-300 z-50">
+        <div id="messageBox2" className="fixed top-5 bg-red-500 text-white py-2 px-4 rounded-lg shadow-lg opacity-0 transition-opacity duration-300 z-50">
        Server Error Try Agin !
       </div>
 
@@ -407,6 +408,7 @@ const [selectedMeal, setSelectedMeal] = React.useState<string>(mealOptions[0]?.v
           
           <button 
            disabled={loading}
+           hidden ={localStorage.getItem("applicationSubmit") !== "true"}
             type="submit"
             className="w-full p-4 bg-primary text-primary-foreground font-bold text-lg rounded-lg hover:opacity-90 transition-opacity transform hover:scale-[1.01] disabled:cursor-not-allowed"
           >

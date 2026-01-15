@@ -3,6 +3,7 @@ import StudentLayout from "@/components/students/StudentLayout";
 import { axiosInstance } from "@/config/axiosInstances";
 import { useQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
+// import { useEffect } from "react";
 
 export const StudentPanel = () => {
   const { student_id, username } = useAuth();
@@ -13,12 +14,7 @@ export const StudentPanel = () => {
     queryFn: async () => {
       const response = await axiosInstance.get("/user/myProfile");
       return response.data?.user || response.data;
-    },
-    staleTime: Infinity,
-    gcTime: Infinity,
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: false,
-    refetchOnMount: false,
+    }
   });
 
   if (isLoading) {
@@ -32,6 +28,7 @@ export const StudentPanel = () => {
     );
   }
 
+
   if (isError) {
     return (
       <StudentLayout currentPage="profile">
@@ -42,6 +39,25 @@ export const StudentPanel = () => {
       </StudentLayout>
     );
   }
+
+
+//   useEffect(() => {
+//   if (data.isFormSubmitted) {
+//     console.log("call........")
+//     applicationSubmit();
+//   }
+// }, [data.isFormSubmitted]); // Effect re-runs when this value changes
+
+
+if (data.isFormSubmitted) {
+  // applicationSubmit();
+  localStorage.setItem("applicationSubmit" , "true");
+}else{
+  localStorage.setItem("applicationSubmit" , "false");
+}
+
+  // console.log("User profile : " , data)
+
 
   const student = data || {};
   const firstInitial = student.firstName?.[0]?.toUpperCase() || username?.[0]?.toUpperCase() || "?";
