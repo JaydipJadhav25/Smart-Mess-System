@@ -1,10 +1,11 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
-import { Bars3Icon, BellIcon, XMarkIcon , ArrowRightIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, XMarkIcon , ArrowRightIcon } from '@heroicons/react/24/outline'
 import { ModeToggle } from '../mode-toggle'
 import {Link, NavLink, useNavigate} from "react-router-dom"
 import useAuth from '../context/useAuth'
 import { axiosInstance } from '@/config/axiosInstances'
 import { toast } from 'sonner'
+// import Loading from '../flashPages/Loading'
 
 
 
@@ -113,299 +114,179 @@ try {
 
 
   return (
-<Disclosure as="nav" className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-lg">
+    <Disclosure
+  as="nav"
+  className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-lg"
+>
+  <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div className="relative flex h-16 items-center justify-between">
 
-  <div className="px-4 sm:px-6 lg:px-8 w-full">
+      {/* Mobile Menu Button */}
+      <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+        <DisclosureButton className="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground hover:bg-muted focus:outline-none focus:ring-2 focus:ring-primary">
+          <Bars3Icon className="block h-6 w-6 data-open:hidden" />
+          <XMarkIcon className="hidden h-6 w-6 data-open:block" />
+        </DisclosureButton>
+      </div>
 
-       <div className="flex justify-between items-center h-16 w-full">
-
-      
-          <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-               {/* <div className="flex items-center justify-between sm:hidden w-full"> */}
-            {/* Mobile menu button*/}
-            <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:ring-2 focus:ring-white focus:outline-hidden focus:ring-inset">
-              <span className="absolute -inset-0.5" />
-              <span className="sr-only">Open main menu</span>
-              <Bars3Icon aria-hidden="true" className="block size-6 group-data-open:hidden" />
-              <XMarkIcon aria-hidden="true" className="hidden size-6 group-data-open:block" />
-            </DisclosureButton>
-
-            
-          </div> 
-
-          <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-            {/* <div className="flex shrink-0 items-center">
-              <img
-                alt="Your Company"
-                src="logo.png"
-                className="h-12 w-auto object-contain rounded-md"
-              />
-              <span className="hidden md:inline-block text-sm font-medium">
-              Smart Mess System
-          </span>
-            </div> */}
-
-             <div className="flex items-center space-x-2">
+      {/* Brand */}
+      <div className="flex flex-1 items-center justify-center sm:justify-start">
+        <div className="flex items-center gap-2">
           <img
-            src="logo.png"
-            alt="Logo"
-            className="w-auto h-8 object-contain rounded-md"
+            src="/logo.png"
+            alt="Smart Mess System"
+            className="h-8 w-auto rounded-md"
           />
-          <span className="hidden md:inline-block text-sm font-medium">
-        Smat Mess System
+
+          <span className="hidden md:inline-flex items-center text-lg font-extrabold tracking-wide">
+            <span className="text-foreground">SMART</span>
+            <span className="mx-1 text-primary">MESS</span>
+            <span className="text-foreground">SYSTEM</span>
           </span>
         </div>
 
-            <div className="hidden sm:ml-6 sm:block">
-              <div className="flex items-center space-x-4">
-                {navigation.map((item) => (
-                  <NavLink
-                    key={item.name}
-                    to={item.path}
-                    className={({ isActive }) =>
-                      classNames(
-                        isActive
-                          ? 'bg-gray-900 text-white'
-                          : 'text-black dark:text-white hover:bg-gray-700 hover:text-white',
-                        'rounded-md px-3 py-2 text-sm font-medium'
-                      )
-                    }
-                  >
-                    {item.name}
-                  </NavLink>
-
-                ))}
-              </div>
-            </div>
-
-
-
-          </div>
-          <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <button
-              type="button"
-              className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden"
-            >
-              <span className="absolute -inset-1.5" />
-              <span className="sr-only">View notifications</span>
-              <BellIcon aria-hidden="true" className="size-6" />
-            </button>
-
-            {/* Profile dropdown */}
-            {
-              !isAuthenticated ? <>
-                <Link to={"/login"} className='ml-3 flex items-center gap-2 text-sm font-medium bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-md'><span>Profile</span>
-                <ArrowRightIcon  aria-hidden="true" className="size-5" />
-                </Link>              
-              </>: <>
-              <Menu as="div" className="relative ml-3">
-{/* 
-              <MenuButton className="relative flex rounded-full dark:bg-gray-800 text-sm focus:outline-hidden focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-gray-800">
-              <span className="absolute -inset-1.5" />
-               {
-                role === "admin" ?   <img
-                  alt=""
-                  //src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                 src="/admin.png"
-                  className="size-8 rounded-full"
-                />  :
-
-                <img
-                  alt=""
-                  //src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                 src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-                  className="size-8 rounded-full"
-                />   
-               }
-
-              <span className="text-sm font-medium bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-md">
-                {
-                   student_id
+        {/* Desktop Navigation */}
+        <div className="hidden sm:ml-8 sm:block">
+          <div className="flex items-center gap-2">
+            {navigation.map((item) => (
+              <NavLink
+                key={item.name}
+                to={item.path}
+                className={({ isActive }) =>
+                  classNames(
+                    "rounded-md px-3 py-2 text-sm font-medium transition",
+                    isActive
+                      ? "bg-primary text-primary-foreground"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  )
                 }
-              </span>
-              </MenuButton> */}
-
-                <MenuButton
-                  className="
-                    relative flex items-center gap-1 rounded-full
-                    dark:bg-gray-800 text-sm
-                    focus:outline-none
-                    focus-visible:ring-2
-                    focus-visible:ring-white
-                    focus-visible:ring-offset-2
-                    focus-visible:ring-offset-gray-800
-                  "
-                >
-                  {/* Avatar Wrapper */}
-                  <div
-                    className={`relative rounded-full p-0.5 ${
-                      role === "admin"
-                        ? "bg-gradient-to-tr from-amber-400 via-yellow-500 to-amber-600"
-                        : ""
-                    }`}
-                  >
-                    <img
-                      alt=""
-                      src={role === "admin" ? "/admin2.png" : "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"}
-                      className="size-8 rounded-full bg-gray-900"
-                    />
-
-                    {/* Admin Badge */}
-                    {role === "admin" && (
-                      <span
-                        className="
-                          absolute -bottom-1 -right-1
-                          bg-amber-500 text-black
-                          text-[9px] font-bold
-                          px-1.5 py-0.5
-                          rounded-full
-                          shadow-md
-                        "
-                      >
-                        ADMIN
-                      </span>
-                    )}
-                  </div>
-
-                  {/* ID / Label */}
-                  <span className="text-xs font-medium bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-md">
-                    {/* {role === "admin" ? "Administrator" : student_id} */}
-                    {
-                      student_id
-                    }
-                  </span>
-                </MenuButton>
-
-
-              <MenuItems
-                transition
-                className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-background backdrop-blur-lg py-1 shadow-lg ring-1 ring-black/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
               >
-                 {role && role === "admin" &&   <MenuItem>
+                {item.name}
+              </NavLink>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Right Section */}
+      <div className="flex items-center gap-3">
+
+        {!isAuthenticated ? (
+          <Link
+            to="/login"
+            className="flex items-center gap-2 rounded-md bg-muted px-3 py-1.5 text-sm font-medium hover:bg-muted/80"
+          >
+            Profile
+            <ArrowRightIcon className="h-4 w-4" />
+          </Link>
+        ) : (
+          <Menu as="div" className="relative">
+            <MenuButton className="flex items-center gap-2 rounded-full focus:outline-none focus:ring-2 focus:ring-primary">
+
+              {/* Avatar */}
+              <div
+                className={`relative rounded-full p-0.5 ${
+                  role === "admin"
+                    ? "bg-gradient-to-tr from-amber-400 via-yellow-500 to-amber-600"
+                    : ""
+                }`}
+              >
+                <img
+                  src={
+                    role === "admin"
+                      ? "/admin2.png"
+                      : "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+                  }
+                  alt="User"
+                  className="h-8 w-8 rounded-full"
+                />
+
+                {role === "admin" && (
+                  <span className="absolute -bottom-1 -right-1 rounded-full bg-amber-500 px-1.5 py-0.5 text-[9px] font-bold text-black">
+                    ADMIN
+                  </span>
+                )}
+              </div>
+
+              <span className="hidden sm:inline-block rounded-md bg-muted px-2 py-1 text-xs font-medium">
+                {student_id}
+              </span>
+            </MenuButton>
+
+            <MenuItems className="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-background py-1 shadow-lg ring-1 ring-black/5">
+              {role === "admin" && (
+                <MenuItem>
                   <Link
-                    to={"/admin"}
-                    className="block px-4 py-2 text-sm text-gray-700 dark:text-white dark:data-focus:bg-gray-900 data-focus:bg-gray-100 data-focus:outline-hidden"
+                    to="/admin"
+                    className="block px-4 py-2 text-sm hover:bg-muted"
                   >
                     Dashboard
                   </Link>
-                </MenuItem> } 
-
-                <MenuItem>
-                  <Link
-                    to={"/profile"}
-                    className="block px-4 py-2 text-sm text-gray-700 dark:text-white dark:data-focus:bg-gray-900 data-focus:bg-gray-100 data-focus:outline-hidden"
-                  >
-                    Your Profile
-                  </Link>
-                </MenuItem> 
-
-                
-               
-                <MenuItem>
-                  <Link
-                     to={role === "admin" ? "/admin-settings" : ""}
-                    className="block px-4 py-2 text-sm text-gray-700 dark:text-white dark:data-focus:bg-gray-900 data-focus:bg-gray-100 data-focus:outline-hidden"
-                  >
-                    Settings
-                  </Link>
                 </MenuItem>
+              )}
 
+              <MenuItem>
+                <Link
+                  to="/profile"
+                  className="block px-4 py-2 text-sm hover:bg-muted"
+                >
+                  Your Profile
+                </Link>
+              </MenuItem>
 
-                <MenuItem>
-                    <p
-                    onClick={userLogout}
-                    className='block px-4 py-2 text-sm text-gray-700 dark:text-white dark:data-focus:bg-gray-900 data-focus:bg-gray-100 data-focus:outline-hidden cursor-pointer' >
-                       Sign Out
-                    </p>
-                </MenuItem>
-              </MenuItems>
+              <MenuItem>
+                <Link
+                  to={role === "admin" ? "/admin-settings" : "#"}
+                  className="block px-4 py-2 text-sm hover:bg-muted"
+                >
+                  Settings
+                </Link>
+              </MenuItem>
 
-            </Menu>
-              </>
-            }
-            
-             {/* mode  */}
-                <div className='px-3'>
-                    <ModeToggle/>
-                </div>
-                {/* student id  */}
-            {/* <div className="ml-auto flex items-center space-x-3">
-            <span className="text-sm text-muted-foreground">ID:</span>
-            <span className="text-sm font-medium bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-md">
-              S2025001
-            </span>
-            </div> */}
+              <MenuItem>
+                <button
+                  onClick={userLogout}
+                  className="block w-full px-4 py-2 text-left text-sm hover:bg-muted"
+                >
+                  Sign Out
+                </button>
+              </MenuItem>
+            </MenuItems>
+          </Menu>
+        )}
 
-          </div>
-        </div>
-
+        {/* Theme Toggle */}
+        <ModeToggle />
       </div>
-
-
-
-      {/* <DisclosurePanel className="sm:hidden">
-        <div className="space-y-1 px-2 pt-2 pb-3">
-          {navigation.map((item) => (
-            // <DisclosureButton
-            //   key={item.name}
-            //   as="a"
-            //   href={item.href}
-            //   aria-current={item.current ? 'page' : undefined}
-            //   className={classNames(
-            //     item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-            //     'block rounded-md px-3 py-2 text-base font-medium',
-            //   )}
-            // >
-            //   {item.name}
-            // </DisclosureButton>
-                        <NavLink
-              key={item.name}
-              to={item.path}
-              className={({ isActive }) =>
-                classNames(
-                  isActive
-                    ? 'bg-gray-900 text-white'
-                    : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                  'block rounded-md px-3 py-2 text-base font-medium'
-                )
-              }
-            >
-              {item.name}
-            </NavLink>
-
-          ))}
-        </div>
-      </DisclosurePanel> */}
-
-
-      <DisclosurePanel className="sm:hidden">
-  <div className="space-y-1 px-3 pt-2 pb-3">
-    {navigation.map((item) => (
-      <NavLink
-        key={item.name}
-        to={item.path}
-        className={({ isActive }) =>
-          classNames(
-            isActive
-              ? 'bg-gray-900 text-white'
-              : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-            'block rounded-md px-3 py-2 text-base font-medium'
-          )
-        }
-      >
-        {item.name}
-      </NavLink>
-    ))}
+    </div>
   </div>
-</DisclosurePanel>
+
+  {/* Mobile Menu */}
+  <DisclosurePanel className="sm:hidden">
+    <div className="space-y-1 px-3 pt-2 pb-3">
+      {navigation.map((item) => (
+        <NavLink
+          key={item.name}
+          to={item.path}
+          className={({ isActive }) =>
+            classNames(
+              "block rounded-md px-3 py-2 text-base font-medium",
+              isActive
+                ? "bg-primary text-primary-foreground"
+                : "text-muted-foreground hover:bg-muted"
+            )
+          }
+        >
+          {item.name}
+        </NavLink>
+      ))}
+    </div>
+  </DisclosurePanel>
 
 
+  {/* <Loading/> */}
+  <div className="absolute top-0 left-0 h-0.5 w-full bg-white/5 overflow-hidden z-50"> <div className="h-full w-full bg-gradient-to-r from-blue-700 via-sky-400 to-orange-300 animate-topBar rounded-r-full"></div> </div>
+</Disclosure>
 
-
-
-      <div className="absolute top-0 left-0 h-0.5 w-full bg-white/5 overflow-hidden z-50">
-  <div className="h-full w-full bg-gradient-to-r from-blue-700 via-sky-400 to-orange-300 animate-topBar rounded-r-full"></div>
-</div>
-    </Disclosure>
   )
 }
