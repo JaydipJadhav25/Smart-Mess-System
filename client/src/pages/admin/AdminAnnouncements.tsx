@@ -232,7 +232,7 @@ const { isError, isLoading, data, error } = useQuery({
                          <h1 className="text-center red-green-800">{error?.message}</h1>
                   </>:<>
                   {filteredAnnouncements &&filteredAnnouncements.map((announcement: any) => (
-            <Card key={announcement._id} className="p-6 border shadow-sm">
+            <Card key={announcement._id} className="p-6 border shadow-sm dark:bg-background/50">
               <div className="flex flex-col gap-4">
                 <div className="flex justify-between">
                   <div className="flex items-start gap-2">

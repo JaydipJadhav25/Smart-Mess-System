@@ -1,0 +1,45 @@
+{
+  day: "Monday",
+  meals: {
+    breakfast: {
+      items: [
+        { name: "Idli", quantity: 2, unit: "piece" },
+        { name: "Sambar", quantity: 150, unit: "ml" }
+      ],
+      nutrition: {
+        auto: { calories: 300, protein: 9, carbs: 55, fat: 4 },
+        manual: { calories: 320, protein: 10, carbs: 60, fat: 5 },
+        source: "manual"
+      },
+      image: "/images/breakfast/idli-sambar.png"
+    },
+
+    lunch: {
+      items: [
+        { name: "Rice", quantity: 200, unit: "g" },
+        { name: "Dal", quantity: 150, unit: "g" },
+        { name: "Bhindi", quantity: 100, unit: "g" },
+        { name: "Chapati", quantity: 2, unit: "piece" }
+      ],
+      nutrition: {
+        auto: { calories: 520, protein: 17, carbs: 85, fat: 10 },
+        manual: { calories: 550, protein: 18, carbs: 90, fat: 12 },
+        source: "manual"
+      },
+      image: "/images/lunch/lunch.png"
+    },
+
+    dinner: {
+      items: [
+        { name: "Roti", quantity: 2, unit: "piece" },
+        { name: "Paneer", quantity: 100, unit: "g" },
+        { name: "Salad", quantity: 150, unit: "g" }
+      ],
+      nutrition: {
+        auto: { calories: 580, protein: 20, carbs: 75, fat: 14 },
+        source: "auto"
+      },
+      image: "/images/dinner/dinner.png"
+    }
+  }
+}
