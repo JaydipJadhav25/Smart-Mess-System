@@ -3,7 +3,7 @@ import { axiosInstance } from "@/config/axiosInstances";
 import { useQuery } from "@tanstack/react-query";
 
 function Updates() {
-  const { isError, isLoading, data } = useQuery({
+  const { isError, isLoading, data , error } = useQuery({
     queryKey: ["adminanncements"],
     queryFn: async () => {
       const response = await axiosInstance("/open/announcements");
@@ -17,7 +17,7 @@ function Updates() {
   //   : [];
 
 
-  console.log("data : " , data);
+  console.log("anncounments : : " , data , error);
 
     // Sort by createdAt (newest first) and take the top 4
   // const recentAnnouncements = data

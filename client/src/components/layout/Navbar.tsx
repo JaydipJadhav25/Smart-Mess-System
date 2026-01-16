@@ -5,7 +5,13 @@ import {Link, NavLink, useNavigate} from "react-router-dom"
 import useAuth from '../context/useAuth'
 import { axiosInstance } from '@/config/axiosInstances'
 import { toast } from 'sonner'
+import { LanguageSwitcher } from './LanguageSwitcher'
+import { FiGithub } from 'react-icons/fi'
 // import Loading from '../flashPages/Loading'
+
+
+import { useTranslation } from "react-i18next"
+
 
 
 
@@ -22,15 +28,25 @@ import { toast } from 'sonner'
 // ]
  
 
+// const navigation = [
+//   { name: 'Home' , path : '/' },
+//   { name: 'Todays Plate', path : '/today'  },
+//   { name: 'Weekly Menu', path : '/menu'  },
+//   // { name: 'Feedback',  path : '/feedback' },
+//   { name: 'About Mess',  path : '/about' },
+//   // { name: 'Feedback',  path : '/feedback' },
+//   // { name: 'Report Leave',  path : '/report' },
+// ]
+
+
+
 const navigation = [
-  { name: 'Home' , path : '/' },
-  { name: 'Todays Plate', path : '/today'  },
-  { name: 'Weekly Menu', path : '/menu'  },
-  // { name: 'Feedback',  path : '/feedback' },
-  { name: 'About Mess',  path : '/about' },
-  // { name: 'Feedback',  path : '/feedback' },
-  // { name: 'Report Leave',  path : '/report' },
+  { key: 'nav.home', path: '/' },
+  { key: 'nav.today', path: '/today' },
+  { key: 'nav.menu', path: '/menu' },
+  { key: 'nav.about', path: '/about' },
 ]
+
 
 function classNames(...classes :  any) {
   return classes.filter(Boolean).join(' ')
@@ -58,6 +74,8 @@ function classNames(...classes :  any) {
 
 
 export default function Navbar() {
+
+const { t } = useTranslation()
 
 
 
@@ -148,9 +166,9 @@ try {
         {/* Desktop Navigation */}
         <div className="hidden sm:ml-8 sm:block">
           <div className="flex items-center gap-2">
-            {navigation.map((item) => (
+            {navigation.map((item , idx) => (
               <NavLink
-                key={item.name}
+                key={idx}
                 to={item.path}
                 className={({ isActive }) =>
                   classNames(
@@ -161,7 +179,8 @@ try {
                   )
                 }
               >
-                {item.name}
+                {/* {item.name} */}
+                  {t(item.key)}
               </NavLink>
             ))}
           </div>
@@ -256,7 +275,23 @@ try {
         )}
 
         {/* Theme Toggle */}
-        <ModeToggle />
+        <div className="flex items-center gap-2">
+           <ModeToggle />
+          <LanguageSwitcher/>
+          <a
+  href="https://github.com/JaydipJadhav25/Smart-Mess-System.git"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="rounded-md p-2 text-muted-foreground hover:text-foreground hover:bg-muted transition"
+>
+  < FiGithub className="h-5 w-5" />
+
+</a>
+
+        </div>
+
+
+
       </div>
     </div>
   </div>
@@ -266,7 +301,7 @@ try {
     <div className="space-y-1 px-3 pt-2 pb-3">
       {navigation.map((item) => (
         <NavLink
-          key={item.name}
+          key={item.key}
           to={item.path}
           className={({ isActive }) =>
             classNames(
@@ -277,7 +312,7 @@ try {
             )
           }
         >
-          {item.name}
+            {t(item.key)}
         </NavLink>
       ))}
     </div>
