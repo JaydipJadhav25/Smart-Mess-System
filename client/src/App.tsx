@@ -39,6 +39,7 @@ import AdminLogin from "./pages/admin/AdminLogin"
 import AdminSettingPage from "./pages/admin/AdminSettingPage"
 import { AdminSettingProvider } from "./components/context/AdminSetting"
 import TranscationSuccess from "./components/Transcations/TranscationSuccess"
+import Features from "./pages/Features"
 
 
 
@@ -51,6 +52,7 @@ import TranscationSuccess from "./components/Transcations/TranscationSuccess"
           <Route path="/" element={<Index/>}/>
           <Route  path="/today" element={<Today/>}/>
           <Route  path="/menu" element={<Menu/>}/>
+          <Route  path="/features" element={<Features/>}/>
           {/* <Route  path="/feedback" element={<Feedback/>}/> */}
           <Route  path="/report" element={<Report/>}/>
           <Route  path="/about" element={<About/>}/>
@@ -194,7 +196,7 @@ import TranscationSuccess from "./components/Transcations/TranscationSuccess"
 //   { name: 'About Mess',  path : '/about' },
 // ]
 
-
+ 
 //create client of react - query
 const client = new QueryClient();
 

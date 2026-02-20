@@ -42,6 +42,7 @@ import { useTranslation } from "react-i18next"
 
 const navigation = [
   { key: 'nav.home', path: '/' },
+  { key: 'nav.features', path: '/features' },
   { key: 'nav.today', path: '/today' },
   { key: 'nav.menu', path: '/menu' },
   { key: 'nav.about', path: '/about' },
