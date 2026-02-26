@@ -33,7 +33,9 @@ export default function TodayNutrition() {
     retry: false, // optional: no retries if it fails
   });
 
-  console.log("data : ", data);
+  // console.log("Meanu : ", data);
+    // const todayVal = new Date().toLocaleDateString("en-US", { weekday: "long" });
+  // console.log("today day : ", todayVal);
   console.log("error : ", error);
 
   // if (isLoading) return <p>Loading...</p>;
@@ -72,13 +74,25 @@ export default function TodayNutrition() {
     );
   }
 
-  const todayIndex = new Date().getDay(); // Sunday=0
 
-  // Map Sunday=0 → index 6, Monday=1 → index 0, etc.
-  const mapDayIndex = [6, 0, 1, 2, 3, 4, 5];
-  // const mapDayIndex = [4, 5, 2, 3, 0, 1, 6];// as per my online-Db
-  const today = data[mapDayIndex[todayIndex]];
-  // const today = data?.data?.[mapDayIndex[todayIndex]];
+
+  // const todayIndex = new Date().getDay(); // Sunday=0
+
+  // // Map Sunday=0 → index 6, Monday=1 → index 0, etc.
+  // const mapDayIndex = [6, 0, 1, 2, 3, 4, 5];
+  // // const mapDayIndex = [4, 5, 2, 3, 0, 1, 6];// as per my online-Db
+  // const today = data[mapDayIndex[todayIndex]];
+  // // const today = data?.data?.[mapDayIndex[todayIndex]];
+
+
+
+  const todayDayName = new Date().toLocaleString("en-US", {
+  weekday: "long",
+});
+
+const today = data.find(
+  (item : any) => item.day === todayDayName
+);
 
   console.log("today : ", today);
 
@@ -145,6 +159,7 @@ export default function TodayNutrition() {
           {/* <h1 className="text-3xl font-bold text-center mb-6">{today.day} Meals &  <PointerHighlight>
         <span> Nutrition</span>
       </PointerHighlight></h1> */}
+      
           <h1 className="text-3xl font-bold text-center mb-6">
             {(today && today.day) || " "} Meals &{" "}
             <PointerHighlight containerClassName="inline-block">
@@ -154,6 +169,7 @@ export default function TodayNutrition() {
 
           {/* show note */}
           <NutritionNode />
+
         </div>
         {isLoading ? (
           <>
