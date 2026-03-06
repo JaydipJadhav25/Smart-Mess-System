@@ -71,12 +71,12 @@ console.log("errors "  , errors);
                 className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                 placeholder="XXXXXXXXXXXX"
               />
-              <button
+              {/* <button
                 type="button"
                 className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 text-sm"
               >
                 Update Profile as per Aadhaar
-              </button>
+              </button> */}
             </div>
             {/* {errors.aadhaar && <p className="text-red-500 text-sm mt-1">{errors.aadhaar.message}</p>} */}
             {errors.aadhaar && typeof errors.aadhaar.message === "string" && (
@@ -105,8 +105,8 @@ console.log("errors "  , errors);
         {/* Email with verification */}
         <div className="bg-backgroud border border-red-200 rounded-md p-4">
           <div className="flex items-center space-x-2 text-red-600 mb-3">
-            <span>ℹ️</span>
-            <span className="text-sm">Note: If you enter/change the Email ID then verification is mandatory and OTP will send to entered Email ID.</span>
+            {/* <span>ℹ️</span> */}
+            {/* <span className="text-sm">Note: If you enter/change the Email ID then verification is mandatory and OTP will send to entered Email ID.</span> */}
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -131,19 +131,19 @@ console.log("errors "  , errors);
             )
           }
             </div>
-            <div className="flex items-end">
+            {/* <div className="flex items-end">
               <span className="px-4 py-2 bg-green-500 text-white rounded-md text-sm">
                 ✓ EMAIL ID VERIFIED
               </span>
-            </div>
+            </div> */}
           </div>
         </div>
 
         {/* Mobile with verification */}
         <div className="bg-backgroud border border-red-200 rounded-md p-4">
           <div className="flex items-center space-x-2 text-red-600 mb-3">
-            <span>ℹ️</span>
-            <span className="text-sm">Note: If you change the Mobile Number then verification is mandatory and OTP will send to entered Mobile Number.</span>
+            {/* <span>ℹ️</span> */}
+            {/* <span className="text-sm">Note: If you change the Mobile Number then verification is mandatory and OTP will send to entered Mobile Number.</span> */}
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -164,11 +164,11 @@ console.log("errors "  , errors);
             )
           }
             </div>
-            <div className="flex items-end">
+            {/* <div className="flex items-end">
               <span className="px-4 py-2 bg-green-500 text-white rounded-md text-sm">
                 ✓ MOBILE NUMBER VERIFIED
               </span>
-            </div>
+            </div> */}
           </div>
         </div>
 
