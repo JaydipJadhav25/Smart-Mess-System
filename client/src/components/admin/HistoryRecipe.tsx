@@ -79,6 +79,8 @@ const HistoryRecipe: React.FC<Props> = ({ recipe  }) => {
           </p>
         </div>
       )}
+
+      
     </div>
   );
 };

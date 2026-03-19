@@ -295,7 +295,7 @@ useEffect(()=>{
           </div>
         )}
             
-               {history && (
+        {history && (
           <div className="space-y-4 mt-6">
             <h2 className="text-lg font-semibold text-slate-800 mb-3 dark:text-white">
                Saved Recipes ({history.length || 0})
