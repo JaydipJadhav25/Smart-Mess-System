@@ -276,7 +276,7 @@ const genrateStudentPlan = async() =>{
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="weight_loss">Weight Loss</SelectItem>
-                      <SelectItem value="maintenance">Maintain Body</SelectItem>
+                      <SelectItem value="weight_maintain">Maintain Body</SelectItem>
                       <SelectItem value="weight_gain">Weight Gain</SelectItem>
                     </SelectContent>
                   </Select>

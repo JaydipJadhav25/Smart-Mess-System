@@ -36,7 +36,7 @@ export default function About() {
     },
     {
       name: "Aditya Mulik",
-      role: "ML Researcher | Model Development & Paper Publication",
+      role: "React Frontend | ML Model Development & Database Design",
       contributions: [
         "React UI development",
         "Responsive design implementation",
@@ -58,14 +58,14 @@ export default function About() {
     },
     {
       name: "Vivek Virkar",
-      role: "ML Researcher | Model Development & Paper Publication",
+      role: "ML Research | Model Development & Paper Publication",
       contributions: [
         "System testing & debugging",
         "Feature validation",
         "Project documentation",
         "Presentation preparation",
       ],
-      image: "/team/member4.jpg",
+      image: "/team/vivek.jpeg",
     },
   ];
 
